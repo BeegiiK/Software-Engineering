@@ -1,4 +1,4 @@
-package Player;
+package logistic;
 
 public enum Colour {
 	WHITE,

@@ -1,3 +1,4 @@
+package logistic;
 
 public enum Resources {
 	CUTLASSES,
