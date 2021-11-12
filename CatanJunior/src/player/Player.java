@@ -15,6 +15,7 @@ public class Player {
 	Hashtable<String, Integer> playerResources = new Hashtable<String, Integer>();
 	Hashtable<String, Integer> playerInventory = new Hashtable<String, Integer>();
 	private int playerTiles;
+	private boolean tradedWithMarketPlace;
 	
 	
 	private Player(Colour colour, Hashtable<String, Integer> resources, Hashtable<String, Integer> inventory) {
@@ -24,6 +25,7 @@ public class Player {
 		this.playerTiles = 0;
 		this.playerTurn = false;
 		this.rolled = false;
+		this.tradedWithMarketPlace = false;
 	}
 	
 	// setters and getters
@@ -33,6 +35,10 @@ public class Player {
 	
 	public Hashtable<String, Integer> getPlayerResources() {
 		return this.playerResources;
+	}
+	
+	public boolean getTradedWithMarketPlace() {
+		return this.tradedWithMarketPlace;
 	}
 	
 }

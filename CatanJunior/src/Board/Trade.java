@@ -1,31 +1,19 @@
 package Board;
 
-import java.util.HashMap;
+import java.util.Hashtable;
 
 public abstract class Trade {
 	
-	protected HashMap<String, Integer> pile = new HashMap<String, Integer>();
+	protected Hashtable<String, Integer> pile = new Hashtable<String, Integer>();
 	
-	protected void take(HashMap<String, Integer> B) {
-		for(String key : B.keySet()) {
-			pile.put(key, pile.get(key) + B.get(key));
-			B.put(key, B.get(key) )
+	protected void trading(Hashtable<String, Integer> A, String key) {
+		if(A.get(key) >= 1) {
+			pile.put(key, pile.get(key) + 1);
+			A.put(key, A.get(key) - 1);
+		}
+		else {
+			System.out.println("The supplier cannot supply that resource right now!");
 		}
 	}
-	
-	protected void give(HashMap<String, Integer> B) {
-		for(String key : B.keySet()) {
-			if(pile.get(key) < B.get(key)) {
-				System.out.println("Cannot be taken");
-			}
-			else {
-				pile.put(key, pile.get(key) - B.get(key));
-			}
-		}
-	}
-
 }
 
-//1. fix trade function
-// do for only one material rather than multiple materials
-// needs an amount to decrease by...
