@@ -9,7 +9,7 @@ import Game.game;
 
 public class Stockpile extends game{
 	
-	protected Hashtable<String, Integer> stockPile = new Hashtable<String, Integer>();
+	private Hashtable<String, Integer> stockPile = new Hashtable<String, Integer>();
 
 	//when game is started, 18 of each resources is created
 	public Stockpile() {
@@ -18,18 +18,30 @@ public class Stockpile extends game{
 		}
 	}
 	
+	// decrement/increment stock-pile
+	public void decrementStockpile(String key, int value) {
+		if(stockPile.get(key) < value) {
+			System.out.println("Cannot decrement");
+		}
+		else {
+			stockPile.put(key, stockPile.get(key) - value);
+		}
+	}
+	
+	public void incrementStockPile(String key, int value) {
+		stockPile.put(key, stockPile.get(key) + value);
+	}
+	
 	// trading with stock pile, as many times as they want. Need to check if desired key is greater than 1
 	public void tradeWithStockpile(Player p, String desiredKey, String unwantedKey1, String unwantedKey2) {
 		if(checkIfSameTwoCards(unwantedKey1, unwantedKey2)) {
 			if(stockPile.get(desiredKey) >= 1) {
-				Hashtable<String, Integer> resource = p.getPlayerResources();
 				
 				stockPile.put(unwantedKey1, stockPile.get(unwantedKey1) + 1);
 				stockPile.put(unwantedKey2, stockPile.get(unwantedKey2) + 1);
 				
-				resource.put(unwantedKey1, resource.get(unwantedKey2) - 1);
-				resource.put(unwantedKey2, resource.get(unwantedKey2) - 1);
-				resource.put(desiredKey, resource.get(desiredKey) + 1);
+				p.decrementResource(unwantedKey1, 2);
+				p.incrementResource(desiredKey, 1);
 			}
 		}
 	}
@@ -47,15 +59,20 @@ public class Stockpile extends game{
 	public void checkSupply() {
 		for(Resources type : Resources.values()) {
 			int count = 0;
-			if(stockPile.get(type) == 0) {
+			if(stockPile.get(type.toString()) == 0) {
 				ArrayList<Player> list = returnAllPlayers();
 				for(int i=0; i<list.size(); i++) {
-					count += list.get(i).getPlayerResources().get(type);
-					list.get(i).getPlayerResources().put(type.toString(), null);
+					count += list.get(i).getPlayerResources().get(type.toString());
+					list.get(i).getPlayerResources().put(type.toString(), 0);
 				}
 			}
 			stockPile.put(type.toString(), count);
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "Stockpile [stockPile=" + stockPile + "]";
+	}
+	
 }
