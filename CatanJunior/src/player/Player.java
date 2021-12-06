@@ -21,7 +21,7 @@ public class Player {
 	private Stack<String> usedCocoTiles = new Stack<String>();
 	private boolean leading = false;
 	
-	private Player(Colour colour, Hashtable<String, Integer> resources, Hashtable<String, Integer> inventory) {
+	public Player(Colour colour, Hashtable<String, Integer> resources, Hashtable<String, Integer> inventory) {
 		this.playerColour = colour;
 		this.playerResources = resources;
 		this.playerInventory = inventory;
@@ -29,6 +29,14 @@ public class Player {
 		this.playerTurn = false;
 		this.rolled = false;
 		this.tradedWithMarketPlace = false;
+	}
+
+	@Override
+	public String toString() {
+		return "Player [playerColour=" + playerColour + ", playerName=" + playerName + ", playerTurn=" + playerTurn
+				+ ", rolled=" + rolled + ", playerResources=" + playerResources + ", playerInventory=" + playerInventory
+				+ ", playerTiles=" + playerTiles + ", tradedWithMarketPlace=" + tradedWithMarketPlace
+				+ ", usedCocoTiles=" + usedCocoTiles + ", leading=" + leading + "]";
 	}
 
 	// setters and getters
