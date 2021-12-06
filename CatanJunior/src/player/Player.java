@@ -6,6 +6,8 @@ import java.util.Set;
 import java.util.Stack;
 
 import logistic.Colour;
+import logistic.Inventory;
+import logistic.Resources;
 
 
 public class Player {
@@ -29,6 +31,28 @@ public class Player {
 		this.rolled = false;
 		this.tradedWithMarketPlace = false;
 		this.leading = false;
+		createResources();
+		createInventory();
+	}
+	
+	// method to declare all internal resource types
+	private void createResources() {
+		for(Resources type : Resources.values()) {
+			getPlayerResources().put(type.toString(), 0);
+		}
+	}
+	
+	// method to declare all internal inventory types
+	private void createInventory() {
+		for(Inventory type : Inventory.values()) {
+			if(type.toString() == "LAIR") {
+				getPlayerInventory().put(type.toString(), 7);
+			}
+			else {
+				getPlayerInventory().put(type.toString(), 8);
+			}
+			
+		}
 	}
 
 	// setters and getters
@@ -69,5 +93,17 @@ public class Player {
 	}
 	
 	// method for increment a resource
-	public void incrementResource(String)
+	public void incrementResource(String type, int value) {
+		getPlayerResources().put(type, getPlayerResources().get(type) + value);
+	}
+	
+	// method for decrement a resource
+	public void decrementResource(String type, int value) {
+		if(getPlayerResources().get(type) < value) {
+			System.out.println("Cannot decrement");
+		}
+		else {
+			getPlayerResources().put(type, getPlayerResources().get(type) - value);
+		}
+	}
 }
