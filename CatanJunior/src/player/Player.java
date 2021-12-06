@@ -19,16 +19,16 @@ public class Player {
 	private int playerTiles;
 	private boolean tradedWithMarketPlace;
 	private Stack<String> usedCocoTiles = new Stack<String>();
-	private boolean leading = false;
+	private boolean leading;
 	
-	private Player(Colour colour, Hashtable<String, Integer> resources, Hashtable<String, Integer> inventory) {
+	private Player(String name, Colour colour) {
 		this.playerColour = colour;
-		this.playerResources = resources;
-		this.playerInventory = inventory;
+		this.playerName = name;
 		this.playerTiles = 0;
 		this.playerTurn = false;
 		this.rolled = false;
 		this.tradedWithMarketPlace = false;
+		this.leading = false;
 	}
 
 	// setters and getters
@@ -67,4 +67,7 @@ public class Player {
 	public void setLeading(boolean ans) {
 		this.leading = ans;
 	}
+	
+	// method for increment a resource
+	public void incrementResource(String)
 }
