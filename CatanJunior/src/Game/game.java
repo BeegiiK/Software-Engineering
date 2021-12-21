@@ -10,7 +10,20 @@ public class game {
 	
 	private ArrayList<Player> listOfPlayers = new ArrayList<Player>();
 	
+	// Constructor
+	public game() {
+		System.out.println("Welcome to Catan Jr!\n");
+		System.out.println("Please enter how many players would like to play? [3 or 4]")
+	}
+	
 	// need to update list of players
+	public ArrayList<Player> getPlayers(){
+		int i = 0;
+		while(i < 5) {
+			System.out.println("Please enter your name: ");
+			
+		}
+	}
 	
 	// as  player gets added, append the player list
 	public ArrayList<Player> returnAllPlayers() {
