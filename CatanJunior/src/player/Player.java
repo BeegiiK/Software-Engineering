@@ -23,7 +23,7 @@ public class Player {
 	private Stack<String> usedCocoTiles = new Stack<String>();
 	private boolean leading;
 	
-	private Player(String name, Colour colour) {
+	public Player(String name, Colour colour) {
 		this.playerColour = colour;
 		this.playerName = name;
 		this.playerTiles = 0;
@@ -55,6 +55,14 @@ public class Player {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "Player [playerColour=" + playerColour + ", playerName=" + playerName + ", playerTurn=" + playerTurn
+				+ ", rolled=" + rolled + ", playerResources=" + playerResources + ", playerInventory=" + playerInventory
+				+ ", playerTiles=" + playerTiles + ", tradedWithMarketPlace=" + tradedWithMarketPlace
+				+ ", usedCocoTiles=" + usedCocoTiles + ", leading=" + leading + "]";
+	}
+	
 	// setters and getters
 	public void setPlayerResources(Hashtable<String, Integer> resources) {
 		this.playerResources = resources;
@@ -105,5 +113,10 @@ public class Player {
 		else {
 			getPlayerResources().put(type, getPlayerResources().get(type) - value);
 		}
+	}
+	
+	// method for decrement an inventory
+	public void decrementInventory(String type, int value) {
+		getPlayerInventory().put(type, getPlayerInventory().get(type) - value);
 	}
 }
