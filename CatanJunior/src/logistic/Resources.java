@@ -4,6 +4,6 @@ public enum Resources {
 	CUTLASSES,
 	GOATS,
 	WOOD,
-	GOLD,
+	GOLD("\033[0;38;2;230;198;39m"),
 	MOLASSES
 }

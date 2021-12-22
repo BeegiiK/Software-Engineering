@@ -118,7 +118,7 @@ public class shipLairCtrl {//Define singleton
 				for(int j = 0; j < numberOfNeighbours; j = j + 1) {
 					int sp_ID = IDs.get(j);
 					if(sp.get(sp_ID-1).ownedBy() == playerColour) {
-						allowedLocs.add(i);
+						allowedLocs.add((i+1));
 						break;
 					}
 				}
@@ -141,7 +141,7 @@ public class shipLairCtrl {//Define singleton
 				for(int j = 0; j < numberOfNeighbours; j = j + 1) {
 					int lr_ID = IDs.get(j);
 					if(lr.get(lr_ID-1).ownedBy() == playerColour) {
-						allowedLocs.add(i);
+						allowedLocs.add((i+1));
 						break;
 					}
 				}
@@ -169,6 +169,10 @@ public class shipLairCtrl {//Define singleton
     
     public void buyLr(int id, Colour C) {
     	lr.get(id-1).boughtBy(C);
+    }
+    
+    public void buySp(int id, Colour C) {
+    	sp.get(id-1).boughtBy(C);
     }
     
 }
