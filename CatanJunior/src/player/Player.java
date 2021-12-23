@@ -80,6 +80,10 @@ public class Player {
 		return this.playerTurn;
 	}
 	
+	public void setPlayerTurn(boolean turn) {
+		this.playerTurn = turn;
+	}
+	
 	public Hashtable<String, Integer> getPlayerInventory() {
 		return this.playerInventory;
 	}
@@ -90,6 +94,10 @@ public class Player {
 	
 	public Stack<String> getUsedCocoTiles(){
 		return this.usedCocoTiles;
+	}
+	
+	public void updateUsedCocoTiles(String tile) {
+		usedCocoTiles.add(tile);
 	}
 	
 	public boolean getLeading() {

@@ -7,8 +7,10 @@ import logistic.Resources;
 import player.Player;
 import Game.game;
 
-public class Stockpile extends game{
+public class Stockpile {
 	
+	private static Stockpile single_instance = null;
+
 	private Hashtable<String, Integer> stockPile = new Hashtable<String, Integer>();
 
 	//when game is started, 18 of each resources is created
@@ -54,7 +56,7 @@ public class Stockpile extends game{
 			return false;
 		}
 	}
-	
+	/*
 	//Check if stock pile supply is run out of 1 type
 	public void checkSupply() {
 		for(Resources type : Resources.values()) {
@@ -74,5 +76,17 @@ public class Stockpile extends game{
 	public String toString() {
 		return "Stockpile [stockPile=" + stockPile + "]";
 	}
+	*/
 	
+	public Hashtable<String, Integer> getStockPile(){
+		return this.stockPile;
+	}
+	
+	public static Stockpile getInstance() {
+		if(single_instance == null) {
+			single_instance = new Stockpile();
+		}
+		
+		return single_instance;
+	}
 }
