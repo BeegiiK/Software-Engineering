@@ -12,6 +12,8 @@ public class shipLairCtrl {//Define singleton
 	private final int shipMax = 40;
 	private ArrayList<ship> sp = new ArrayList<>(shipMax);
 	
+	private int displayMode = 0;
+	
 	private shipLairCtrl() {
 		ShipVeiw[] shipTypeByID = new ShipVeiw[] {ShipVeiw.Horizontal, 	ShipVeiw.DiagRight, 	ShipVeiw.Diagleft, 	ShipVeiw.Diagleft, 		ShipVeiw.DiagRight,
 				ShipVeiw.Horizontal, 	ShipVeiw.DiagRight, 	ShipVeiw.Diagleft, 	ShipVeiw.Horizontal, 	ShipVeiw.Horizontal,
@@ -175,6 +177,45 @@ public class shipLairCtrl {//Define singleton
     	sp.get(id-1).boughtBy(C);
     }
     
+    public String spLabel(int id) {
+    	if(displayMode == 2) {
+    		if(sp.get(id-1).getId() >=10) {
+    			return ("S"+sp.get(id-1).getId());
+    		}
+    		else {
+    			return ("S"+sp.get(id-1).getId()+" ");
+    		}
+    	}
+    	else {
+    		return ("   ");
+    	}
+    }
+    
+    public String lrLabel(int id) {
+    	if(displayMode == 3) {
+    		if(lr.get(id-1).getId() >=10) {
+    			return ("L"+lr.get(id-1).getId());
+    		}
+    		else {
+    			return ("L"+lr.get(id-1).getId()+" ");
+    		}
+    	}
+    	else {
+    		return ("   ");
+    	}
+    }
+    
+    public void toggleDisplayNone() {
+    	displayMode = 1;
+    }
+    
+    public void toggleDisplayLr() {
+    	displayMode = 3;
+    }
+    
+    public void toggleDisplaySp() {
+    	displayMode = 2;
+    }
 }
 
 
