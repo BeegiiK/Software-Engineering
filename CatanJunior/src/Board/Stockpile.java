@@ -3,52 +3,37 @@ package Board;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import logistic.Resources;
+import logistic.RESOURCE;
+import pile.Pile;
 import player.Player;
 import Game.game;
 
-public class Stockpile {
+public class Stockpile extends Pile{
 	
 	private static Stockpile single_instance = null;
 
-	private Hashtable<String, Integer> stockPile = new Hashtable<String, Integer>();
-
 	//when game is started, 18 of each resources is created
 	public Stockpile() {
-		for(Resources type : Resources.values()) {
-			stockPile.put(type.toString(), 18);
+		for(RESOURCE type : RESOURCE.values()) {
+			pile.put(type, 18);
 		}
-	}
-	
-	// decrement/increment stock-pile
-	public void decrementStockpile(String key, int value) {
-		if(stockPile.get(key) < value) {
-			System.out.println("Cannot decrement");
-		}
-		else {
-			stockPile.put(key, stockPile.get(key) - value);
-		}
-	}
-	
-	public void incrementStockPile(String key, int value) {
-		stockPile.put(key, stockPile.get(key) + value);
 	}
 	
 	// trading with stock pile, as many times as they want. Need to check if desired key is greater than 1
-	public void tradeWithStockpile(Player p, String desiredKey, String unwantedKey1, String unwantedKey2) {
+	public boolean tradeWithStockpile(Player p, RESOURCE desiredKey, RESOURCE unwantedKey1, RESOURCE unwantedKey2) {
 		if(checkIfSameTwoCards(unwantedKey1, unwantedKey2)) {
-			if(stockPile.get(desiredKey) >= 1) {
-				
-				stockPile.put(unwantedKey1, stockPile.get(unwantedKey1) + 1);
-				stockPile.put(unwantedKey2, stockPile.get(unwantedKey2) + 1);
-				
-				p.decrementResource(unwantedKey1, 2);
-				p.incrementResource(desiredKey, 1);
+			if(pile.get(desiredKey) >= 1) {
+				incrementPile(unwantedKey1, 2);
+				p.getPlayerPile().decrementPile(unwantedKey1, 2);
+				p.getPlayerPile().incrementPile(desiredKey, 1);
+				return true;
 			}
 		}
+			System.out.println("You need to give two cards of the same reosurce type.");
+			return false;
 	}
 	
-	public boolean checkIfSameTwoCards(String key1, String key2) {
+	public boolean checkIfSameTwoCards(RESOURCE key1, RESOURCE key2) {
 		if(key1 == key2) {
 			return true;
 		}
@@ -56,30 +41,24 @@ public class Stockpile {
 			return false;
 		}
 	}
-	/*
+	
 	//Check if stock pile supply is run out of 1 type
-	public void checkSupply() {
-		for(Resources type : Resources.values()) {
+	public void checkSupply(ArrayList<Player> listP) {
+		for(RESOURCE type : RESOURCE.values()) {
 			int count = 0;
-			if(stockPile.get(type.toString()) == 0) {
-				ArrayList<Player> list = returnAllPlayers();
-				for(int i=0; i<list.size(); i++) {
-					count += list.get(i).getPlayerResources().get(type.toString());
-					list.get(i).getPlayerResources().put(type.toString(), 0);
+			if(pile.get(type) == 0) {
+				for(int i=0; i<listP.size(); i++) {
+					count += listP.get(i).getPlayerPile().getPile().get(type);
+					listP.get(i).getPlayerPile().getPile().put(type, 0);
 				}
 			}
-			stockPile.put(type.toString(), count);
+			pile.put(type, count);
 		}
 	}
 
 	@Override
 	public String toString() {
-		return "Stockpile [stockPile=" + stockPile + "]";
-	}
-	*/
-	
-	public Hashtable<String, Integer> getStockPile(){
-		return this.stockPile;
+		return "Stockpile [stockPile=" + pile + "]";
 	}
 	
 	public static Stockpile getInstance() {

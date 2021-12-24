@@ -1,4 +1,4 @@
-package map;
+package logistic;
 
 public enum RESOURCE {
 	CUTLASSES("\033[0;38;2;40;140;210m"+"-"+"\033[0;38;2;222;210;50m"+"«"+"\033[0;38;2;40;140;210m"+"--"+"\033[0;0m"),
