@@ -205,6 +205,10 @@ public class shipLairCtrl {//Define singleton
     	}
     }
     
+    public Colour getLrColour(int id) {
+    	return lr.get(id).ownedBy();
+    }
+    
     public void toggleDisplayNone() {
     	displayMode = 1;
     }
