@@ -1,7 +1,7 @@
 package Game;
 
 public enum options {
-	BUY("Buy"),
+	BUY("Buy Cocotile"),
 	TRADE("Trade"),
 	BUILD("Build"),
 	END("End my turn");

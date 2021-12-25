@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 import logistic.Colour;
 import logistic.Inventory;
+import map.veiwMap;
 
 public class game {
 
@@ -24,6 +25,9 @@ public class game {
 	private Scanner sc = new Scanner(System.in);
 	private CocoTiles cocotile = new CocoTiles();
 	private Stockpile stockpile = Stockpile.getInstance();
+	
+	private veiwMap map = new veiwMap();
+	
 	
 	// Constructor
 	private game() {}
@@ -84,35 +88,38 @@ public class game {
 			}
 			
 			Player player = new Player(player_name, c);
-			fillPlayerAttributes(player);
 			listOfPlayers.add(player);
 			i++;
 		}
 	}
 	
 	private void playGame() {
-		String exit = "n";
+		boolean EOG = false;
 		String die = null;
 		String chosenOption = null;
 		
 		int die_result;
-		while(exit == "n") {
+		while(!EOG) {
 			for(int i=0; i<listOfPlayers.size();i++) {
-				String str = "n";
+				boolean str = false;
 				listOfPlayers.get(i).setPlayerTurn(true);
 				
 				System.out.println("\n"+listOfPlayers.get(i).getPlayerName() + ", it's your turn to roll the die!\n[R] Roll die");
 				die = sc.nextLine();
 				die_result = checkDieRoll(die);
-				// do something
 				
-				while(!str.equals("y")) {
-					printOptions(i);
-					chosenOption = sc.nextLine();
-					str = checkChosenOption(chosenOption, listOfPlayers.get(i));
+				if(die_result == 6) {
+					System.out.println("You have rolled a 6, you can now move the ghost captain!");
 				}
-				MostCoco();
-				listOfPlayers.get(i).setPlayerTurn(false);
+				else {
+					while(!str) {
+						printOptions(i);
+						chosenOption = sc.nextLine();
+						str = checkChosenOption(chosenOption, listOfPlayers.get(i));
+					}
+				//	MostCoco();
+					listOfPlayers.get(i).setPlayerTurn(false);
+				}
 			}
 		}
 	}
@@ -127,14 +134,7 @@ public class game {
 			}
 		}
 	}
-	
-	private void fillPlayerAttributes(Player p) {
-		p.incrementResource("WOOD", 1);
-		p.incrementResource("MOLASSES", 1);
-		stockpile.decrementStockpile("WOOD", 1);
-		stockpile.decrementStockpile("MOLASSES", 1);
-	}
-	
+
 	private void printOptions(int i) {
 		System.out.println(listOfPlayers.get(i).getPlayerName()+", you now have the following options:");
 		int j = 1;
@@ -145,10 +145,10 @@ public class game {
 		System.out.println("Please choose one of the options");
 	}
 	
-	private String checkChosenOption(String chosen, Player p) {
+	private boolean checkChosenOption(String chosen, Player p) {
 		ArrayList<Integer> idx = new ArrayList<Integer>(4);
 		boolean exit = true;
-		String str = null;
+		boolean str = false;
 		idx.add(1);
 		idx.add(2);
 		idx.add(3);
@@ -168,20 +168,71 @@ public class game {
 		return str;
 	}
 	
-	private String navigateTurnInput(int i, Player p) {
-		String str = null;
+	private boolean navigateTurnInput(int i, Player p) {
+		boolean str;
 		if(i == 1) {
 			str = cocotile.buy(p);
 			return str;
 		}
-		else if (i == 2) {
-			//M
-			
+		else if(i == 2) {
+			str = tradeOption(p);
+			return str;
+		}
+		else if(i == 3) {
+			str = buildOption(p);
+			return str;
 		}
 		else {
-			
+			return true;
 		}
-		return null;
+	}
+	
+	private boolean buildOption(Player p) {
+		boolean retval= true;
+		while(retval) {
+			System.out.println("\nWelcome to the build option. You have three options:");
+			retval = false;
+		}
+		return true;
+	}
+	private boolean tradeOption(Player p) {
+		boolean retval=true;
+		while(retval) {
+			System.out.println("\nWelcome to the trade option. You have three options:");
+			System.out.println("[1] Trade with marketplace");
+			System.out.println("[2] Trade with stockpile");
+			System.out.println("[3] Go back to options screen");
+			String res = sc.nextLine();
+			
+			if(res.equals("1")){
+				System.out.println("\nHow would you like to trade with marketplace?");
+				System.out.println("[1] Trade");
+				System.out.println("[2] Go back to trade screen");
+				res = sc.nextLine();
+				if(res.equals("2")) {
+					retval = true;
+				}
+				else {
+					retval = false;
+				}
+			}
+			else if(res.equals("2")) {
+				System.out.println("\nHow would you like to trade with stockpile?");
+				System.out.println("[1] Trade");
+				System.out.println("[2] Go back to trade screen");
+				res = sc.nextLine();
+				if(res.equals("2")) {
+					retval = true;
+				}
+				else {
+					retval = false;
+				}
+			}
+			else {
+				return false;
+			}	
+		}
+		return true;
 	}
 	
 	private int checkDieRoll(String die) {
@@ -234,7 +285,7 @@ public class game {
 	public void checkForEOG() {
 		for(Player p: listOfPlayers) {
 			if(p.getPlayerTurn()) {
-				if(p.getPlayerResources().get(Inventory.LAIR.toString()) == 0) {
+				if(p.getPlayerPile().getPile().get(Inventory.LAIR) == 0) {
 					System.out.println("The game is over. Player: "+p.getPlayerName()+" has won the game");
 				}
 			}

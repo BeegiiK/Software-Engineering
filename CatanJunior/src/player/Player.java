@@ -1,95 +1,74 @@
 package player;
 
-import java.util.HashSet;
 import java.util.Hashtable;
-import java.util.Set;
 import java.util.Stack;
 
 import logistic.Colour;
 import logistic.Inventory;
-import logistic.Resources;
 
 
-public class Player {
+public class Player{
 	
-	private Colour playerColour;
-	private String playerName;
-	private boolean playerTurn;
+	private Colour colour;
+	private String name;
+	private boolean turn;
 	private boolean rolled;
-	Hashtable<String, Integer> playerResources = new Hashtable<String, Integer>();
-	Hashtable<String, Integer> playerInventory = new Hashtable<String, Integer>();
-	private int playerTiles;
+	private PlayerPile pile = new PlayerPile();
+
+	Hashtable<Inventory, Integer> inventory = new Hashtable<Inventory, Integer>();
+	private int tiles;
 	private boolean tradedWithMarketPlace;
 	private Stack<String> usedCocoTiles = new Stack<String>();
 	private boolean leading;
 	
 	public Player(String name, Colour colour) {
-		this.playerColour = colour;
-		this.playerName = name;
-		this.playerTiles = 0;
-		this.playerTurn = false;
+		this.colour = colour;
+		this.name = name;
+		this.tiles = 0;
+		this.turn = false;
 		this.rolled = false;
 		this.tradedWithMarketPlace = false;
 		this.leading = false;
-		createResources();
 		createInventory();
-	}
-	
-	// method to declare all internal resource types
-	private void createResources() {
-		for(Resources type : Resources.values()) {
-			getPlayerResources().put(type.toString(), 0);
-		}
 	}
 	
 	// method to declare all internal inventory types
 	private void createInventory() {
-		for(Inventory type : Inventory.values()) {
-			if(type.toString() == "LAIR") {
-				getPlayerInventory().put(type.toString(), 7);
-			}
-			else {
-				getPlayerInventory().put(type.toString(), 8);
-			}
-			
-		}
+		getInventory().put(Inventory.LAIR, 7);
+		getInventory().put(Inventory.SHIP, 8);
 	}
 
 	@Override
 	public String toString() {
-		return "Player [playerColour=" + playerColour + ", playerName=" + playerName + ", playerTurn=" + playerTurn
-				+ ", rolled=" + rolled + ", playerResources=" + playerResources + ", playerInventory=" + playerInventory
-				+ ", playerTiles=" + playerTiles + ", tradedWithMarketPlace=" + tradedWithMarketPlace
+		return "Player [playerColour=" + colour + ", playerName=" + name + ", playerTurn=" + turn
+				+ ", rolled=" + rolled + ", playerResources=" + pile + ", playerInventory=" + inventory
+				+ ", playerTiles=" + tiles + ", tradedWithMarketPlace=" + tradedWithMarketPlace
 				+ ", usedCocoTiles=" + usedCocoTiles + ", leading=" + leading + "]";
 	}
 	
 	// setters and getters
-	public void setPlayerResources(Hashtable<String, Integer> resources) {
-		this.playerResources = resources;
-	}
-	
-	public Hashtable<String, Integer> getPlayerResources() {
-		return this.playerResources;
-	}
-	
 	public boolean getTradedWithMarketPlace() {
 		return this.tradedWithMarketPlace;
 	}
 	
+	public void setTradedWithMarketPlace(boolean var) {
+		this.tradedWithMarketPlace = var;
+	}
+	
 	public boolean getPlayerTurn() {
-		return this.playerTurn;
+		return this.turn;
 	}
 	
 	public void setPlayerTurn(boolean turn) {
-		this.playerTurn = turn;
+		this.turn = turn;
 	}
 	
-	public Hashtable<String, Integer> getPlayerInventory() {
-		return this.playerInventory;
+	public Hashtable<Inventory, Integer> getInventory() {
+		return this.inventory;
 	}
 	
 	public String getPlayerName() {
-		return this.playerName;
+		return this.name;
 	}
 	
 	public Stack<String> getUsedCocoTiles(){
@@ -108,23 +87,12 @@ public class Player {
 		this.leading = ans;
 	}
 	
-	// method for increment a resource
-	public void incrementResource(String type, int value) {
-		getPlayerResources().put(type, getPlayerResources().get(type) + value);
-	}
-	
-	// method for decrement a resource
-	public void decrementResource(String type, int value) {
-		if(getPlayerResources().get(type) < value) {
-			System.out.println("Cannot decrement");
-		}
-		else {
-			getPlayerResources().put(type, getPlayerResources().get(type) - value);
-		}
+	public PlayerPile getPlayerPile() {
+		return this.pile;
 	}
 	
 	// method for decrement an inventory
-	public void decrementInventory(String type, int value) {
-		getPlayerInventory().put(type, getPlayerInventory().get(type) - value);
+	public void decrementInventory(Inventory type, int value) {
+		getInventory().put(type, getInventory().get(type) - value);
 	}
 }
