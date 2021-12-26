@@ -9,7 +9,7 @@ import Board.Stockpile;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import logistic.Colour;
+import map.Colour;
 import logistic.Inventory;
 import map.veiwMap;
 
@@ -191,6 +191,10 @@ public class game {
 			veiwMap map1 = new veiwMap();
 			System.out.println(map1.toString());
 			return false;
+		}
+		else if(i == 4) {
+			// do something
+			return true;
 		}
 		else {
 			return true;

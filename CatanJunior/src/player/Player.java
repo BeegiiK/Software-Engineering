@@ -3,7 +3,7 @@ package player;
 import java.util.Hashtable;
 import java.util.Stack;
 
-import logistic.Colour;
+import map.Colour;
 import logistic.Inventory;
 
 

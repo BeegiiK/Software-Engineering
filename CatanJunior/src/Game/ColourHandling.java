@@ -2,7 +2,7 @@ package Game;
 
 import java.util.ArrayList;
 
-import logistic.Colour;
+import map.Colour;
 
 public class ColourHandling {
 	

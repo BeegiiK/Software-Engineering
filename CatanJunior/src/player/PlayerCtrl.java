@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import Board.Stockpile;
-import map.RESOURCE;
+import logistic.RESOURCE;
 import map.TileCtrl;
 import map.Colour;
 import map.GainsAmount;
@@ -68,11 +68,28 @@ public class PlayerCtrl {
 	
 	public boolean checkStockpile(Hashtable<RESOURCE, Integer> required) {
 		Stockpile stockpile = Stockpile.getInstance();
-		for(RESOURCE r: RESOURCE.values()) {
-			if(!r.equals(RESOURCE.NONE)) {
-				if(required.get(r) > stockpile.getPile().get(r)) {
-					return false;
-				}
+		for(RESOURCE r: required.keySet()) {
+			if(required.get(r) > stockpile.getPile().get(r)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public Player getActivePlayer() {
+		for(Player p: list) {
+			if(p.getPlayerTurn()) {
+				return p;
+			}
+		}
+		return null;
+	}
+	
+	public boolean checkPlayerPile(Hashtable<RESOURCE, Integer> required) {
+		Player p = getActivePlayer();
+		for(RESOURCE r: required.keySet()) {
+			if(required.get(r) > p.getPlayerPile().getPile().get(r)) {
+				return false;
 			}
 		}
 		return true;
