@@ -6,7 +6,7 @@ public enum Inventory {
 	SHIP,
 	LAIR;
 	
-	public static Hashtable<RESOURCE,Integer> cost(Inventory i){
+	public static Hashtable<RESOURCE, Integer> cost(Inventory i){
 		Hashtable<RESOURCE, Integer> cost = null;
 		
 		if(i.equals(Inventory.LAIR)) {
