@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Stack;
 
+import Game.MoveGhostCaptain;
 import map.RESOURCE;
 import logistic.typesOfCocoTiles;
 
@@ -81,8 +82,12 @@ public class CocoTiles {
 			stockpile.decrementPile(RESOURCE.MOLASSES, 2);
 			stockpile.decrementPile(RESOURCE.WOOD, 2);
 		}
+		else if(input == typesOfCocoTiles.MOVEGHOSTPIRATE.toString()) {
+			MoveGhostCaptain moveUX = new MoveGhostCaptain();
+			moveUX.move();
+		}
 		else {
-			//move ghost captain
+			// ship lair cocotile
 		}
 	}
 	

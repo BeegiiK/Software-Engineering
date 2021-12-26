@@ -4,7 +4,8 @@ public enum options {
 	BUY("Buy Cocotile"),
 	TRADE("Trade"),
 	BUILD("Build"),
-	END("End my turn");
+	END("End my turn"),
+	VIEW("View map");
 	
 	private String displayName;
 	
