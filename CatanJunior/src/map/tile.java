@@ -60,6 +60,16 @@ public class tile extends boardPart{
 		return ID;
 	}
 
+	public int getRollNum() {
+		return rollNum;
+	}
 
+	public boolean isActive() {
+		return active;
+	}
+
+	public RESOURCE getResource() {
+		return resource;
+	}
 	
 }
