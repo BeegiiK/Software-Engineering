@@ -30,7 +30,7 @@ public class game {
 	
 	
 	// Constructor
-	private game() {}
+	public game() {}
 	
 	
 	public void initialiseGame() {
@@ -93,7 +93,7 @@ public class game {
 		}
 	}
 	
-	private void playGame() {
+	public void playGame() {
 		boolean EOG = false;
 		String die = null;
 		String chosenOption = null;

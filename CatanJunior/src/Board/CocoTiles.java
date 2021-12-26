@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Stack;
 
-import logistic.RESOURCE;
+import map.RESOURCE;
 import logistic.typesOfCocoTiles;
 
 import java.util.Scanner;
@@ -45,11 +45,19 @@ public class CocoTiles {
 		input = sc.nextLine();
 		
 		if(input.equals("y") || input.equals("Y")) {
+			String coco = null;
 			p.getPlayerPile().decrementPile(RESOURCE.CUTLASSES, 1);
 			p.getPlayerPile().decrementPile(RESOURCE.MOLASSES, 1);
-			p.getPlayerPile().decrementPile(RESOURCE.WOOD, 1);
-			p.updateUsedCocoTiles(getCocoTile());
-			takeAction(input, p);
+			p.getPlayerPile().decrementPile(RESOURCE.GOLD, 1);
+			coco = getCocoTile();
+			System.out.println("You have obtained the " + coco + " cocotile");
+			System.out.println(p.getPlayerPile().toString());
+			System.out.println(stockpile);
+			
+			p.updateUsedCocoTiles(coco);
+			takeAction(coco, p);
+			System.out.println(p.getPlayerPile().toString());
+			System.out.println(stockpile);
 			return true;
 		}
 		return false;
@@ -90,6 +98,6 @@ public class CocoTiles {
 				// do something
 			}
 		}
-
 	}
+	
 }

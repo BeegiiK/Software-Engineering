@@ -42,6 +42,11 @@ public abstract class Pile {
 		return true;
 	}
 	
+	@Override
+	public String toString() {
+		return "Pile [pile=" + pile + "]";
+	}
+
 	public Hashtable<RESOURCE, Integer> getPile(){
 		return pile;
 	}

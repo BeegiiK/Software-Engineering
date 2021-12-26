@@ -14,6 +14,12 @@ public class PlayerPile extends Pile{
 		incrementPile(RESOURCE.MOLASSES, 1);
 		stockpile.decrementPile(RESOURCE.WOOD, 1);
 		stockpile.decrementPile(RESOURCE.MOLASSES, 1);
+		
+		//remove after test
+		incrementPile(RESOURCE.CUTLASSES, 1);
+		incrementPile(RESOURCE.GOLD, 1);
+		stockpile.decrementPile(RESOURCE.CUTLASSES, 1);
+		stockpile.decrementPile(RESOURCE.GOLD, 1);
 	}
 
 }
