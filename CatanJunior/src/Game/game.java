@@ -109,7 +109,7 @@ public class game {
 				die = sc.nextLine();
 				die_result = checkDieRoll(die);
 				// remove after testing
-				die_result = 6;
+				//die_result = 6;
 				
 				if(die_result == 6) {
 					System.out.println("You have rolled a 6, you can now move the ghost captain!");
@@ -157,6 +157,7 @@ public class game {
 		idx.add(2);
 		idx.add(3);
 		idx.add(4);
+		idx.add(5);
 		
 		while(exit) {
 			if(idx.contains(Integer.parseInt(chosen))) {
@@ -185,6 +186,11 @@ public class game {
 		else if(i == 3) {
 			str = buildOption(p);
 			return str;
+		}
+		else if(i == 5) {
+			veiwMap map1 = new veiwMap();
+			System.out.println(map1.toString());
+			return false;
 		}
 		else {
 			return true;

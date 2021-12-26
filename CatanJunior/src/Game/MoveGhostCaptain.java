@@ -11,7 +11,7 @@ public class MoveGhostCaptain {
 
 	public void move() {
 		TileCtrl t = TileCtrl.getInstance();
-		t.toggleDisplayLabel();
+		//t.toggleDisplayLabel();
 		veiwMap map1 = new veiwMap();
 		boolean var = true;
 		String s = sc.nextLine();
