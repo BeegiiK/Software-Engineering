@@ -1,7 +1,7 @@
 package player;
 
 import Board.Stockpile;
-import logistic.RESOURCE;
+import map.RESOURCE;
 import pile.Pile;
 
 public class PlayerPile extends Pile{
