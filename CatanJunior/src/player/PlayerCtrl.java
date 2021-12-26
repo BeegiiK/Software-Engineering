@@ -6,7 +6,7 @@ import java.util.Hashtable;
 import Board.Stockpile;
 import Game.game;
 import logistic.Inventory;
-import logistic.RESOURCE;
+import map.RESOURCE;
 import map.Colour;
 import pile.Pile;
 
@@ -47,8 +47,10 @@ public class PlayerCtrl {
 	
 	public boolean checkStockpile(Hashtable<RESOURCE, Integer> required) {
 		for(RESOURCE r: RESOURCE.values()) {
-			if(required.get(r) > stockpile.getPile().get(r)) {
-				return false;
+			if(!r.equals(RESOURCE.NONE)) {
+				if(required.get(r) > stockpile.getPile().get(r)) {
+					return false;
+				}
 			}
 		}
 		return true;

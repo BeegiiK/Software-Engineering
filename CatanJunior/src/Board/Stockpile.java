@@ -3,7 +3,7 @@ package Board;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import logistic.RESOURCE;
+import map.RESOURCE;
 import pile.Pile;
 import player.Player;
 import Game.game;
@@ -57,8 +57,7 @@ public class Stockpile extends Pile{
 	}
 	
 	// method for giving out resources depending on map positions
-	public void
-	
+
 
 	@Override
 	public String toString() {
