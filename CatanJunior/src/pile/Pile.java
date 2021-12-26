@@ -4,7 +4,7 @@ import java.util.Hashtable;
 
 import map.RESOURCE;
 
-public abstract class Pile {
+public class Pile {
 	
 	protected Hashtable<RESOURCE, Integer> pile = new Hashtable<RESOURCE, Integer>();
 	
