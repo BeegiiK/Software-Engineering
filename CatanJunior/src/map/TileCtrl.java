@@ -108,7 +108,6 @@ public class TileCtrl {
 					else if(A.get(j) == Colour.ORANGE) {
 						orange.incrementPile(tl.get(i).getResource(), 1);
 					}
-				
 				}
 			}
 		}
@@ -118,8 +117,18 @@ public class TileCtrl {
 		G.setPileforColour(Colour.BLUE, blue);
 		G.setPileforColour(Colour.WHITE, white);
 		
-		return G;
+		return G;	
+	}
+	
+	public ArrayList<Integer> getAllowedGhostCaptainLocs(){
+		ArrayList<Integer> A = new ArrayList<Integer>();
 		
+		for(int i = 0; i < tl.size(); i = i + 1) {
+			if(tl.get(i).isActive() && i !=6)
+				A.add(i+1);
+		}
+		
+		return A;
 	}
 
 }

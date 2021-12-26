@@ -5,11 +5,6 @@ import java.util.Hashtable;
 import map.RESOURCE;
 import pile.Pile;
 
-<<<<<<< HEAD
-public class playerGainsFromRoll extends Pile{
-	
-	protected Hashtable<Colour, Pile> table
-=======
 public class GainsAmount extends Pile{
 	protected Hashtable<Colour, Pile> table = new Hashtable<Colour, Pile>();
 	
@@ -23,10 +18,9 @@ public class GainsAmount extends Pile{
 		table.put(C, P);
 	}
 	
-	public Pile getPileforColour(Colour C) {
+	public Pile getPileforColour(Colour C, Pile P) {
 		return table.get(C);
 	}
 	
->>>>>>> branch 'master' of git@github.com:BeegiiK/Software-Engineering.git
 
 }
