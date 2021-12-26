@@ -28,6 +28,7 @@ public class game {
 	
 	private veiwMap map = new veiwMap();
 	
+	private MoveGhostCaptain moveUX = new MoveGhostCaptain();
 	
 	// Constructor
 	public game() {}
@@ -107,9 +108,12 @@ public class game {
 				System.out.println("\n"+listOfPlayers.get(i).getPlayerName() + ", it's your turn to roll the die!\n[R] Roll die");
 				die = sc.nextLine();
 				die_result = checkDieRoll(die);
+				// remove after testing
+				die_result = 6;
 				
 				if(die_result == 6) {
 					System.out.println("You have rolled a 6, you can now move the ghost captain!");
+					moveUX.move();
 				}
 				else {
 					while(!str) {
