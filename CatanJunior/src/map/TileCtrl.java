@@ -72,7 +72,7 @@ public class TileCtrl {
 	
 	public String tlLabel(int id) {
 		if(displayMode == true) {
-			if(id-1 < 10) {
+			if(id < 10) {
 				return ("T"+tl.get(id-1).getID()+" ");
 			}
 			else {

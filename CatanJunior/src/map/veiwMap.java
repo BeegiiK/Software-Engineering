@@ -14,7 +14,7 @@ public String toString() {
 		shipLairCtrl A = shipLairCtrl.getInstance();
 		A.toggleDisplayLr();
 		A.toggleDisplaySp();
-		B.toggleDisplayLabel();
+		//B.toggleDisplayLabel();
 
 
 		return ('\n'+
@@ -57,7 +57,7 @@ public String toString() {
 				String.format("%" + (tabAmount + 00) + "s", "") + A.lrLabel(23) + " " + A.getLrStr(23, 0) + A.getSpStr(31, 0) + A.getLrStr(24, 0) + " " + A.lrLabel(24) +  "    "+B.getTlStr(10, 2)+"     " + A.lrLabel(25) + " " + A.getLrStr(25, 0) + A.getSpStr(32, 0) + A.getLrStr(26, 0) + " " + A.lrLabel(26) + "        []|           |" + '\n' +
 				String.format("%" + (tabAmount + 04) + "s", "") + A.getLrStr(23,1) + "    " + A.spLabel(31) + "     " +	A.getLrStr(24,1) + "       "+B.getTlStr(10, 3)+"          " + A.getLrStr(25,1) + "    " + A.spLabel(32) + "     " + A.getLrStr(26, 1) + "              '...........'" + '\n' +
 				String.format("%" + (tabAmount + 03) + "s", "") + "/" + "                " + A.getSpStr(33, 0) +"       "+B.getTlStr(10, 4)+"         " + A.getSpStr(34, 0) + "                " + "\\" + '\n' +
-				String.format("%" + (tabAmount + 02) + "s", "") + "/" + "      "+B.getTlStr(11, 0)+"   " + A.spLabel(33) + " " + A.getSpStr(33, 1) + "       "+B.tlLabel(10)+"       " + A.getSpStr(34, 1) + " " + A.spLabel(34) + "   "+B.getTlStr(12, 0)+"      " + "\\" + '\n' +
+				String.format("%" + (tabAmount + 02) + "s", "") + "/" + "      "+B.getTlStr(11, 0)+"   " + A.spLabel(33) + " " + A.getSpStr(33, 1) + "       "+B.tlLabel(10)+"        " + A.getSpStr(34, 1) + " " + A.spLabel(34) + "   "+B.getTlStr(12, 0)+"      " + "\\" + '\n' +
 				String.format("%" + (tabAmount + 01) + "s", "") + "/" + "       "+B.getTlStr(11, 1)+"        " + A.getSpStr(33, 2) + "                " + A.getSpStr(34, 2) +  "        "+B.getTlStr(12, 1)+"       " + "\\" + '\n' +
 				String.format("%" + (tabAmount + 00) + "s", "") + "/" + "        "+B.getTlStr(11, 2)+"     "   + A.lrLabel(27) + " " + A.getLrStr(27, 0) + A.getSpStr(35, 0) + A.getLrStr(28, 0) + " " + A.lrLabel(28) + "     "+B.getTlStr(12, 2)+"        " + "\\" +              "          _______===___" + '\n' +
 				String.format("%" + (tabAmount + 00) + "s", "") + "\\" + "       "+B.getTlStr(11, 3)+"          " + A.getLrStr(27, 1) + "    " + A.spLabel(35) + "     " + A.getLrStr(28, 1) +  "        "+B.getTlStr(12, 3)+"         " + "/" + "            |         |" + '\n' +
