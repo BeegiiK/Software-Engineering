@@ -55,6 +55,10 @@ public class Stockpile extends Pile{
 			pile.put(type, count);
 		}
 	}
+	
+	// method for giving out resources depending on map positions
+	public void
+	
 
 	@Override
 	public String toString() {

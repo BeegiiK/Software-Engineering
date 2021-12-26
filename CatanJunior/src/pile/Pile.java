@@ -2,7 +2,7 @@ package pile;
 
 import java.util.Hashtable;
 
-import logistic.RESOURCE;
+import map.RESOURCE;
 
 public abstract class Pile {
 	
@@ -10,7 +10,9 @@ public abstract class Pile {
 	
 	public Pile() {
 		for(RESOURCE r: RESOURCE.values()) {
-			pile.put(r, 0);
+			if(!r.equals(RESOURCE.NONE)) {
+				pile.put(r, 0);
+			}
 		}
 	}
 	

@@ -51,6 +51,10 @@ public class Player{
 		return this.tradedWithMarketPlace;
 	}
 	
+	public Colour getColour() {
+		return this.colour;
+	}
+	
 	public void setTradedWithMarketPlace(boolean var) {
 		this.tradedWithMarketPlace = var;
 	}
@@ -95,4 +99,5 @@ public class Player{
 	public void decrementInventory(Inventory type, int value) {
 		getInventory().put(type, getInventory().get(type) - value);
 	}
+	
 }
