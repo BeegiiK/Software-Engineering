@@ -31,18 +31,28 @@ public class PlayerCtrl {
 		return null;
 	}
 
-	public void giveDiceResources(Hashtable<Colour, Pile> map, Hashtable<RESOURCE, Integer> required) {
-		if(checkStockpile(required)) {
+	public void giveDiceResources(Hashtable<Colour, Pile> map) {
+		if(checkStockpile(getTotalResources(map))) {
 			for(Colour c: map.keySet()) {
 				Player p = getPlayer(c);
 				Pile pile = map.get(c);
 				
 				for(RESOURCE r: pile.getPile().keySet()) {
 					p.getPlayerPile().incrementPile(r, pile.getPile().get(r));
+					stockpile.decrementPile(r, pile.getPile().get(r));
 				}
 			}
 		}
-		
+	}
+	
+	public Hashtable<RESOURCE, Integer> getTotalResources(Hashtable<Colour, Pile> map) {
+		Hashtable<RESOURCE, Integer> required = null;
+		for(Colour c: map.keySet()) {
+			for(RESOURCE r: map.get(c).getPile().keySet()) {
+				required.put(r, required.get(r) + map.get(c).getPile().get(r));
+			}
+		}
+		return required;
 	}
 	
 	public boolean checkStockpile(Hashtable<RESOURCE, Integer> required) {
