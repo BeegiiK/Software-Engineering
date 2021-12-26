@@ -2,6 +2,8 @@ package map;
 
 import java.util.ArrayList;
 
+import pile.Pile;
+
 public class TileCtrl {
 	private static TileCtrl single_instance = null;
 	public ArrayList<tile> tl = new ArrayList<tile>();
@@ -80,6 +82,44 @@ public class TileCtrl {
 		else {
 			return ("   ");
 		}
+	}
+	
+	public GainsAmount getGainsAmount(int rolled_number) {
+		GainsAmount G = new GainsAmount();
+		Pile red = new Pile();
+		Pile blue = new Pile();
+		Pile white = new Pile();
+		Pile orange = new Pile();
+
+		
+		for(int i = 0; i < tl.size(); i = i +1) {
+			if(rolled_number == tl.get(i).getRollNum() && tl.get(i).isActive()) {
+				ArrayList<Colour> A = tl.get(i).getLairOwners();
+				for(int j = 0; j < A.size(); j = j+1) {
+					if(A.get(j) == Colour.RED) {
+						red.incrementPile(tl.get(i).getResource(), 1);
+					}
+					else if(A.get(j) == Colour.BLUE) {
+						blue.incrementPile(tl.get(i).getResource(), 1);
+					}
+					else if(A.get(j) == Colour.WHITE) {
+						white.incrementPile(tl.get(i).getResource(), 1);
+					}
+					else if(A.get(j) == Colour.ORANGE) {
+						orange.incrementPile(tl.get(i).getResource(), 1);
+					}
+				
+				}
+			}
+		}
+		
+		G.setPileforColour(Colour.ORANGE, orange);
+		G.setPileforColour(Colour.RED, red);
+		G.setPileforColour(Colour.BLUE, blue);
+		G.setPileforColour(Colour.WHITE, white);
+		
+		return G;
+		
 	}
 
 }
