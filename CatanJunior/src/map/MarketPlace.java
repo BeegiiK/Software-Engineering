@@ -57,7 +57,7 @@ public class MarketPlace {
 	}
 	
 	public String getMPlabel(int id) {
-		return ("M"+id+"  "+stand.get(id-1).label);
+		return ("M"+id+" "+stand.get(id-1).label);
 	}
 	
 	//public ArrayList<RESOURCE> 
