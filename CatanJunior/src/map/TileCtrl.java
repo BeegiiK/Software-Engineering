@@ -111,12 +111,10 @@ public class TileCtrl {
 				}
 			}
 		}
-		
 		G.setPileforColour(Colour.ORANGE, orange);
 		G.setPileforColour(Colour.RED, red);
 		G.setPileforColour(Colour.BLUE, blue);
 		G.setPileforColour(Colour.WHITE, white);
-		
 		return G;	
 	}
 	
