@@ -4,6 +4,7 @@ import java.util.Hashtable;
 import java.util.Stack;
 
 import map.Colour;
+import map.RESOURCE;
 import logistic.Inventory;
 
 
@@ -101,4 +102,33 @@ public class Player{
 		getInventory().put(type, getInventory().get(type) - value);
 	}
 	
+	public void availableResources() {
+		System.out.println(name + ", you have the following resources:");
+		for(RESOURCE r: pile.getPile().keySet()) {
+			if(!pile.getPile().get(r).equals(0)) {
+				System.out.println(r + " - " + pile.getPile().get(r));
+			}
+		}
+	}
+	
+	public void availableInventory() {
+		System.out.println(name + ", you have the following inventory:");
+		for(Inventory i: inventory.keySet()) {
+			System.out.println(i + " - " + inventory.get(i));
+		}
+	}
+	
+	public void printCard() {
+		System.out.println("------------------------");
+		availableResources();
+		availableInventory();
+		System.out.println("------------------------");
+	}
+	
+	public boolean checkShip() {
+		if(inventory.get(Inventory.SHIP).equals(0)) {
+			return false;
+		}
+		return true;
+	}
 }

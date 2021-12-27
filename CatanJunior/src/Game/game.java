@@ -43,8 +43,8 @@ public class game {
 		while(cond) {
 			System.out.println("Please enter how many players would like to play? [3-4]");
 			no_of_players = sc.nextLine();
-			if(Integer.parseInt(no_of_players) == 4 || Integer.parseInt(no_of_players) == 3) {
-				getPlayers(Integer.parseInt(no_of_players));
+			if(Integer.valueOf(no_of_players) == 4 || Integer.valueOf(no_of_players) == 3) {
+				getPlayers(Integer.valueOf(no_of_players));
 				playGame();
 				cond = false;
 			}
@@ -102,9 +102,9 @@ public class game {
 		
 		SPLR.buyLr(lr_1, c);
 		SPLR.buySp(sp_1, c);
-	
 		SPLR.buyLr(lr_2, c);
 		SPLR.buySp(sp_2, c);
+		
 	}
 	
 	public void chooseStartingLocs() {
@@ -126,6 +126,8 @@ public class game {
 				getStartingLocs(c, 3, 4, 26, 32);
 			}
 			
+			p.decrementInventory(Inventory.SHIP, 2);
+			p.decrementInventory(Inventory.LAIR, 2);
 		}
 		
 		System.out.println(m.toString());
@@ -144,6 +146,7 @@ public class game {
 			for(int i=0; i<Pl.getNumofPlayers();i++) {
 				boolean str = false;
 				Pl.getPlayerList().get(i).setPlayerTurn(true);
+				Pl.getPlayerList().get(i).printCard();
 				
 				System.out.println("\n"+Pl.getPlayerList().get(i).getPlayerName() + ", it's your turn to roll the die!\n[R] Roll die");
 				die = sc.nextLine();

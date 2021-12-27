@@ -43,6 +43,7 @@ public class buildUI {
 								p.getPlayerPile().decrementPile(r, 1);
 								stockpile.incrementPile(r, 1);
 							}
+							p.decrementInventory(Inventory.LAIR, 1);
 							
 							shipLairCtrl a = shipLairCtrl.getInstance();
 							veiwMap map1 = new veiwMap();
@@ -66,7 +67,7 @@ public class buildUI {
 					}
 					
 				}
-				else {
+				else if(s.equals("2")) {
 					System.out.println("A ship will cost: 1 Goat & 1 Wood");
 					System.out.println("[y] Yes");
 					System.out.println("[N] No");
@@ -83,6 +84,7 @@ public class buildUI {
 								p.getPlayerPile().decrementPile(r, 1);
 								stockpile.incrementPile(r, 1);
 							}
+							p.decrementInventory(Inventory.SHIP, 1);
 							
 							shipLairCtrl a = shipLairCtrl.getInstance();
 							veiwMap map1 = new veiwMap();

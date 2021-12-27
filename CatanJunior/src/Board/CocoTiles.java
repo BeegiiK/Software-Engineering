@@ -6,6 +6,9 @@ import java.util.Stack;
 
 import Game.MoveGhostCaptain;
 import map.RESOURCE;
+import map.shipLairCtrl;
+import map.veiwMap;
+import logistic.Inventory;
 import logistic.typesOfCocoTiles;
 
 import java.util.Scanner;
@@ -86,9 +89,73 @@ public class CocoTiles {
 			MoveGhostCaptain moveUX = new MoveGhostCaptain();
 			moveUX.move();
 		}
-		else {
-			// ship lair cocotile
+		else if(input == typesOfCocoTiles.SHIP_LAIR.toString()) {
+			shipLairCocoTile(p);
 		}
+	}
+	
+	public void shipLairCocoTile(Player p) {
+		boolean var = true;
+		String s = null;
+		veiwMap map = new veiwMap();
+		shipLairCtrl controller = shipLairCtrl.getInstance();
+		
+		System.out.println(map.toString());
+		System.out.println("What would you like to build for free?");
+		System.out.println("[S] Ship");
+		System.out.println("[L] Lair");
+		s = sc.nextLine();
+		
+		while(var) {
+			if(s.equals("s") || s.equals("S")) {
+				if(p.checkShip()) {
+					System.out.println("Please choose a ship location:");
+					p.decrementInventory(Inventory.SHIP, 1);
+					for(Integer i: controller.allowedShips(p.getColour())) {
+						System.out.println("["+i+"] "+ "S"+i);
+					}
+					boolean stay = true;
+					
+					while(stay) {
+						s = sc.nextLine();
+						if(controller.allowedShips(p.getColour()).contains(Integer.parseInt(s))) {
+							controller.buySp(Integer.parseInt(s), p.getColour());
+							stay = false;
+							var = false;
+						}
+						else {
+							System.out.println("Please choose another valid location");
+							System.out.println("Please choose a ship location:");
+						}
+					}
+				}
+			}
+			else if(s.equals("l") || s.equals("L")) {
+				System.out.println("Please choose a lair location:");
+				p.decrementInventory(Inventory.LAIR, 1);
+				for(Integer i: controller.allowedLairs(p.getColour())) {
+					System.out.println("["+i+"] "+ "L"+i);
+				}
+				
+				boolean stay = true;
+				while(stay) {
+					s = sc.nextLine();
+					if(controller.allowedLairs(p.getColour()).contains(Integer.parseInt(s))) {
+						controller.buyLr(Integer.parseInt(s), p.getColour());
+						stay = false;
+						var = false;
+					}
+					else {
+						System.out.println("Please choose another valid location");
+						System.out.println("Please choose a lair location:");
+					}
+				}
+			}
+			else {
+				System.out.println("Please choose a ship or lair.");
+			}
+		}
+		
 	}
 	
 	// a method to check if the cocotile will disrupt the stockpile, i.e. 0 or 1 for a resource --NB
