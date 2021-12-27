@@ -12,6 +12,7 @@ public class veiwMap {
 public String toString() { 
 		TileCtrl B = TileCtrl.getInstance();
 		shipLairCtrl A = shipLairCtrl.getInstance();
+		MarketPlace P = MarketPlace.getInstance();
 		A.toggleDisplayLr();
 		A.toggleDisplaySp();
 		//B.toggleDisplayLabel();
@@ -27,7 +28,7 @@ public String toString() {
 				String.format("%" + (tabAmount + 04) + "s", "") + " _____________" + A.getLrStr(3, 0) + " " + A.lrLabel(3) +"    "+B.getTlStr(1, 2)+"     "+ A.lrLabel(4) + " " + A.getLrStr(4, 0) + "_____________ " + '\n' +
 				String.format("%" + (tabAmount + 04) + "s", "") + "/" + "             " + A.getLrStr(3, 1) + "        "+B.getTlStr(1, 3)+"         " + A.getLrStr(4, 1) + "             " + "\\" + "            _______===___" + '\n' +
 				String.format("%" + (tabAmount + 03) + "s", "") + "/" + "                " + A.getSpStr(4, 0) + "       "+B.getTlStr(1, 4)+"         " + A.getSpStr(5, 0) + "                " + "\\" + "             |         |" + '\n' +
-				String.format("%" + (tabAmount + 02) + "s", "") + "/" + "      "+B.getTlStr(2, 0)+"    " + A.spLabel(4) + A.getSpStr(4, 1) + "       "+B.tlLabel(1)+"        " + A.getSpStr(5, 1)  +" "+ A.spLabel(5) + "   "+B.getTlStr(3, 0)+"      "  + "\\" + "            |         |" + '\n' +
+				String.format("%" + (tabAmount + 02) + "s", "") + "/" + "      "+B.getTlStr(2, 0)+"    " + A.spLabel(4) + A.getSpStr(4, 1) + "       "+B.tlLabel(1)+"        " + A.getSpStr(5, 1)  +" "+ A.spLabel(5) + "   "+B.getTlStr(3, 0)+"      "  + "\\" + "            | "+P.getMPlabel(1)+" |" + '\n' +
 				String.format("%" + (tabAmount + 01) + "s", "") + "/" +"       "+B.getTlStr(2, 1)+"        " + A.getSpStr(4, 2) + "                " + A.getSpStr(5, 2) + "        "+B.getTlStr(3, 1)+"       " + "\\" + "         __|_________|" + '\n' +
 				String.format("%" + (tabAmount + 00) + "s", "") + "/" + "        "+B.getTlStr(2, 2)+"     " + A.lrLabel(5) + " " + A.getLrStr(5, 0) + A.getSpStr(6, 0) + A.getLrStr(6, 0) + " " + A.lrLabel(6) + "     "+B.getTlStr(3, 2)+"        "  + "\\" + "               ===   " + '\n' +
 				String.format("%" + (tabAmount + 00) + "s", "") + "\\" +"        "+B.getTlStr(2, 3)+"         " + A.getLrStr(5, 1) + "    " + A.spLabel(6) + "     " + A.getLrStr(6, 1) + "        "+B.getTlStr(3, 3)+"         " + "/" + '\n' +

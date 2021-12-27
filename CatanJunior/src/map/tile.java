@@ -36,7 +36,7 @@ public class tile extends boardPart{
 			this.setBoardPart(".···.", "¦ "+rollNum+" ¦", "'···'", "     ", RESOURCE.getString(resource));
 		}
 		else if(active == false){
-			this.setBoardPart( "\033[0;38;2;34;174;34m_____","\\X X/", " |‡| ", "     \\033[0;0m", RESOURCE.getString(resource));
+			this.setBoardPart( "\033[0;38;2;34;174;34m_____","\\X X/", " |‡| ", "     \033[0;0m", RESOURCE.getString(resource));
 		}
 		else {
 			this.setBoardPart( "  _  "," / \\ ", "/___\\", "     ", RESOURCE.getString(resource));

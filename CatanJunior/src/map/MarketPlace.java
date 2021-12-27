@@ -7,7 +7,7 @@ import player.Player;
 
 public class MarketPlace {
 	
-	private MarketPlace single_instance = null;
+	private static MarketPlace single_instance = null;
 	private ArrayList<RESOURCE> stand = new ArrayList<RESOURCE>();
 	
 	private MarketPlace() {
@@ -31,9 +31,33 @@ public class MarketPlace {
 		return stand.get(id).label;
 	}
 	
-	public void swap(Player p, RESOURCE out, RESOURCE in) {
+	public static MarketPlace getInstance() {
+		if(single_instance == null) {
+			single_instance = new MarketPlace();
+		}
 		
+		return single_instance;
+	}
+	
+	public void swap(Player p, RESOURCE out, RESOURCE in) {
+
+		p.getPlayerPile().decrementPile(in, 1);
+		p.getPlayerPile().incrementPile(out, 1);
 		stand.add(stand.indexOf(out), in);
+	}
+	
+	public ArrayList<String> getMarketPlaceResources(){
+		ArrayList<String> A = new ArrayList<String>();
+		for(int i = 0; i < stand.size(); i = i+1) {
+			if(!stand.contains(stand.get(i).label)) {
+				A.add(stand.get(i).label);
+			}
+		}
+		return A;
+	}
+	
+	public String getMPlabel(int id) {
+		return ("M"+id+"  "+stand.get(id-1).label);
 	}
 	
 	//public ArrayList<RESOURCE> 
