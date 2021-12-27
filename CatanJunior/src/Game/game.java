@@ -98,25 +98,13 @@ public class game {
 	}
 	
 	private void getStartingLocs(Colour c, int lr_1, int sp_1, int lr_2, int sp_2) {
-		String s = null;
 		shipLairCtrl SPLR = shipLairCtrl.getInstance();
-		int x = 0;
-		while(x==0) {
-			s = sc.nextLine();
-			if(Integer.parseInt(s) == 1) {
-				SPLR.buyLr(lr_1, c);
-				SPLR.buySp(sp_1, c);
-				x = 1;
-			}
-			else if(Integer.parseInt(s) == 2) {
-				SPLR.buyLr(lr_2, c);
-				SPLR.buySp(sp_2, c);
-				x = 1;
-			}
-			else {
-				System.out.println("Please Enter a valid option");
-			}
-		}
+		
+		SPLR.buyLr(lr_1, c);
+		SPLR.buySp(sp_1, c);
+	
+		SPLR.buyLr(lr_2, c);
+		SPLR.buySp(sp_2, c);
 	}
 	
 	public void chooseStartingLocs() {
@@ -124,41 +112,24 @@ public class game {
 		veiwMap m = new veiwMap();	 
 		for(Player p: Pl.getPlayerList()) {
 			Colour c = p.getColour();
-			System.out.println(p.getPlayerName()+ ", Please choose a starting location");
-			
-			System.out.println(m.toString());
 			
 			if(c.equals(Colour.RED)) {
-				System.out.println("[1] L10 + S10");
-				System.out.println("[2] L29 + S36");
-
 				getStartingLocs(c, 10, 10, 29, 36);
 			}
 			else if(c.equals(Colour.BLUE)) {
-				System.out.println("[1] L7 + S9");
-				System.out.println("[2] L30 + S37");
-
 				getStartingLocs(c, 7, 9, 30, 37);
 			}
 			else if(c.equals(Colour.WHITE)) {
-				System.out.println("[1] L4 + S5");
-				System.out.println("[2] L23 + S31");
-
 				getStartingLocs(c, 4, 5, 23, 31);
 			}
 			else if(c.equals(Colour.ORANGE)) {
-				System.out.println("[1] L3 + S4");
-				System.out.println("[2] L26 + S32");
-
 				getStartingLocs(c, 3, 4, 26, 32);
 			}
 			
 		}
 		
 		System.out.println(m.toString());
-		System.out.println("All players have picked their starting positions, LET THE GAMES BEGIN!");
-		
-
+		System.out.println("All players have their starting positions, LET THE GAMES BEGIN!");
 	}
 	
 	public void playGame() {
