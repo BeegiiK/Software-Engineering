@@ -49,7 +49,7 @@ public class tile extends boardPart{
 		ArrayList<Colour> C = new ArrayList<Colour>();
 		shipLairCtrl a = shipLairCtrl.getInstance(); 
 		for(int i = 0; i < lairs.size(); i = i+1) {
-			if(a.getLrColour(i) != Colour.NONE) {
+			if(a.getLrColour(lairs.get(i)) != Colour.NONE) {
 				C.add(a.getLrColour(i));
 			}
 		}
