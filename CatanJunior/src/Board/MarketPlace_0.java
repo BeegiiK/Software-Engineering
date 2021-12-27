@@ -6,10 +6,10 @@ import logistic.RESOURCE;
 import pile.Pile;
 import player.Player;
 
-public class MarketPlace extends Pile{
+public class MarketPlace_0 extends Pile{
 	
 	// Constructor
-	public MarketPlace(Stockpile stock) {
+	public MarketPlace_0(Stockpile stock) {
 		resetMarketPlace(stock);
 	}
 	
