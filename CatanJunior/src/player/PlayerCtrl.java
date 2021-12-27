@@ -47,14 +47,14 @@ public class PlayerCtrl {
 
 		if(checkStockpile(getTotalResources(map))) {
 			for(Colour c: getListOfColours()) {
-				Player p = getPlayer(c);
-				Pile pile = map.getPileforColour(c);
-				
-				for(RESOURCE r: pile.getPile().keySet()) {
-					p.getPlayerPile().incrementPile(r, pile.getPile().get(r));
-					stockpile.decrementPile(r, pile.getPile().get(r));
-					System.out.println(r +" - "+ pile.getPile().get(r));
-				}
+					Player p = getPlayer(c);
+					Pile pile = map.getPileforColour(c);
+					
+					for(RESOURCE r: pile.getPile().keySet()) {
+						p.getPlayerPile().incrementPile(r, pile.getPile().get(r));
+						stockpile.decrementPile(r, pile.getPile().get(r));
+						System.out.println(r +" - "+ pile.getPile().get(r));
+					}
 			}
 		}
 	}

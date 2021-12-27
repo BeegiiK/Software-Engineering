@@ -12,6 +12,8 @@ import java.util.Scanner;
 
 import map.Colour;
 import map.GainsAmount;
+import map.MarketPlace;
+import map.RESOURCE;
 import map.TileCtrl;
 import map.shipLairCtrl;
 import logistic.Inventory;
@@ -141,6 +143,7 @@ public class game {
 		String die = null;
 		String chosenOption = null;
 		PlayerCtrl Pl = PlayerCtrl.getInstance();
+		MarketPlace mp = MarketPlace.getInstance();
 		
 		chooseStartingLocs();
 		int die_result;
@@ -173,6 +176,7 @@ public class game {
 				}
 //				MostCoco();
 				Pl.getPlayerList().get(i).setPlayerTurn(false);
+				Pl.getPlayerList().get(i).setTradedWithMarketPlace(false);
 			}
 		}
 	}
@@ -243,16 +247,20 @@ public class game {
 		}
 		else if(i == 5) {
 			veiwMap map1 = new veiwMap();
+			shipLairCtrl cont = shipLairCtrl.getInstance();
+			TileCtrl tileCont = TileCtrl.getInstance();
+			cont.toggleDisplayNone();
+			tileCont.toggleDisplayLabel();
 			System.out.println(map1.toString());
+			tileCont.toggleDisplayLabel();
+			
 			return false;
 		}
 		else if(i == 4) {
-			// do something
+			// End of turn
 			return true;
 		}
-		else {
-			return true;
-		}
+		return true;
 	}
 	
 	private boolean buildOption(Player p) {
@@ -275,26 +283,34 @@ public class game {
 			String res = sc.nextLine();
 			
 			if(res.equals("1")){
-				System.out.println("\nHow would you like to trade with marketplace?");
-				System.out.println("[1] Trade");
+				System.out.println("[1] Trade with marketplace (1:1 trading)");
 				System.out.println("[2] Go back to trade screen");
+				
 				res = sc.nextLine();
 				if(res.equals("2")) {
 					retval = true;
 				}
 				else {
-					retval = false;
+					if(p.getTradedWithMarketPlace() == false) {
+						marketTrade(p);
+						retval = false;
+					}
+					else {
+						System.out.println("You have already traded with marketplace");
+						retval = false;
+					}
+					
 				}
 			}
 			else if(res.equals("2")) {
-				System.out.println("\nHow would you like to trade with stockpile?");
-				System.out.println("[1] Trade");
+				System.out.println("[1] Trade with stockpile (2:1 trading)");
 				System.out.println("[2] Go back to trade screen");
 				res = sc.nextLine();
 				if(res.equals("2")) {
 					retval = true;
 				}
 				else {
+					stockTrade(p);
 					retval = false;
 				}
 			}
@@ -303,6 +319,120 @@ public class game {
 			}	
 		}
 		return true;
+	}
+	
+	private void stockTrade(Player p) {
+		Stockpile stockpile = Stockpile.getInstance();
+		ArrayList<RESOURCE> i = new ArrayList<RESOURCE>();
+		ArrayList<RESOURCE> k = new ArrayList<RESOURCE>();
+		int j = 0;
+		RESOURCE mp_desired = null;
+		RESOURCE mp_unwanted = null;
+		
+		System.out.println("What resources would you like to give?");
+		for(RESOURCE r: p.getPlayerPile().getPile().keySet()) {
+			if(p.getPlayerPile().getPile().get(r) >= 2) {
+				i.add(r);
+				System.out.println("["+j+"] "+r.label);
+				j++;
+			}
+		}
+		
+		while(true) {
+			String unwanted = sc.nextLine();
+			
+			if(Integer.parseInt(unwanted) <= j && Integer.parseInt(unwanted) >= 0){
+				mp_unwanted = i.get(Integer.parseInt(unwanted));
+				break;
+			}
+			else {
+				System.out.println("Please choose one unwanted resource from the list above.");
+			}
+		}
+		
+		j = 0;
+		System.out.println("What resource would you like?");
+		for(RESOURCE r: RESOURCE.values()) {
+			if(!r.equals(RESOURCE.NONE)) {
+				System.out.println("["+j+"] "+ r.label);
+				k.add(r);
+				j++;
+			}
+			
+		}
+		
+		while(true) {
+			String desired = sc.nextLine();
+			if(Integer.parseInt(desired) <= j && Integer.parseInt(desired) >= 0){
+				mp_desired = k.get(Integer.parseInt(desired));
+				break;
+			}
+			else {
+				System.out.println("Please choose one desired resource from the list above.");
+			}	
+		}
+		
+		p.getPlayerPile().decrementPile(mp_unwanted, 2);
+		stockpile.incrementPile(mp_unwanted, 2);
+		p.getPlayerPile().incrementPile(mp_desired, 1);
+		stockpile.decrementPile(mp_desired, 1);
+	}
+	
+	private void marketTrade(Player p) {
+		MarketPlace mp = MarketPlace.getInstance();
+		ArrayList<RESOURCE> i = new ArrayList<RESOURCE>();
+		ArrayList<RESOURCE> k = new ArrayList<RESOURCE>();
+		RESOURCE mp_desired = null;
+		RESOURCE mp_unwanted = null;
+
+		int j = 0;
+		
+		System.out.println("What resource would you like to give?");
+		for(RESOURCE r: p.getPlayerPile().getPile().keySet()) {
+			if(!p.getPlayerPile().getPile().get(r).equals(0)) {
+				i.add(r);
+				System.out.println("["+j+"] "+r.label);
+				j++;
+			}
+		}
+		
+		while(true) {
+			String unwanted = sc.nextLine();
+			
+			if(Integer.parseInt(unwanted) <= j && Integer.parseInt(unwanted) >= 0){
+				mp_unwanted = i.get(Integer.parseInt(unwanted));
+				break;
+			}
+			else {
+				System.out.println("Please choose one unwanted resource from the list above.");
+			}
+		}
+		
+		System.out.println("What resource would you like?");
+		for(j = 0; j<mp.getMarketPlaceResources().size(); j++) {
+			
+			RESOURCE r = mp.getMarketPlaceResources().get(j);
+			System.out.println("["+j+"] "+r.label);
+			k.add(r);
+		}
+		
+		while(true) {
+			String desired = sc.nextLine();
+			if(Integer.parseInt(desired) <= j && Integer.parseInt(desired) >= 0){
+				mp_desired = k.get(Integer.parseInt(desired));
+				break;
+			}
+			else {
+				System.out.println("Please choose one desired resource from the list above.");
+			}	
+		}
+		
+		mp.swap(p, mp_desired, mp_unwanted);
+		if(mp.allSameResources()) {
+			System.out.println("Marketplace will reset as all resources are of similar type");
+			mp.shuffle();
+		}
+		p.setTradedWithMarketPlace(true);
 	}
 	
 	private int checkDieRoll(String die) {
