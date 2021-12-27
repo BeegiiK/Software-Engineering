@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import Board.Stockpile;
 import logistic.Inventory;
-import logistic.RESOURCE;
+import map.RESOURCE;
 import map.shipLairCtrl;
 import map.veiwMap;
 import player.Player;

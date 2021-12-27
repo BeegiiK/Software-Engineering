@@ -2,7 +2,7 @@ package pile;
 
 import java.util.Hashtable;
 
-import logistic.RESOURCE;
+import map.RESOURCE;
 
 public class Pile {
 	

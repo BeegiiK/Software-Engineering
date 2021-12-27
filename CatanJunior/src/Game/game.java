@@ -1,6 +1,7 @@
 package Game;
 
 import player.Player;
+import player.PlayerCtrl;
 import Board.CocoTiles;
 import Board.Dice;
 import Board.MarketPlace;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import map.Colour;
+import map.shipLairCtrl;
 import logistic.Inventory;
 import map.veiwMap;
 
@@ -17,7 +19,7 @@ public class game {
 
 	private static game single_instance = null;
 	
-	private ArrayList<Player> listOfPlayers = new ArrayList<Player>();
+
 	private String no_of_players;
 	private ColourHandling c_h = new ColourHandling();
 	private Dice dice = new Dice();
@@ -55,6 +57,7 @@ public class game {
 	// update list of players after initialization
 	public void getPlayers(int numberOfPlayers){
 		int i = 1;
+		PlayerCtrl p = PlayerCtrl.getInstance();
 		while(i <= numberOfPlayers) {
 			boolean nn = true;
 			String player_name = null;
@@ -62,7 +65,7 @@ public class game {
 			while(nn) {
 				System.out.println("\nPlease enter player " + i +"'s name: ");
 				player_name = sc.nextLine();
-				if(checkName(player_name) || listOfPlayers.size() < 1) {
+				if(checkName(player_name) || p.getNumofPlayers() < 1) {
 					nn = false;
 				}
 				else {
@@ -89,23 +92,89 @@ public class game {
 			}
 			
 			Player player = new Player(player_name, c);
-			listOfPlayers.add(player);
+			p.addPlayer(player);
 			i++;
 		}
+	}
+	
+	private void getStartingLocs(Colour c, int lr_1, int sp_1, int lr_2, int sp_2) {
+		String s = null;
+		shipLairCtrl SPLR = shipLairCtrl.getInstance();
+		int x = 0;
+		while(x==0) {
+			s = sc.nextLine();
+			if(Integer.parseInt(s) == 1) {
+				SPLR.buyLr(lr_1, c);
+				SPLR.buySp(sp_1, c);
+				x = 1;
+			}
+			else if(Integer.parseInt(s) == 2) {
+				SPLR.buyLr(lr_2, c);
+				SPLR.buySp(sp_2, c);
+				x = 1;
+			}
+			else {
+				System.out.println("Please Enter a valid option");
+			}
+		}
+	}
+	
+	public void chooseStartingLocs() {
+		PlayerCtrl Pl = PlayerCtrl.getInstance();
+		veiwMap m = new veiwMap();	 
+		for(Player p: Pl.getPlayerList()) {
+			Colour c = p.getColour();
+			System.out.println(p.getPlayerName()+ ", Please choose a starting location");
+			
+			System.out.println(m.toString());
+			
+			if(c.equals(Colour.RED)) {
+				System.out.println("[1] L10 + S10");
+				System.out.println("[2] L29 + S36");
+
+				getStartingLocs(c, 10, 10, 29, 36);
+			}
+			else if(c.equals(Colour.BLUE)) {
+				System.out.println("[1] L7 + S9");
+				System.out.println("[2] L30 + S37");
+
+				getStartingLocs(c, 7, 9, 30, 37);
+			}
+			else if(c.equals(Colour.WHITE)) {
+				System.out.println("[1] L4 + S5");
+				System.out.println("[2] L23 + S31");
+
+				getStartingLocs(c, 4, 5, 23, 31);
+			}
+			else if(c.equals(Colour.ORANGE)) {
+				System.out.println("[1] L3 + S4");
+				System.out.println("[2] L26 + S32");
+
+				getStartingLocs(c, 3, 4, 26, 32);
+			}
+			
+		}
+		
+		System.out.println(m.toString());
+		System.out.println("All players have picked their starting positions, LET THE GAMES BEGIN!");
+		
+
 	}
 	
 	public void playGame() {
 		boolean EOG = false;
 		String die = null;
 		String chosenOption = null;
+		PlayerCtrl Pl = PlayerCtrl.getInstance();
 		
+		chooseStartingLocs();
 		int die_result;
 		while(!EOG) {
-			for(int i=0; i<listOfPlayers.size();i++) {
+			for(int i=0; i<Pl.getNumofPlayers();i++) {
 				boolean str = false;
-				listOfPlayers.get(i).setPlayerTurn(true);
+				Pl.getPlayerList().get(i).setPlayerTurn(true);
 				
-				System.out.println("\n"+listOfPlayers.get(i).getPlayerName() + ", it's your turn to roll the die!\n[R] Roll die");
+				System.out.println("\n"+Pl.getPlayerList().get(i).getPlayerName() + ", it's your turn to roll the die!\n[R] Roll die");
 				die = sc.nextLine();
 				die_result = checkDieRoll(die);
 				// remove after testing
@@ -119,10 +188,10 @@ public class game {
 					while(!str) {
 						printOptions(i);
 						chosenOption = sc.nextLine();
-						str = checkChosenOption(chosenOption, listOfPlayers.get(i));
+						str = checkChosenOption(chosenOption,Pl.getPlayerList().get(i));
 					}
 				//	MostCoco();
-					listOfPlayers.get(i).setPlayerTurn(false);
+					Pl.getPlayerList().get(i).setPlayerTurn(false);
 				}
 			}
 		}
@@ -130,7 +199,9 @@ public class game {
 	
 	private void MostCoco() {
 		Player leading = null;
-		for(Player p: listOfPlayers) {
+		PlayerCtrl Pl = PlayerCtrl.getInstance();
+		
+		for(Player p: Pl.getPlayerList()) {
 			if(p.getUsedCocoTiles().size() > leading.getUsedCocoTiles().size()) {
 				leading = p;
 				leading.setLeading(true);
@@ -140,7 +211,9 @@ public class game {
 	}
 
 	private void printOptions(int i) {
-		System.out.println(listOfPlayers.get(i).getPlayerName()+", you now have the following options:");
+		
+		PlayerCtrl Pl = PlayerCtrl.getInstance();
+		System.out.println(Pl.getPlayerList().get(i).getPlayerName()+", you now have the following options:");
 		int j = 1;
 		for(options o: options.values()) {
 			System.out.println("["+j+"] "+o.displayName() +"\n");
@@ -205,6 +278,8 @@ public class game {
 		boolean retval= true;
 		while(retval) {
 			System.out.println("\nWelcome to the build option. You have three options:");
+			buildUI b = new buildUI();
+			b.buy();
 			retval = false;
 		}
 		return true;
@@ -267,13 +342,15 @@ public class game {
 	}
 	
 	private boolean checkName(String name) {
+		
+		PlayerCtrl Pl = PlayerCtrl.getInstance();
 		int count = 0;
-		for(Player n: listOfPlayers) {
+		for(Player n: Pl.getPlayerList()) {
 			if(!n.getPlayerName().equals(name)) {
 				count++;
 			}
 		}
-		if(count == listOfPlayers.size()) {
+		if(count == Pl.getNumofPlayers()) {
 			return true;
 		}
 		return false;
@@ -290,14 +367,12 @@ public class game {
 		return null;
 	}
 	
-	// return list of all players in game
-	public ArrayList<Player> returnAllPlayers() {
-		return listOfPlayers;
-	}
 	
 	// checks for the end of game condition for a player
 	public void checkForEOG() {
-		for(Player p: listOfPlayers) {
+		PlayerCtrl Pl = PlayerCtrl.getInstance();
+		
+		for(Player p: Pl.getPlayerList()) {
 			if(p.getPlayerTurn()) {
 				if(p.getPlayerPile().getPile().get(Inventory.LAIR) == 0) {
 					System.out.println("The game is over. Player: "+p.getPlayerName()+" has won the game");

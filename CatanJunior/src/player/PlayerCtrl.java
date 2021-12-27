@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import Board.Stockpile;
-import logistic.RESOURCE;
+import map.RESOURCE;
 import map.TileCtrl;
 import map.Colour;
 import map.GainsAmount;
@@ -101,6 +101,14 @@ public class PlayerCtrl {
 		}
 		
 		return single_instance;
+	}
+	
+	public int getNumofPlayers() {
+		return list.size();
+	}
+	
+	public ArrayList<Player> getPlayerList(){
+		return list;
 	}
 
 

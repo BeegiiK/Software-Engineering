@@ -18,7 +18,7 @@ public class GainsAmount extends Pile{
 		table.put(C, P);
 	}
 	
-	public Pile getPileforColour(Colour C, Pile P) {
+	public Pile getPileforColour(Colour C) {
 		return table.get(C);
 	}
 	
