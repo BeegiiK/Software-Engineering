@@ -45,30 +45,16 @@ public class tile extends boardPart{
 		return this.getPart();
 	}
 	
-<<<<<<< HEAD
     public ArrayList<Colour> getLairOwners(){
         ArrayList<Colour> C = new ArrayList<Colour>();
         shipLairCtrl a = shipLairCtrl.getInstance(); 
         for(int i = 0; i < lairs.size(); i = i+1) {
             if(a.getLrColour(lairs.get(i) - 1) != Colour.NONE) {
                 C.add(a.getLrColour(lairs.get(i) - 1));
-                System.out.println("LO "+a.getLrColour(lairs.get(i) - 1));
             }
         }
         return C;
     }
-=======
-	public ArrayList<Colour> getLairOwners(){
-		ArrayList<Colour> C = new ArrayList<Colour>();
-		shipLairCtrl a = shipLairCtrl.getInstance(); 
-		for(int i = 0; i < lairs.size(); i = i+1) {
-			if(a.getLrColour(lairs.get(i)) != Colour.NONE) {
-				C.add(a.getLrColour(i));
-			}
-		}
-		return C;
-	}
->>>>>>> branch 'master' of git@github.com:BeegiiK/Software-Engineering.git
 
 	public int getID() {
 		return ID;
