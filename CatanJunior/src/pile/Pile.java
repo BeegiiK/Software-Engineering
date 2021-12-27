@@ -50,4 +50,9 @@ public class Pile {
 	public Hashtable<RESOURCE, Integer> getPile(){
 		return pile;
 	}
+	
+	public Pile returnEmptyPile() {
+		Pile p = new Pile();
+		return p;
+	}
 }

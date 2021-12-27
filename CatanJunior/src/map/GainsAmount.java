@@ -10,7 +10,9 @@ public class GainsAmount extends Pile{
 	
 	public GainsAmount() {
 		for(Colour C: Colour.values()) {
-			table.put(C, null);
+			if(!C.equals(Colour.NONE)) {
+				table.put(C, returnEmptyPile());
+			}
 		}
 	}
 	
@@ -20,6 +22,10 @@ public class GainsAmount extends Pile{
 	
 	public Pile getPileforColour(Colour C) {
 		return table.get(C);
+	}
+	
+	public Hashtable<Colour, Pile> getTable(){
+		return table;
 	}
 	
 

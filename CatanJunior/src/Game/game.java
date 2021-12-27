@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import map.Colour;
+import map.GainsAmount;
+import map.TileCtrl;
 import map.shipLairCtrl;
 import logistic.Inventory;
 import map.veiwMap;
@@ -151,25 +153,30 @@ public class game {
 				System.out.println("\n"+Pl.getPlayerList().get(i).getPlayerName() + ", it's your turn to roll the die!\n[R] Roll die");
 				die = sc.nextLine();
 				die_result = checkDieRoll(die);
-				// remove after testing
-				//die_result = 6;
 				
 				if(die_result == 6) {
 					System.out.println("You have rolled a 6, you can now move the ghost captain!");
 					moveUX.move();
-				}
-				else {
 					while(!str) {
 						printOptions(i);
 						chosenOption = sc.nextLine();
 						str = checkChosenOption(chosenOption,Pl.getPlayerList().get(i));
 					}
-				//	MostCoco();
-					Pl.getPlayerList().get(i).setPlayerTurn(false);
 				}
+				else {
+					Pl.giveDiceResources(die_result);
+					while(!str) {
+						printOptions(i);
+						chosenOption = sc.nextLine();
+						str = checkChosenOption(chosenOption,Pl.getPlayerList().get(i));
+					}
+				}
+//				MostCoco();
+				Pl.getPlayerList().get(i).setPlayerTurn(false);
 			}
 		}
 	}
+	
 	
 	private void MostCoco() {
 		Player leading = null;

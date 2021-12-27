@@ -25,4 +25,6 @@ public class lair extends buyableSpot{
 			}
 		}
 	}	
+	
+	
 }

@@ -153,6 +153,7 @@ public class CocoTiles {
 			}
 			else {
 				System.out.println("Please choose a ship or lair.");
+				s = sc.nextLine();
 			}
 		}
 		

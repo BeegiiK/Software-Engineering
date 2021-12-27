@@ -1,6 +1,5 @@
 package Game;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 import map.TileCtrl;
 import map.veiwMap;
@@ -14,7 +13,7 @@ public class MoveGhostCaptain {
 		//t.toggleDisplayLabel();
 		veiwMap map1 = new veiwMap();
 		boolean var = true;
-		String s = sc.nextLine();
+		String s = null;
 		
 		System.out.println("You can move the ghost captain to the following locations:");
 		System.out.println(map1.toString());
