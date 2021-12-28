@@ -122,7 +122,7 @@ public class Player{
 	public void printCard() {
 		String Base = "   ---------------------------------------------------------------------------------";
 		ArrayList<String> each_R = new ArrayList<String>();
-		String format = "%-5s%s";
+		String format = "%7s%s";
 		int sum = 0;
 		
 		System.out.println(" ");
@@ -141,10 +141,10 @@ public class Player{
 		
 		String lead_Str;
 		if(leading == true) {
-			lead_Str = "x0";
+			lead_Str = "x1";
 		}
 		else {
-			lead_Str = "x1";
+			lead_Str = "x0";
 		}
 		System.out.println(" |");
 		System.out.println(Base);
@@ -154,7 +154,7 @@ public class Player{
 		System.out.println("                                   "+ getPlayerName() +" Inventory");
 		System.out.println(Base);
 		System.out.println("   |   Used Coco-Tiles : "+usedCocoTiles.size()+"   |   Ships : "+ inventory.get(Inventory.SHIP)+"   |   Lairs : "+ inventory.get(Inventory.LAIR)+
-				"   |   Bonus Lair :"+ "   " + lead_Str);
+				"   |   Bonus Lair :"+ "   " + lead_Str +" |");
 		System.out.println(Base);
 
 
