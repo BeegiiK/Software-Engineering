@@ -13,8 +13,7 @@ public String toString() {
 		TileCtrl B = TileCtrl.getInstance();
 		shipLairCtrl A = shipLairCtrl.getInstance();
 		MarketPlace P = MarketPlace.getInstance();
-		A.toggleDisplayLr();
-		A.toggleDisplaySp();
+
 		//B.toggleDisplayLabel();
 
 
