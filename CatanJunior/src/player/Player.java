@@ -122,7 +122,7 @@ public class Player{
 	public void printCard() {
 		String Base = "   ---------------------------------------------------------------------------------";
 		ArrayList<String> each_R = new ArrayList<String>();
-		String format = "%7s%s";
+		String format = "%8s%s";
 		int sum = 0;
 		
 		System.out.println(" ");
@@ -135,7 +135,6 @@ public class Player{
 
 				each_R.add(r.label+ " : " + pile.getPile().get(r));
 				System.out.printf(format,"   |   ",  each_R.get(each_R.size()-1));
-
 			}
 		}
 		
@@ -146,7 +145,7 @@ public class Player{
 		else {
 			lead_Str = "x0";
 		}
-		System.out.println(" |");
+		System.out.println("  |");
 		System.out.println(Base);
 		
 		System.out.println(" ");
