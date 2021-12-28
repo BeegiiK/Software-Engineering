@@ -6,6 +6,7 @@ import java.util.Hashtable;
 import map.RESOURCE;
 import pile.Pile;
 import player.Player;
+import player.PlayerCtrl;
 import Game.game;
 
 public class Stockpile extends Pile{
@@ -15,49 +16,41 @@ public class Stockpile extends Pile{
 	//when game is started, 18 of each resources is created
 	public Stockpile() {
 		for(RESOURCE type : RESOURCE.values()) {
-			pile.put(type, 18);
-		}
-	}
-	
-	// trading with stock pile, as many times as they want. Need to check if desired key is greater than 1
-	public boolean tradeWithStockpile(Player p, RESOURCE desiredKey, RESOURCE unwantedKey1, RESOURCE unwantedKey2) {
-		if(checkIfSameTwoCards(unwantedKey1, unwantedKey2)) {
-			if(pile.get(desiredKey) >= 1) {
-				incrementPile(unwantedKey1, 2);
-				p.getPlayerPile().decrementPile(unwantedKey1, 2);
-				p.getPlayerPile().incrementPile(desiredKey, 1);
-				return true;
+			if(!type.equals(RESOURCE.NONE)) {
+				//change back to 18
+				pile.put(type, 14);
 			}
 		}
-			System.out.println("You need to give two cards of the same reosurce type.");
-			return false;
 	}
-	
-	public boolean checkIfSameTwoCards(RESOURCE key1, RESOURCE key2) {
-		if(key1 == key2) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	
-	//Check if stock pile supply is run out of 1 type
-	public void checkSupply(ArrayList<Player> listP) {
-		for(RESOURCE type : RESOURCE.values()) {
-			int count = 0;
-			if(pile.get(type) == 0) {
-				for(int i=0; i<listP.size(); i++) {
-					count += listP.get(i).getPlayerPile().getPile().get(type);
-					listP.get(i).getPlayerPile().getPile().put(type, 0);
-				}
-			}
-			pile.put(type, count);
-		}
-	}
-	
-	// method for giving out resources depending on map positions
 
+	
+	public void resetStockPile(RESOURCE r) {
+		PlayerCtrl playerCont = PlayerCtrl.getInstance();
+		ArrayList<Player> playerList = playerCont.getPlayerList();
+
+		for(Player p: playerList) {
+			int removed = p.getPlayerPile().getPile().get(r);
+			p.getPlayerPile().decrementPile(r, removed);
+			incrementPile(r, removed);
+		}
+		
+	}
+	
+	
+	public boolean decrementPile(RESOURCE r, int i) {
+		if(pile.get(r) <= i) {
+			resetStockPile(r);
+		}
+		boolean x = super.decrementPile(r, i);
+		return x;
+	}
+	
+	public void printStockPile() {
+		System.out.println("Stockpile");
+		for(RESOURCE r: pile.keySet()) {
+			System.out.println(r.label + " - "+ pile.get(r));
+		}
+	}
 
 	@Override
 	public String toString() {

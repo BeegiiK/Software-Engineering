@@ -150,8 +150,13 @@ public class game {
 		while(!EOG) {
 			for(int i=0; i<Pl.getNumofPlayers();i++) {
 				boolean str = false;
+				Stockpile stockpile = Stockpile.getInstance();
+				stockpile.printStockPile();
 				Pl.getPlayerList().get(i).setPlayerTurn(true);
-				Pl.getPlayerList().get(i).printCard();
+				//Pl.getPlayerList().get(i).printCard();
+				Pl.getPlayerList().get(0).printCard();
+				Pl.getPlayerList().get(1).printCard();
+				Pl.getPlayerList().get(2).printCard();
 				
 				System.out.println("\n"+Pl.getPlayerList().get(i).getPlayerName() + ", it's your turn to roll the die!\n[R] Roll die");
 				die = sc.nextLine();
