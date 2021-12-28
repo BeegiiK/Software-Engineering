@@ -349,7 +349,7 @@ public class game {
 					retval = true;
 				}
 				else {
-					System.out.println("Invalid entry");
+					System.out.println("\u001b[1m\u001b[41;1m" + "Invalid entry" + "\u001b[0m");
 					retval = true;
 				}
 			}
@@ -365,12 +365,12 @@ public class game {
 					retval = true;
 				}
 				else {
-					System.out.println("Invalid entry");
+					System.out.println("\u001b[1m\u001b[41;1m" + "Invalid entry" + "\u001b[0m");
 					retval = true;
 				}
 			}
 			else {
-				System.out.println("Invalid entry");
+				System.out.println("\u001b[1m\u001b[41;1m" + "Invalid entry" + "\u001b[0m");
 				return false;
 			}	
 		}
@@ -385,53 +385,66 @@ public class game {
 		RESOURCE mp_desired = null;
 		RESOURCE mp_unwanted = null;
 		
-		System.out.println("What resources would you like to give?");
+		//check if a resource has less than 2
+		int count = 0;
 		for(RESOURCE r: p.getPlayerPile().getPile().keySet()) {
 			if(p.getPlayerPile().getPile().get(r) >= 2) {
-				i.add(r);
-				System.out.println("["+j+"] "+r.label);
-				j++;
+				count++;
 			}
 		}
 		
-		while(true) {
-			String unwanted = sc.nextLine();
-			
-			if(Integer.parseInt(unwanted) <= j && Integer.parseInt(unwanted) >= 0){
-				mp_unwanted = i.get(Integer.parseInt(unwanted));
-				break;
-			}
-			else {
-				System.out.println("Please choose one unwanted resource from the list above.");
-			}
+		if(count == 0) {
+			System.out.println("\u001b[1m\u001b[41;1m"+"You do not have enough resources to trade with stockpile" + "\u001b[0m");
 		}
-		
-		j = 0;
-		System.out.println("What resource would you like?");
-		for(RESOURCE r: RESOURCE.values()) {
-			if(!r.equals(RESOURCE.NONE)) {
-				System.out.println("["+j+"] "+ r.label);
-				k.add(r);
-				j++;
+		else {
+			System.out.println("What resources would you like to give?");
+			for(RESOURCE r: p.getPlayerPile().getPile().keySet()) {
+				if(p.getPlayerPile().getPile().get(r) >= 2) {
+					i.add(r);
+					System.out.println("["+j+"] "+r.label);
+					j++;
+				}
 			}
 			
-		}
-		
-		while(true) {
-			String desired = sc.nextLine();
-			if(Integer.parseInt(desired) <= j && Integer.parseInt(desired) >= 0){
-				mp_desired = k.get(Integer.parseInt(desired));
-				break;
+			while(true) {
+				String unwanted = sc.nextLine();
+				
+				if(Integer.parseInt(unwanted) <= j && Integer.parseInt(unwanted) >= 0){
+					mp_unwanted = i.get(Integer.parseInt(unwanted));
+					break;
+				}
+				else {
+					System.out.println("Please choose one unwanted resource from the list above.");
+				}
 			}
-			else {
-				System.out.println("Please choose one desired resource from the list above.");
-			}	
+			
+			j = 0;
+			System.out.println("What resource would you like?");
+			for(RESOURCE r: RESOURCE.values()) {
+				if(!r.equals(RESOURCE.NONE)) {
+					System.out.println("["+j+"] "+ r.label);
+					k.add(r);
+					j++;
+				}
+				
+			}
+			
+			while(true) {
+				String desired = sc.nextLine();
+				if(Integer.parseInt(desired) <= j && Integer.parseInt(desired) >= 0){
+					mp_desired = k.get(Integer.parseInt(desired));
+					break;
+				}
+				else {
+					System.out.println("Please choose one desired resource from the list above.");
+				}	
+			}
+			
+			p.getPlayerPile().decrementPile(mp_unwanted, 2);
+			stockpile.incrementPile(mp_unwanted, 2);
+			p.getPlayerPile().incrementPile(mp_desired, 1);
+			stockpile.decrementPile(mp_desired, 1);
 		}
-		
-		p.getPlayerPile().decrementPile(mp_unwanted, 2);
-		stockpile.incrementPile(mp_unwanted, 2);
-		p.getPlayerPile().incrementPile(mp_desired, 1);
-		stockpile.decrementPile(mp_desired, 1);
 	}
 	
 	private void marketTrade(Player p) {
