@@ -1,8 +1,11 @@
 package Game;
 
 import java.util.Scanner;
+
+import Board.Stockpile;
 import map.TileCtrl;
 import map.veiwMap;
+import player.PlayerCtrl;
 
 public class MoveGhostCaptain {
 	
@@ -10,7 +13,9 @@ public class MoveGhostCaptain {
 
 	public void move() {
 		TileCtrl t = TileCtrl.getInstance();
-		//t.toggleDisplayLabel();
+		PlayerCtrl cont = PlayerCtrl.getInstance();
+		Stockpile stockpile = Stockpile.getInstance();
+		
 		veiwMap map1 = new veiwMap();
 		boolean var = true;
 		String s = null;
@@ -46,9 +51,12 @@ public class MoveGhostCaptain {
 			}
 		}
 		
+		stockpile.decrementPile(t.getTileResource(Integer.parseInt(s)), 2);
+		cont.getActivePlayer().getPlayerPile().incrementPile(t.getTileResource(Integer.parseInt(s)), 2);
+		
 		t.moveGhostCaptain(Integer.parseInt(s));
 		System.out.println(map1.toString());
-		
+		System.out.println("You have recieved x2 " + t.getTileResource(Integer.parseInt(s)).label);
 	}
 	
 

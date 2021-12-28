@@ -165,10 +165,6 @@ public class game {
 				boolean str = false;
 				chosenOption = "6";
 				Pl.getPlayerList().get(i).setPlayerTurn(true);
-//				Pl.getPlayerList().get(i).printCard();
-//				Pl.getPlayerList().get(0).printCard();
-//				Pl.getPlayerList().get(1).printCard();
-//				Pl.getPlayerList().get(2).printCard();
 				
 				System.out.println("\n"+Pl.getPlayerList().get(i).getPlayerName() + ", it's your turn to roll the die!\n[R] Roll die");
 				die = sc.nextLine();
@@ -339,10 +335,7 @@ public class game {
 				System.out.println("[2] Go back to trade screen");
 				
 				res = sc.nextLine();
-				if(res.equals("2")) {
-					retval = true;
-				}
-				else {
+				if(res.equals("1")) {
 					if(p.getTradedWithMarketPlace() == false) {
 						marketTrade(p);
 						retval = false;
@@ -351,22 +344,33 @@ public class game {
 						System.out.println("You have already traded with marketplace");
 						retval = false;
 					}
-					
+				}
+				else if(res.equals("2")){
+					retval = true;
+				}
+				else {
+					System.out.println("Invalid entry");
+					retval = true;
 				}
 			}
 			else if(res.equals("2")) {
 				System.out.println("[1] Trade with stockpile (2:1 trading)");
 				System.out.println("[2] Go back to trade screen");
 				res = sc.nextLine();
-				if(res.equals("2")) {
-					retval = true;
-				}
-				else {
+				if(res.equals("1")) {
 					stockTrade(p);
 					retval = false;
 				}
+				else if(res.equals("2")){
+					retval = true;
+				}
+				else {
+					System.out.println("Invalid entry");
+					retval = true;
+				}
 			}
 			else {
+				System.out.println("Invalid entry");
 				return false;
 			}	
 		}

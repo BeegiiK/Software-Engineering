@@ -71,13 +71,10 @@ public class CocoTiles {
 				p.getPlayerPile().decrementPile(RESOURCE.GOLD, 1);
 				coco = getCocoTile();
 				System.out.println("You have obtained the " + coco + " cocotile");
-				System.out.println(p.getPlayerPile().toString());
-				System.out.println(stockpile);
 				
 				p.updateUsedCocoTiles(coco);
 				takeAction(coco, p);
-				System.out.println(p.getPlayerPile().toString());
-				System.out.println(stockpile);
+		
 				currentGame.MostCoco();
 				return true;
 			}
@@ -92,7 +89,6 @@ public class CocoTiles {
 	}
 	
 	public void takeAction(String input, Player p) {
-		System.out.println(input);
 		if(input == typesOfCocoTiles.GOAT_CUTLASSES.toString()) {
 			//need to check if this will make a resource zero
 			p.getPlayerPile().incrementPile(RESOURCE.GOATS, 2);

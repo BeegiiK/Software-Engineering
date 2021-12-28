@@ -130,5 +130,9 @@ public class TileCtrl {
 		
 		return A;
 	}
+	
+	public RESOURCE getTileResource(int id) {
+		return tl.get(id-1).getResource();
+	}
 
 }
