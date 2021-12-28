@@ -4,14 +4,13 @@ import player.Player;
 import player.PlayerCtrl;
 import Board.CocoTiles;
 import Board.Dice;
-import Board.MarketPlace_0;
 import Board.Stockpile;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 import map.Colour;
-import map.GainsAmount;
 import map.MarketPlace;
 import map.RESOURCE;
 import map.TileCtrl;
@@ -143,7 +142,6 @@ public class game {
 		String die = null;
 		String chosenOption = null;
 		PlayerCtrl Pl = PlayerCtrl.getInstance();
-		MarketPlace mp = MarketPlace.getInstance();
 		
 		chooseStartingLocs();
 		int die_result;
@@ -187,15 +185,22 @@ public class game {
 	}
 	
 	
-	private void MostCoco() {
-		Player leading = null;
+	public void MostCoco() {
 		PlayerCtrl Pl = PlayerCtrl.getInstance();
+		ArrayList<Integer> counts = new ArrayList<Integer>();
+		int max = 0;
 		
 		for(Player p: Pl.getPlayerList()) {
-			if(p.getUsedCocoTiles().size() > leading.getUsedCocoTiles().size()) {
-				leading = p;
-				leading.setLeading(true);
-				p.setLeading(false);
+			p.setLeading(false);
+			counts.add(p.getUsedCocoTiles().size());
+		}
+		
+		max = Collections.max(counts);
+		for(Integer i: counts) {
+			if(i > max) {
+				Pl.getPlayerList().get(i).setLeading(true);
+				System.out.println(Pl.getPlayerList().get(i).getPlayerName() + " ,you are now leading with most cocotiles.");
+				System.out.println("Your lair now sits on Spooky Island!");
 			}
 		}
 	}
@@ -487,7 +492,6 @@ public class game {
 	// checks for the end of game condition for a player
 	public void checkForEOG() {
 		PlayerCtrl Pl = PlayerCtrl.getInstance();
-		
 		for(Player p: Pl.getPlayerList()) {
 			if(p.getPlayerTurn()) {
 				if(p.getPlayerPile().getPile().get(Inventory.LAIR) == 0) {

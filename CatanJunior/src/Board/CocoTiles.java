@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Stack;
 
 import Game.MoveGhostCaptain;
+import Game.game;
 import map.RESOURCE;
 import map.shipLairCtrl;
 import map.veiwMap;
@@ -43,28 +44,50 @@ public class CocoTiles {
 	
 	public boolean buy(Player p) {
 		String input = null;
+		boolean var = true;
+		game currentGame = game.getInstance();
 		System.out.println("\nWelcome to the buy screen. Would you like to buy a cocotile?");
 		System.out.println("[Y] (Your resources will be taken - 1 Cutlass, 1 Molasses & 1 Gold)");
 		System.out.println("[N] You will be escorted back to the options screen.");
 		input = sc.nextLine();
 		
-		if(input.equals("y") || input.equals("Y")) {
-			String coco = null;
-			p.getPlayerPile().decrementPile(RESOURCE.CUTLASSES, 1);
-			p.getPlayerPile().decrementPile(RESOURCE.MOLASSES, 1);
-			p.getPlayerPile().decrementPile(RESOURCE.GOLD, 1);
-			coco = getCocoTile();
-			System.out.println("You have obtained the " + coco + " cocotile");
-			System.out.println(p.getPlayerPile().toString());
-			System.out.println(stockpile);
-			
-			p.updateUsedCocoTiles(coco);
-			takeAction(coco, p);
-			System.out.println(p.getPlayerPile().toString());
-			System.out.println(stockpile);
-			return true;
+		while(var) {
+			if(!input.equals("y") || !input.equals("Y") || !input.equals("n") || !input.equals("N")) {
+				System.out.println("Please select one of the above options");
+				var = true;
+			}
+			else {
+				var = false;
+			}
 		}
-		return false;
+		
+		if(input.equals("y") || input.equals("Y")) {
+			if(p.getPlayerPile().checkDecrement(RESOURCE.CUTLASSES, 1) && p.getPlayerPile().checkDecrement(RESOURCE.MOLASSES, 1) &&
+					p.getPlayerPile().checkDecrement(RESOURCE.GOLD, 1)) {
+				String coco = null;
+				p.getPlayerPile().decrementPile(RESOURCE.CUTLASSES, 1);
+				p.getPlayerPile().decrementPile(RESOURCE.MOLASSES, 1);
+				p.getPlayerPile().decrementPile(RESOURCE.GOLD, 1);
+				coco = getCocoTile();
+				System.out.println("You have obtained the " + coco + " cocotile");
+				System.out.println(p.getPlayerPile().toString());
+				System.out.println(stockpile);
+				
+				p.updateUsedCocoTiles(coco);
+				takeAction(coco, p);
+				System.out.println(p.getPlayerPile().toString());
+				System.out.println(stockpile);
+				currentGame.MostCoco();
+				return true;
+			}
+			else {
+				System.out.println("You do not have enough resources to buy a cocotile.");
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
 	}
 	
 	public void takeAction(String input, Player p) {
