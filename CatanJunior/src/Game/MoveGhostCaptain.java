@@ -19,8 +19,9 @@ public class MoveGhostCaptain {
 		System.out.println(map1.toString());
 		
 		for(Integer j: t.getAllowedGhostCaptainLocs()) {
-			System.out.println("[" + j + "]" + "T" + j);
+			System.out.print("[" + j + "] " + "T" + j + "   ");
 		}
+		System.out.println(" ");
 		
 		while(var) {
 			System.out.println("Please choose a location:");

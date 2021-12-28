@@ -52,8 +52,9 @@ public class CocoTiles {
 		input = sc.nextLine();
 		
 		while(var) {
-			if(!input.equals("y") || !input.equals("Y") || !input.equals("n") || !input.equals("N")) {
+			if(!(input.equals("y") || input.equals("Y") || input.equals("n") || input.equals("N"))) {
 				System.out.println("Please select one of the above options");
+				input = sc.nextLine();
 				var = true;
 			}
 			else {

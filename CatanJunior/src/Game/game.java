@@ -189,6 +189,8 @@ public class game {
 		PlayerCtrl Pl = PlayerCtrl.getInstance();
 		ArrayList<Integer> counts = new ArrayList<Integer>();
 		int max = 0;
+		int unique = 0;
+		int leader = 0;
 		
 		for(Player p: Pl.getPlayerList()) {
 			p.setLeading(false);
@@ -197,11 +199,16 @@ public class game {
 		
 		max = Collections.max(counts);
 		for(Integer i: counts) {
-			if(i > max) {
-				Pl.getPlayerList().get(i).setLeading(true);
-				System.out.println(Pl.getPlayerList().get(i).getPlayerName() + " ,you are now leading with most cocotiles.");
-				System.out.println("Your lair now sits on Spooky Island!");
+			if(i.equals(max)) {
+				unique++;
+				leader = counts.indexOf(i);
 			}
+				
+		}
+		if(unique == 1) {
+			Pl.getPlayerList().get(leader).setLeading(true);
+			System.out.println(Pl.getPlayerList().get(leader).getPlayerName() + " ,you are now leading with most cocotiles.");
+			System.out.println("Your lair now sits on Spooky Island!");
 		}
 	}
 
