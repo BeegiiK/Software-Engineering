@@ -21,7 +21,7 @@ public class Player{
 	private int tiles;
 	private boolean tradedWithMarketPlace;
 	private Stack<String> usedCocoTiles = new Stack<String>();
-	private boolean leading;
+	private boolean leading = false;
 	
 	public Player(String name, Colour colour) {
 		this.colour = colour;
@@ -120,7 +120,7 @@ public class Player{
 //	}
 	
 	public void printCard() {
-		String Base = "   --------------------------------------------------------------------------";
+		String Base = "   ---------------------------------------------------------------------------------";
 		ArrayList<String> each_R = new ArrayList<String>();
 		String format = "%-5s%s";
 		int sum = 0;
@@ -138,6 +138,14 @@ public class Player{
 
 			}
 		}
+		
+		String lead_Str;
+		if(leading == true) {
+			lead_Str = "x0";
+		}
+		else {
+			lead_Str = "x1";
+		}
 		System.out.println(" |");
 		System.out.println(Base);
 		
@@ -145,7 +153,8 @@ public class Player{
 		System.out.println(Base);
 		System.out.println("                                   "+ getPlayerName() +" Inventory");
 		System.out.println(Base);
-		System.out.println("                     |   Ships : "+ inventory.get(Inventory.SHIP)+"   |   Lairs : "+ inventory.get(Inventory.LAIR)+" |");
+		System.out.println("   |   Used Coco-Tiles : "+usedCocoTiles.size()+"   |   Ships : "+ inventory.get(Inventory.SHIP)+"   |   Lairs : "+ inventory.get(Inventory.LAIR)+
+				"   |   Bonus Lair :"+ "   " + lead_Str);
 		System.out.println(Base);
 
 
