@@ -17,48 +17,39 @@ public class Stockpile extends Pile{
 	public Stockpile() {
 		for(RESOURCE type : RESOURCE.values()) {
 			if(!type.equals(RESOURCE.NONE)) {
-				pile.put(type, 18);
+				//change back to 18
+				pile.put(type, 14);
 			}
 		}
 	}
 
-	//Check if stock pile supply is run out of 1 type
-	public boolean checkSupply() {
-		if(!findEmpty().equals(null)) {
-			return true;
-		}
-		return false;
-	}
 	
-	public void resetStockPile() {
+	public void resetStockPile(RESOURCE r) {
 		PlayerCtrl playerCont = PlayerCtrl.getInstance();
 		ArrayList<Player> playerList = playerCont.getPlayerList();
-		
-		if(checkSupply()) {
-			RESOURCE r = findEmpty();
-			for(Player p: playerList) {
-				int removed = p.getPlayerPile().getPile().get(r);
-				p.getPlayerPile().decrementPile(r, removed);
-				incrementPile(r, removed);
-			}
+
+		for(Player p: playerList) {
+			int removed = p.getPlayerPile().getPile().get(r);
+			p.getPlayerPile().decrementPile(r, removed);
+			incrementPile(r, removed);
 		}
+		
 	}
 	
-	public RESOURCE findEmpty() {
-		for(RESOURCE type : RESOURCE.values()) {
-			if(pile.get(type) == 0) {
-				return type;
-			}
-		}
-		return null;
-	}
 	
 	public boolean decrementPile(RESOURCE r, int i) {
-		if(pile.get(r) < i) {
-			resetStockPile();
+		if(pile.get(r) <= i) {
+			resetStockPile(r);
 		}
 		boolean x = super.decrementPile(r, i);
 		return x;
+	}
+	
+	public void printStockPile() {
+		System.out.println("Stockpile");
+		for(RESOURCE r: pile.keySet()) {
+			System.out.println(r.label + " - "+ pile.get(r));
+		}
 	}
 
 	@Override
