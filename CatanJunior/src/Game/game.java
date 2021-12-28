@@ -48,6 +48,18 @@ public class game {
 		while(cond) {
 			System.out.println("Please enter how many players would like to play? [3-4]");
 			no_of_players = sc.nextLine();
+			
+			while(true) {
+				try {
+					Integer.valueOf(no_of_players);
+					break;
+				}
+				catch(Exception e) {
+					System.out.println("Please input a number between 3 and 4");
+					no_of_players = sc.nextLine();
+				}
+			}
+			
 			if(Integer.valueOf(no_of_players) == 4 || Integer.valueOf(no_of_players) == 3) {
 				getPlayers(Integer.valueOf(no_of_players));
 				playGame();
@@ -497,7 +509,7 @@ public class game {
 		PlayerCtrl Pl = PlayerCtrl.getInstance();
 		int count = 0;
 		for(Player n: Pl.getPlayerList()) {
-			if(!n.getPlayerName().equals(name)) {
+			if(!n.getPlayerStr().equals(name)) {
 				count++;
 			}
 		}

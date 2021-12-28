@@ -27,6 +27,17 @@ public class MoveGhostCaptain {
 			System.out.println("Please choose a location:");
 			s = sc.nextLine();
 			
+			while(true) {
+				try {
+					t.getAllowedGhostCaptainLocs().contains(Integer.parseInt(s));
+					break;
+				}
+				catch(Exception e) {
+					System.out.println("Please input a valid location.");
+					s = sc.nextLine();
+				}
+			}
+			
 			if(t.getAllowedGhostCaptainLocs().contains(Integer.parseInt(s))) {
 				var = false;
 			}
