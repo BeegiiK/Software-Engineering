@@ -46,10 +46,32 @@ public class Stockpile extends Pile{
 	}
 	
 	public void printStockPile() {
-		System.out.println("Stockpile");
-		for(RESOURCE r: pile.keySet()) {
-			System.out.println(r.label + " - "+ pile.get(r));
+//		System.out.println("Stockpile");
+//		for(RESOURCE r: pile.keySet()) {
+//			System.out.println(r.label + " - "+ pile.get(r));
+//		}
+		String Base = "   ---------------------------------------------------------------------------------";
+		ArrayList<String> each_R = new ArrayList<String>();
+		String format = "%7s%s";
+		
+		System.out.println(" ");
+		System.out.println(Base);
+		System.out.println("                                    Stockpile");
+		System.out.println(Base);
+		
+		for(RESOURCE r : RESOURCE.values()) {
+			if(!r.equals(RESOURCE.NONE)) {
+
+				each_R.add(r.label+ " : " + pile.get(r));
+				System.out.printf(format,"   |   ",  each_R.get(each_R.size()-1));
+			}
 		}
+		
+		System.out.println("  |");
+		System.out.println(Base);
+		
+		System.out.println(" ");
+		
 	}
 
 	@Override

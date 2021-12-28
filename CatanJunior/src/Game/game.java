@@ -11,12 +11,14 @@ import java.util.Collections;
 import java.util.Scanner;
 
 import map.Colour;
+import map.GainsAmount;
 import map.MarketPlace;
 import map.RESOURCE;
 import map.TileCtrl;
 import map.shipLairCtrl;
 import logistic.Inventory;
 import map.veiwMap;
+import pile.Pile;
 
 public class game {
 
@@ -153,14 +155,15 @@ public class game {
 				Stockpile stockpile = Stockpile.getInstance();
 				stockpile.printStockPile();
 				Pl.getPlayerList().get(i).setPlayerTurn(true);
-				//Pl.getPlayerList().get(i).printCard();
-				Pl.getPlayerList().get(0).printCard();
-				Pl.getPlayerList().get(1).printCard();
-				Pl.getPlayerList().get(2).printCard();
+//				Pl.getPlayerList().get(i).printCard();
+//				Pl.getPlayerList().get(0).printCard();
+//				Pl.getPlayerList().get(1).printCard();
+//				Pl.getPlayerList().get(2).printCard();
 				
 				System.out.println("\n"+Pl.getPlayerList().get(i).getPlayerName() + ", it's your turn to roll the die!\n[R] Roll die");
 				die = sc.nextLine();
 				die_result = checkDieRoll(die);
+				
 				
 				if(die_result == 6) {
 					System.out.println("You have rolled a 6, you can now move the ghost captain!");
@@ -172,6 +175,7 @@ public class game {
 					}
 				}
 				else {
+					printGottenResources(die_result);
 					Pl.giveDiceResources(die_result);
 					while(!(Integer.parseInt(chosenOption) == 4)) {
 						printOptions(i);
@@ -234,7 +238,7 @@ public class game {
 	}
 	
 	private boolean checkChosenOption(String chosen, Player p) {
-		ArrayList<Integer> idx = new ArrayList<Integer>(4);
+		ArrayList<Integer> idx = new ArrayList<Integer>();
 		boolean exit = true;
 		boolean str = false;
 		idx.add(1);
@@ -242,6 +246,8 @@ public class game {
 		idx.add(3);
 		idx.add(4);
 		idx.add(5);
+		idx.add(6);
+		idx.add(7);
 		
 		while(exit) {
 			if(idx.contains(Integer.parseInt(chosen))) {
@@ -250,7 +256,7 @@ public class game {
 				exit = false;
 			}
 			else {
-				System.out.println("Please give a valid input for an option to be chosen [1-4].\n");
+				System.out.println("Please give a valid input for an option to be chosen [1-5].\n");
 				chosen = sc.nextLine();
 			}
 		}
@@ -285,6 +291,16 @@ public class game {
 		else if(i == 4) {
 			// End of turn
 			return true;
+		}
+		else if(i == 6) {
+			PlayerCtrl p1 = PlayerCtrl.getInstance();
+			p1.getActivePlayer().printCard();
+			return false;
+		}
+		else if(i == 7) {
+			Stockpile S = Stockpile.getInstance();
+			S.printStockPile();
+			return false;
 		}
 		return true;
 	}
@@ -525,6 +541,42 @@ public class game {
 		}
 		
 		return single_instance;
+	}
+	
+	public void printGottenResources(int die_result) {
+		TileCtrl T = TileCtrl.getInstance();
+		GainsAmount G = new GainsAmount();
+		PlayerCtrl P = PlayerCtrl.getInstance();
+		G = T.getGainsAmount(die_result);
+		
+		String Base = "   |---------------------------------------------------------------------------------|";
+		ArrayList<String> each_R = new ArrayList<String>();
+		String format = "%7s%s";
+
+		
+		System.out.println(" ");
+		System.out.println(Base);
+		System.out.println("   |                            Players Dice Roll Winnings                           |");
+		System.out.println(Base);
+		String r1;
+		String r2 ="   |                                                                                 |";
+		
+		for(Colour c: P.getListOfColours()) {
+			Player p = P.getPlayer(c);
+			Pile pile = G.getPileforColour(c);
+			r1 = new String(new char[69 - p.getPlayerName().length()]).replace("\0", " ");
+			//System.out.println(Colour.valueOfEscCode(c) + Base +Colour.valueOfEscCode(Colour.NONE));
+			//System.out.println('\n'+Base);
+			System.out.println("   |                               "+p.getPlayerName()+" Gains:" +r1+"|\n"+r2);
+			for(RESOURCE r: pile.getPile().keySet()) {
+				each_R.add(r.label+ " : +" + pile.getPile().get(r));
+				System.out.printf(format,"   |   ",  each_R.get(each_R.size()-1));
+				
+			}
+			System.out.print("     |");
+			System.out.println('\n'+Base);
+			//System.out.println('\n'+Colour.valueOfEscCode(c) + Base +Colour.valueOfEscCode(Colour.NONE));
+		}
 	}
 
 }

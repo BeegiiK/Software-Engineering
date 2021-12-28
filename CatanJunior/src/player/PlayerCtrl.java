@@ -60,10 +60,12 @@ public class PlayerCtrl {
 			
 			for(RESOURCE r: pile.getPile().keySet()) {
 				p.getPlayerPile().incrementPile(r, pile.getPile().get(r));
-				System.out.println(r +" - "+ pile.getPile().get(r));
+				//System.out.println(r +" - "+ pile.getPile().get(r));
 			}
 		}
 	}
+	
+
 	
 	public Player getActivePlayer() {
 		for(Player p: list) {

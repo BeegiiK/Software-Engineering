@@ -5,7 +5,9 @@ public enum options {
 	TRADE("Trade"),
 	BUILD("Build"),
 	END("End my turn"),
-	VIEW("View map");
+	VIEW("View map"),
+	PRINT_CARD("Veiw resources & Inventory"),
+	PRINT_STOCKPILE("Veiw Stockpile");
 	
 	private String displayName;
 	

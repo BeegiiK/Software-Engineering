@@ -107,7 +107,7 @@ public class Player{
 	public void printCard() {
 		String Base = "   ---------------------------------------------------------------------------------";
 		ArrayList<String> each_R = new ArrayList<String>();
-		String format = "%8s%s";
+		String format = "%7s%s";
 		int sum = 0;
 		
 		System.out.println(" ");
@@ -140,6 +140,7 @@ public class Player{
 		System.out.println("   |   Used Coco-Tiles : "+usedCocoTiles.size()+"   |   Ships : "+ inventory.get(Inventory.SHIP)+"   |   Lairs : "+ inventory.get(Inventory.LAIR)+
 				"   |   Bonus Lair :"+ "   " + lead_Str +" |");
 		System.out.println(Base);
+		System.out.println(" ");
 
 
 	}

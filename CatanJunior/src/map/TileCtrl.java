@@ -96,25 +96,19 @@ public class TileCtrl {
 		for(int i = 0; i < tl.size(); i = i +1) {
 			if(rolled_number == tl.get(i).getRollNum() && tl.get(i).isActive()) {
 				A = tl.get(i).getLairOwners();
-				System.out.println(tl.get(i).getLairOwners().toString());
 				for(int j = 0; j < A.size(); j = j+1) {
 					if(A.get(j) == Colour.RED) {
 						red.incrementPile(tl.get(i).getResource(), 1);
-						System.out.println(tl.get(i).getID() + " - RED");
 					}
 					else if(A.get(j) == Colour.BLUE) {
 						blue.incrementPile(tl.get(i).getResource(), 1);
-						System.out.println(tl.get(i).getID() + " - BLUE");
-
 					}
 					else if(A.get(j) == Colour.WHITE) {
 						white.incrementPile(tl.get(i).getResource(), 1);
-						System.out.println(tl.get(i).getID() + " - WHITE");
 
 					}
 					else if(A.get(j) == Colour.ORANGE) {
 						orange.incrementPile(tl.get(i).getResource(), 1);
-						System.out.println(tl.get(i).getID() + " - ORANGE");
 					}
 				}
 			}
