@@ -54,6 +54,7 @@ public class buildUI {
 							
 							if(a.allowedLairs(x.getActivePlayer().getColour()).isEmpty()) {
 								System.out.println("There is no allowable lair locations");
+								var = false;
 							}
 							else {
 								System.out.println("Choose a location for the lair");
@@ -102,6 +103,7 @@ public class buildUI {
 							
 							if(a.allowedShips(x.getActivePlayer().getColour()).isEmpty()) {
 								System.out.println("There is no allowable ship locations");
+								var = false;
 							}
 							else {
 								System.out.println("Choose a location for the ship");
