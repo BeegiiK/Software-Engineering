@@ -138,16 +138,18 @@ public class game {
 	}
 	
 	public void playGame() {
-		boolean EOG = false;
 		String die = null;
-		String chosenOption = null;
+		String chosenOption = "6";
 		PlayerCtrl Pl = PlayerCtrl.getInstance();
 		
 		chooseStartingLocs();
 		int die_result;
-		while(!EOG) {
+		boolean keepPlaying = true;
+		boolean var = true;
+		while(keepPlaying) {
 			for(int i=0; i<Pl.getNumofPlayers();i++) {
 				boolean str = false;
+				chosenOption = "6";
 				Stockpile stockpile = Stockpile.getInstance();
 				stockpile.printStockPile();
 				Pl.getPlayerList().get(i).setPlayerTurn(true);
@@ -171,15 +173,22 @@ public class game {
 				}
 				else {
 					Pl.giveDiceResources(die_result);
-					while(!str) {
+					while(!(Integer.parseInt(chosenOption) == 4)) {
 						printOptions(i);
 						chosenOption = sc.nextLine();
 						str = checkChosenOption(chosenOption,Pl.getPlayerList().get(i));
+						if(checkForEOG()) {
+							keepPlaying = false;
+							var = false;
+							break;
+						}
 					}
 				}
-//				MostCoco();
 				Pl.getPlayerList().get(i).setPlayerTurn(false);
 				Pl.getPlayerList().get(i).setTradedWithMarketPlace(false);
+				if(var == false) {
+					break;
+				}
 			}
 		}
 	}
@@ -497,15 +506,17 @@ public class game {
 	
 	
 	// checks for the end of game condition for a player
-	public void checkForEOG() {
+	public boolean checkForEOG() {
 		PlayerCtrl Pl = PlayerCtrl.getInstance();
 		for(Player p: Pl.getPlayerList()) {
 			if(p.getPlayerTurn()) {
-				if(p.getPlayerPile().getPile().get(Inventory.LAIR) == 0) {
+				if(p.getInventory().get(Inventory.LAIR) == 0 || (p.getInventory().get(Inventory.LAIR) == 1 && p.getLeading() == true)) {
 					System.out.println("The game is over. Player: "+p.getPlayerName()+" has won the game");
+					return true;
 				}
 			}
 		}
+		return false;
 	}
 	
 	public static game getInstance() {

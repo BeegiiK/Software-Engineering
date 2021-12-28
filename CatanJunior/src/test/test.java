@@ -9,8 +9,6 @@ public class test {
 		game g = game.getInstance();
 		
 		g.initialiseGame();
-		g.playGame();
-	
 	}
 
 }

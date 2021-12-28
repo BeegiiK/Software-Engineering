@@ -17,6 +17,7 @@ public class buildUI {
 	public void buy() {
 		boolean var = true;
 		String s = null;
+		shipLairCtrl cont = shipLairCtrl.getInstance();
 		
 		while(var) {
 			System.out.println("What would you like to buy?");
@@ -47,20 +48,27 @@ public class buildUI {
 							
 							shipLairCtrl a = shipLairCtrl.getInstance();
 							veiwMap map1 = new veiwMap();
+							cont.toggleDisplayLr();
 							System.out.println(map1.toString());
+							cont.toggleDisplayNone();
 							
-							System.out.println("Choose a location for the lair");
-							for(Integer i: a.allowedLairs(x.getActivePlayer().getColour())) {
-								System.out.println("["+i+"] " + "L"+i);
+							if(a.allowedLairs(x.getActivePlayer().getColour()).isEmpty()) {
+								System.out.println("There is no allowable lair locations");
 							}
-							System.out.println("Please choose a location:");
-							s = sc.nextLine();
-							//error check for invalid input
-							a.buyLr(Integer.parseInt(s), x.getActivePlayer().getColour());
-							System.out.println(map1.toString());
-							
-							var = false;
-						}
+							else {
+								System.out.println("Choose a location for the lair");
+								for(Integer i: a.allowedLairs(x.getActivePlayer().getColour())) {
+									System.out.println("["+i+"] " + "L"+i);
+								}
+								System.out.println("Please choose a location:");
+								s = sc.nextLine();
+								//error check for invalid input
+								a.buyLr(Integer.parseInt(s), x.getActivePlayer().getColour());
+								System.out.println(map1.toString());
+								
+								var = false;
+							}
+						}		
 						else {
 							System.out.println("You do not have enough resources");
 						}
@@ -88,19 +96,26 @@ public class buildUI {
 							
 							shipLairCtrl a = shipLairCtrl.getInstance();
 							veiwMap map1 = new veiwMap();
+							cont.toggleDisplaySp();
 							System.out.println(map1.toString());
+							cont.toggleDisplayNone();
 							
-							System.out.println("Choose a location for the ship");
-							for(Integer i: a.allowedShips(x.getActivePlayer().getColour())) {
-								System.out.println("["+i+"] " + "S"+i);
+							if(a.allowedShips(x.getActivePlayer().getColour()).isEmpty()) {
+								System.out.println("There is no allowable ship locations");
 							}
-							System.out.println("Please choose a location:");
-							s = sc.nextLine();
-							//error check for invalid input
-							a.buySp(Integer.parseInt(s), x.getActivePlayer().getColour());
-							System.out.println(map1.toString());
-					
-							var = false;
+							else {
+								System.out.println("Choose a location for the ship");
+								for(Integer i: a.allowedShips(x.getActivePlayer().getColour())) {
+									System.out.println("["+i+"] " + "S"+i);
+								}
+								System.out.println("Please choose a location:");
+								s = sc.nextLine();
+								//error check for invalid input
+								a.buySp(Integer.parseInt(s), x.getActivePlayer().getColour());
+								System.out.println(map1.toString());
+						
+								var = false;
+							}
 						}
 						else {
 							System.out.println("You do not have enough resources");

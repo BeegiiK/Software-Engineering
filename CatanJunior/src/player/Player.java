@@ -36,6 +36,7 @@ public class Player{
 	
 	// method to declare all internal inventory types
 	private void createInventory() {
+		//getInventory().put(Inventory.LAIR, 7);
 		getInventory().put(Inventory.LAIR, 7);
 		getInventory().put(Inventory.SHIP, 8);
 	}
@@ -102,22 +103,6 @@ public class Player{
 	public void decrementInventory(Inventory type, int value) {
 		getInventory().put(type, getInventory().get(type) - value);
 	}
-	
-//	public void availableResources() {
-//		System.out.println(name + ", you have the following resources:");
-//		for(RESOURCE r: pile.getPile().keySet()) {
-//			if(!pile.getPile().get(r).equals(0)) {
-//				System.out.println(r + " - " + pile.getPile().get(r));
-//			}
-//		}
-//	}
-	
-//	public void availableInventory() {
-//		System.out.println(name + ", you have the following inventory:");
-//		for(Inventory i: inventory.keySet()) {
-//			System.out.println(i + " - " + inventory.get(i));
-//		}
-//	}
 	
 	public void printCard() {
 		String Base = "   ---------------------------------------------------------------------------------";
