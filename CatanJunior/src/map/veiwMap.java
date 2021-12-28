@@ -72,6 +72,11 @@ public String toString() {
 				String.format ("%" + (tabAmount + 01) + "s", "") + "                     " + A.getSpStr(38, 2) + "                " + A.getSpStr(39, 2) + '\n' +
 				String.format ("%" + (tabAmount + 00) + "s", "") + "                   " + A.lrLabel(31) + " " + A.getLrStr(31, 0) + A.getSpStr(40, 0) + A.getLrStr(32, 0) + " " + A.lrLabel(32) + '\n' +
 				String.format ("%" + (tabAmount + 23) + "s", "") + A.getLrStr(31, 1) + "    " + A.spLabel(40) + "     " + A.getLrStr(32, 1) + '\n' +
-				"________________________________________________________________________________________________________" + '\n'+'\n');
+				"________________________________________________________________________________________________________" + '\n' +String.format ("%" + (tabAmount) + "s", "")+
+				"Molasses : "+RESOURCE.getString(RESOURCE.MOLASSES)+ "   Wood : "+RESOURCE.getString(RESOURCE.WOOD)+"   Goats : "+RESOURCE.getString(RESOURCE.GOATS)+"   Gold : "+RESOURCE.getString(RESOURCE.GOLD)+"   Cutlasses : "+RESOURCE.getString(RESOURCE.CUTLASSES)+"\n\n"
+				+String.format ("%" + (tabAmount) + "s", "")+ "              \\      |      /                 _____\n"
+				+String.format ("%" + (tabAmount) + "s", "")+ "XX  : Lair     \\     |     /   :  Ship        \\X X/   :  Ghost-Captain\n"
+				+String.format ("%" + (tabAmount) + "s", "")+ "XX              \\    |    /                    |‡|\n"
+				+"________________________________________________________________________________________________________\n");
 	}
 }

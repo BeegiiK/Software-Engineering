@@ -79,6 +79,10 @@ public class Player{
 		return (Colour.valueOfEscCode(colour)+name+Colour.valueOfEscCode(Colour.NONE));
 	}
 	
+	public String getPlayerStr() {
+		return name;
+	}
+	
 	public Stack<String> getUsedCocoTiles(){
 		return this.usedCocoTiles;
 	}

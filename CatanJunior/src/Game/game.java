@@ -152,8 +152,6 @@ public class game {
 			for(int i=0; i<Pl.getNumofPlayers();i++) {
 				boolean str = false;
 				chosenOption = "6";
-				Stockpile stockpile = Stockpile.getInstance();
-				stockpile.printStockPile();
 				Pl.getPlayerList().get(i).setPlayerTurn(true);
 //				Pl.getPlayerList().get(i).printCard();
 //				Pl.getPlayerList().get(0).printCard();
@@ -228,7 +226,7 @@ public class game {
 	private void printOptions(int i) {
 		
 		PlayerCtrl Pl = PlayerCtrl.getInstance();
-		System.out.println(Pl.getPlayerList().get(i).getPlayerName()+", you now have the following options:");
+		System.out.println(Pl.getPlayerList().get(i).getPlayerName()+", you now have the following options:\n");
 		int j = 1;
 		for(options o: options.values()) {
 			System.out.println("["+j+"] "+o.displayName() +"\n");
@@ -564,7 +562,8 @@ public class game {
 		for(Colour c: P.getListOfColours()) {
 			Player p = P.getPlayer(c);
 			Pile pile = G.getPileforColour(c);
-			r1 = new String(new char[69 - p.getPlayerName().length()]).replace("\0", " ");
+			r1 = new String(new char[43 - p.getPlayerStr().length()]).replace("\0", " ");
+
 			//System.out.println(Colour.valueOfEscCode(c) + Base +Colour.valueOfEscCode(Colour.NONE));
 			//System.out.println('\n'+Base);
 			System.out.println("   |                               "+p.getPlayerName()+" Gains:" +r1+"|\n"+r2);
