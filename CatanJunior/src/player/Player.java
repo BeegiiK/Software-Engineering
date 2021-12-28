@@ -1,5 +1,6 @@
 package player;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Stack;
 
@@ -102,27 +103,52 @@ public class Player{
 		getInventory().put(type, getInventory().get(type) - value);
 	}
 	
-	public void availableResources() {
-		System.out.println(name + ", you have the following resources:");
-		for(RESOURCE r: pile.getPile().keySet()) {
-			if(!pile.getPile().get(r).equals(0)) {
-				System.out.println(r + " - " + pile.getPile().get(r));
-			}
-		}
-	}
+//	public void availableResources() {
+//		System.out.println(name + ", you have the following resources:");
+//		for(RESOURCE r: pile.getPile().keySet()) {
+//			if(!pile.getPile().get(r).equals(0)) {
+//				System.out.println(r + " - " + pile.getPile().get(r));
+//			}
+//		}
+//	}
 	
-	public void availableInventory() {
-		System.out.println(name + ", you have the following inventory:");
-		for(Inventory i: inventory.keySet()) {
-			System.out.println(i + " - " + inventory.get(i));
-		}
-	}
+//	public void availableInventory() {
+//		System.out.println(name + ", you have the following inventory:");
+//		for(Inventory i: inventory.keySet()) {
+//			System.out.println(i + " - " + inventory.get(i));
+//		}
+//	}
 	
 	public void printCard() {
-		System.out.println("------------------------");
-		availableResources();
-		availableInventory();
-		System.out.println("------------------------");
+		String Base = "   --------------------------------------------------------------------------";
+		ArrayList<String> each_R = new ArrayList<String>();
+		String format = "%-5s%s";
+		int sum = 0;
+		
+		System.out.println(" ");
+		System.out.println(Base);
+		System.out.println("                                   "+ getPlayerName() +" Resources");
+		System.out.println(Base);
+		
+		for(RESOURCE r : pile.getPile().keySet()) {
+			if(!r.equals(RESOURCE.NONE)) {
+
+				each_R.add(r.label+ " : " + pile.getPile().get(r));
+				System.out.printf(format,"   |   ",  each_R.get(each_R.size()-1));
+
+			}
+		}
+		System.out.println(" |");
+		System.out.println(Base);
+		
+		System.out.println(" ");
+		System.out.println(Base);
+		System.out.println("                                   "+ getPlayerName() +" Inventory");
+		System.out.println(Base);
+		System.out.println("                     |   Ships : "+ inventory.get(Inventory.SHIP)+"   |   Lairs : "+ inventory.get(Inventory.LAIR)+" |");
+		System.out.println(Base);
+
+
 	}
 	
 	public boolean checkShip() {
