@@ -48,7 +48,10 @@ public class game {
 		while(cond) {
 			System.out.println("Please enter how many players would like to play? [3-4]");
 			no_of_players = sc.nextLine();
-			if(Integer.valueOf(no_of_players) == 4 || Integer.valueOf(no_of_players) == 3) {
+			if(!isSingleInt(no_of_players)) {
+				System.out.println("Please enter an single digit between [3-4].");
+			}
+			else if((Integer.valueOf(no_of_players) == 4 || Integer.valueOf(no_of_players) == 3)) {
 				getPlayers(Integer.valueOf(no_of_players));
 				playGame();
 				cond = false;
@@ -575,6 +578,15 @@ public class game {
 			System.out.print("     |");
 			System.out.println('\n'+Base);
 			//System.out.println('\n'+Colour.valueOfEscCode(c) + Base +Colour.valueOfEscCode(Colour.NONE));
+		}
+	}
+	
+	public boolean isSingleInt(String Str) {
+		if((Str.length() > 1 || Str.length() == 0)) {
+			return false;
+		}
+		else {
+			return true;
 		}
 	}
 
