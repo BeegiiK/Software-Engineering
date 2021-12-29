@@ -37,7 +37,12 @@ public abstract class BuyableBoardPiece extends BoardPiece{
 	public COLOUR ownedBy() {
 		return owned;
 	}
-
+	
+	/**
+	 * Sets ownership of a buyable Piece to a specific
+	 * colour.
+	 * @param C
+	 */
 	public void boughtBy(COLOUR C) {
 		if(veiw.isEmpty() == false && owned == COLOUR.NONE) {
 			this.owned = C;
@@ -49,6 +54,11 @@ public abstract class BuyableBoardPiece extends BoardPiece{
 		}
 	}
 	
+	/**
+	 * Get ID of a buyable Piece.
+	 * 
+	 * @return Integer
+	 */
 	public int getId() {
 		return id;
 	}
