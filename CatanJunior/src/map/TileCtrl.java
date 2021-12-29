@@ -9,12 +9,26 @@ import pile.Pile;
  * the earnings for each player given their owned lairs
  */
 public class TileCtrl {
+	/**
+	 * Singleton Initialisation
+	 */
 	private static TileCtrl single_instance = null;
+	/**
+	 * ArrayList Tile - containing all tiles on the board
+	 */
 	public ArrayList<Tile> tl = new ArrayList<Tile>();
+	/**
+	 *  Ghost Captain starting location
+	 */
 	private int currGhostCaptainLoc = 0;
+	/**
+	 * Boolean display mode will show Tile tags;
+	 */
 	private boolean displayMode = true;
 	
-	
+	/* Setup each tile with, lair IDs, dice roll number, and resource
+	 * 
+	 */
 	private TileCtrl() {
 		tl.add(new Tile(1, RESOURCE.WOOD, 3));
 		tl.get(0).setlairs(1, 2, 3, 4, 5, 6);
@@ -28,6 +42,7 @@ public class TileCtrl {
 		tl.get(4).setlairs(7, 8, 11, 12, 15, 16);
 		tl.add(new Tile(6, RESOURCE.WOOD, 2));
 		tl.get(5).setlairs(9, 10, 13, 14, 17, 18);
+		//Spooky Island
 		tl.add(new Tile(7, RESOURCE.NONE, 0));
 		tl.get(6).setlairs(12, 13, 16, 17, 20, 21);
 		moveGhostCaptain(7);
@@ -45,7 +60,10 @@ public class TileCtrl {
 		tl.get(12).setlairs(27, 28, 29, 30, 31, 32);
 		
 	}
-	
+	/**
+	 * Move ghost captain location
+	 * @param loc
+	 */
 	public void moveGhostCaptain(int loc){
 		if(currGhostCaptainLoc != 0) {
 			tl.get(currGhostCaptainLoc-1).toggleActivate();
@@ -54,26 +72,28 @@ public class TileCtrl {
 		currGhostCaptainLoc = loc;
 	}
 	
-	
+	/**
+	 * 
+	 * @return Get instance - TileCtrl
+	 */
 	public static TileCtrl getInstance() {
 		if(single_instance == null)
 			single_instance = new TileCtrl();
 		
 		return single_instance;  
 	}
-	
-	public String getTlStr(int id, int element) {
-		return tl.get(id-1).veiw().get(element);
-	}
-	
-	public String getTlID(int id) {
-		return ("T"+ tl.get(id-1).getID());
-	}
-	
+	/**
+	 * flipping Display Mode 
+	 */
 	public void toggleDisplayLabel() {
 		displayMode = !displayMode;
 	}
 	
+	/**
+	 * Display tile tag depending on display Mode
+	 * @param id
+	 * @return String Label for tile
+	 */
 	public String tlLabel(int id) {
 		if(displayMode == true) {
 			if(id < 10) {
@@ -87,7 +107,12 @@ public class TileCtrl {
 			return ("   ");
 		}
 	}
-	
+	/**
+	 * Gets a GainsAmount for each play after the dice has been rolled
+	 * 
+	 * @param rolled_number
+	 * @return
+	 */
 	public GainsAmount getGainsAmount(int rolled_number) {
 		GainsAmount G = new GainsAmount();
 		Pile red = new Pile();
@@ -96,7 +121,10 @@ public class TileCtrl {
 		Pile orange = new Pile();
 		
 		ArrayList<COLOUR> A = new ArrayList<COLOUR>();
-		
+		/**
+		 * Get each resource tile that matches the rolled number
+		 * and return what resources each color is owed 
+		 */
 		for(int i = 0; i < tl.size(); i = i +1) {
 			if(rolled_number == tl.get(i).getRollNum() && tl.get(i).isActive()) {
 				A = tl.get(i).getLairOwners();
@@ -124,6 +152,10 @@ public class TileCtrl {
 		return G;	
 	}
 	
+	/**
+	 * Get list of allowable ghost locations
+	 * @return ArrayList Integer - of allowed ghost captain locations
+	 */
 	public ArrayList<Integer> getAllowedGhostCaptainLocs(){
 		ArrayList<Integer> A = new ArrayList<Integer>();
 		
@@ -135,8 +167,17 @@ public class TileCtrl {
 		return A;
 	}
 	
+	// Getters & Setters
+	
 	public RESOURCE getTileResource(int id) {
 		return tl.get(id-1).getResource();
 	}
-
+	
+	public String getTlStr(int id, int element) {
+		return tl.get(id-1).veiw().get(element);
+	}
+	
+	public String getTlID(int id) {
+		return ("T"+ tl.get(id-1).getID());
+	}
 }
