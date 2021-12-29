@@ -1,8 +1,9 @@
 package map;
 
 import java.util.ArrayList;
+import java.util.List;
 /**
- * The LairPeice class defines a lair on the map itself.
+ * The LairPiece class defines a lair on the map itself.
  * @category Board Piece 
  */
 public class LairPiece extends BuyableBoardPiece{

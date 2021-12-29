@@ -10,19 +10,37 @@ import java.util.Collections;
  * 
  * @category Map Visuals Controller
  */
-public class ShipLairBoardCtrl {//Define singleton
+public class ShipLairBoardCtrl {
+	/**
+	 * Initialisation of  Singleton Object 
+	 */
 	private static ShipLairBoardCtrl onlyInstance = null;
-	
+	/**
+	 * Number of lairs on the map
+	 */
 	private final int lairMax = 32;
+	/**
+	 * Array List of all Lairs on the map
+	 */
 	private ArrayList<LairPiece> lr = new ArrayList<>(lairMax);
-	
+	/*
+	 * Number of ships of the map
+	 */
 	private final int shipMax = 40;
+	/**
+	 * Array List of all Ships on the map
+	 */
 	private ArrayList<ShipPiece> sp = new ArrayList<>(shipMax);
-	
+	/**
+	 *  Display mode controls which tags are visible on the map (Lair IDs, Ship IDs)
+	 */
 	private int displayMode = 0;
-	
+	/**
+	 * Setup up each ship and lair, connect them to the correct neighbours.
+	 */
 	private ShipLairBoardCtrl() {
-		SHIP_ORIENTATION[] shipTypeByID = new SHIP_ORIENTATION[] {SHIP_ORIENTATION.Horizontal, 	SHIP_ORIENTATION.DiagRight, 	SHIP_ORIENTATION.Diagleft, 	SHIP_ORIENTATION.Diagleft, 		SHIP_ORIENTATION.DiagRight,
+		SHIP_ORIENTATION[] shipTypeByID = new SHIP_ORIENTATION[] {// Ship Orientation by position
+				SHIP_ORIENTATION.Horizontal, 	SHIP_ORIENTATION.DiagRight, 	SHIP_ORIENTATION.Diagleft, 	SHIP_ORIENTATION.Diagleft, 		SHIP_ORIENTATION.DiagRight,
 				SHIP_ORIENTATION.Horizontal, 	SHIP_ORIENTATION.DiagRight, 	SHIP_ORIENTATION.Diagleft, 	SHIP_ORIENTATION.Horizontal, 	SHIP_ORIENTATION.Horizontal,
 				SHIP_ORIENTATION.DiagRight, 	SHIP_ORIENTATION.Diagleft, 		SHIP_ORIENTATION.DiagRight, SHIP_ORIENTATION.Diagleft, 		SHIP_ORIENTATION.Horizontal,
 				SHIP_ORIENTATION.Diagleft, 		SHIP_ORIENTATION.DiagRight, 	SHIP_ORIENTATION.Diagleft, 	SHIP_ORIENTATION.DiagRight, 	SHIP_ORIENTATION.Horizontal,
@@ -31,15 +49,18 @@ public class ShipLairBoardCtrl {//Define singleton
 				SHIP_ORIENTATION.Horizontal, 	SHIP_ORIENTATION.Horizontal, 	SHIP_ORIENTATION.Diagleft, 	SHIP_ORIENTATION.DiagRight, 	SHIP_ORIENTATION.Horizontal,
 				SHIP_ORIENTATION.DiagRight,		SHIP_ORIENTATION.Diagleft, 		SHIP_ORIENTATION.Diagleft, 	SHIP_ORIENTATION.DiagRight, 	SHIP_ORIENTATION.Horizontal};
 		
+	     //Create and add Lairs to Lr ArrayList
 		for(int i = 1; i <= lairMax; i = i+1) {
 			LairPiece x = new LairPiece(i);
 			lr.add(x);
 		}
+		// Create and add Ships to Sp ArrayList
 		for(int i = 1; i <= shipMax; i = i+1) {
 			ShipPiece y = new ShipPiece(i, shipTypeByID[i-1]);
 			sp.add(y);
 		}
 		
+		// Define Lair Ship Neighbours
 		lr.get(0).setNeighbours(sp.get(0), sp.get(1));
 		lr.get(1).setNeighbours(sp.get(0), sp.get(2));
 		lr.get(2).setNeighbours(sp.get(1), sp.get(3));
@@ -72,7 +93,6 @@ public class ShipLairBoardCtrl {//Define singleton
 		lr.get(29).setNeighbours(sp.get(36), sp.get(38));
 		lr.get(30).setNeighbours(sp.get(37), sp.get(39));
 		lr.get(31).setNeighbours(sp.get(38), sp.get(39));
-		
 		sp.get(0).setNeighbours(lr.get(0), lr.get(1));
 		sp.get(1).setNeighbours(lr.get(0), lr.get(2));
 		sp.get(2).setNeighbours(lr.get(1), lr.get(3));
@@ -115,6 +135,13 @@ public class ShipLairBoardCtrl {//Define singleton
 		sp.get(39).setNeighbours(lr.get(30), lr.get(31));	
 	}
 	
+	/**
+	 * Return an array list of allowed Lairs building locations for a given colour
+	 * given that a lair must be connected to a ship that is owned by that colour and 
+	 * cant already be owned.
+	 * @param playerColour
+	 * @return ArrayList Integer
+	 */
 	public ArrayList<Integer> allowedLairs(COLOUR playerColour) {
 		ArrayList<Integer> allowedLocs = new ArrayList<Integer>();
 		for(int i = 0; i<lairMax; i = i+1) {
@@ -137,7 +164,13 @@ public class ShipLairBoardCtrl {//Define singleton
 		Collections.sort(allowedLocs);
 		return allowedLocs;
 	}
-	
+	/**
+	 * Return an array list of allowed ships building locations for a given colour
+	 * given that a ships must be connected to a lair that is owned by that colour and 
+	 * cant already be owned.
+	 * @param playerColour
+	 * @return ArrayList Integer
+	 */
 	public ArrayList<Integer> allowedShips(COLOUR playerColour) {
 		ArrayList<Integer> allowedLocs = new ArrayList<Integer>();
 		for(int i = 0; i<shipMax; i = i+1) {
@@ -161,29 +194,39 @@ public class ShipLairBoardCtrl {//Define singleton
 		return allowedLocs;
 	}
 	
-	
+	/**
+	 * Get the single Instance of ShipLairBoardCtrl
+	 * @return
+	 */
     public static ShipLairBoardCtrl getInstance(){
         if (onlyInstance == null)
         	onlyInstance = new ShipLairBoardCtrl();
         return onlyInstance;
     }
     
-    public String getLrStr(int id, int elementNum) {
-    	return lr.get(id-1).getPart().get(elementNum);
-    }
-    
-    public String getSpStr(int id, int elementNum) {
-    	return sp.get(id-1).getPart().get(elementNum);
-    }
-    
+    /**
+     * Assigns Lair on map to a Colour
+     * @param id
+     * @param C
+     */
     public void buyLr(int id, COLOUR C) {
     	lr.get(id-1).boughtBy(C);
     }
-    
+    /**
+     * Assisgns Ship on a map to a Colour
+     * @param id
+     * @param C
+     */
     public void buySp(int id, COLOUR C) {
     	sp.get(id-1).boughtBy(C);
     }
     
+    /**
+     * Assigns the ID tag of each ship .
+     * Changes deepening on display mode.
+     * @param id
+     * @return
+     */
     public String spLabel(int id) {
     	if(displayMode == 2) {
     		if(sp.get(id-1).getId() >=10) {
@@ -197,7 +240,12 @@ public class ShipLairBoardCtrl {//Define singleton
     		return ("   ");
     	}
     }
-    
+    /**
+     * Assigns the ID tag of each ship.
+     * Changes depending on display mode.
+     * @param id
+     * @return
+     */
     public String lrLabel(int id) {
     	if(displayMode == 3) {
     		if(lr.get(id-1).getId() >=10) {
@@ -212,20 +260,40 @@ public class ShipLairBoardCtrl {//Define singleton
     	}
     }
     
-    public COLOUR getLrColour(int id) {
-    	return lr.get(id).ownedBy();
-    }
-    
+
+    /**
+     * Set no ship or lair ID tags to be displayed
+     */
     public void toggleDisplayNone() {
     	displayMode = 1;
     }
     
+    /**
+     * Set only Lair ID tags to be displayed
+     */
     public void toggleDisplayLr() {
     	displayMode = 3;
     }
     
+    /**
+     * Set only Ship ID tags to be displayed
+     */
     public void toggleDisplaySp() {
     	displayMode = 2;
+    }
+    
+    //Getter & Setters for public use
+    
+    public String getLrStr(int id, int elementNum) {
+    	return lr.get(id-1).getPart().get(elementNum);
+    }
+    
+    public String getSpStr(int id, int elementNum) {
+    	return sp.get(id-1).getPart().get(elementNum);
+    }
+    
+    public COLOUR getLrColour(int id) {
+    	return lr.get(id).ownedBy();
     }
 }
 

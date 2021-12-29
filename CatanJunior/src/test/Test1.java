@@ -4,7 +4,7 @@ package test;
 import map.COLOUR;
 import map.TileCtrl;
 import map.ShipLairBoardCtrl;
-import map.veiwMap;
+import map.ViewMap;
 //
 //public class Test1 {
 //	

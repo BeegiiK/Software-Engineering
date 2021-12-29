@@ -7,7 +7,7 @@ import Game.MoveGhostCaptain;
 import Game.game;
 import map.RESOURCE;
 import map.ShipLairBoardCtrl;
-import map.veiwMap;
+import map.ViewMap;
 import logistic.Inventory;
 import logistic.typesOfCocoTiles;
 
@@ -116,7 +116,7 @@ public class CocoTiles {
 	public void shipLairCocoTile(Player p) {
 		boolean var = true;
 		String s = null;
-		veiwMap map = new veiwMap();
+		ViewMap map = new ViewMap();
 		ShipLairBoardCtrl controller = ShipLairBoardCtrl.getInstance();
 		
 		System.out.println(map.toString());

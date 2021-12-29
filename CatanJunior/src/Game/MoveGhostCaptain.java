@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import Board.Stockpile;
 import map.TileCtrl;
-import map.veiwMap;
+import map.ViewMap;
 import player.PlayerCtrl;
 
 public class MoveGhostCaptain {
@@ -16,7 +16,7 @@ public class MoveGhostCaptain {
 		PlayerCtrl cont = PlayerCtrl.getInstance();
 		Stockpile stockpile = Stockpile.getInstance();
 		
-		veiwMap map1 = new veiwMap();
+		ViewMap map1 = new ViewMap();
 		boolean var = true;
 		String s = null;
 		
