@@ -2,7 +2,14 @@ package map;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
+/**
+ * Singleton
+ * The ShipLairBoardCtrl class controls attributes
+ * of all ships & lairs and interactions between them
+ * during the game. 
+ * 
+ * @category Map Visuals Controller
+ */
 public class ShipLairBoardCtrl {//Define singleton
 	private static ShipLairBoardCtrl onlyInstance = null;
 	
