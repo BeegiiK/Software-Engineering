@@ -12,7 +12,7 @@ public class veiwMap {
 public String toString() { 
 		TileCtrl B = TileCtrl.getInstance();
 		ShipLairBoardCtrl A = ShipLairBoardCtrl.getInstance();
-		MarketPlace P = MarketPlace.getInstance();
+		MarketPlaceCtrl P = MarketPlaceCtrl.getInstance();
 
 		//B.toggleDisplayLabel();
 
