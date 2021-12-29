@@ -9,7 +9,6 @@ import Board.Stockpile;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 import map.COLOUR;
 import map.GainsAmount;
@@ -39,15 +38,12 @@ public class game {
 	private MoveGhostCaptain moveUX = new MoveGhostCaptain();
 	
 	// Constructor
-	public game() {}
+	private game() {}
 	
 	
 	public void initialiseGame() {
 		boolean cond = true;
-
 		printIntroMessage();
-
-
 		
 		while(cond) {
 			System.out.println("Please enter how many players would like to play? [3-4]");
@@ -70,7 +66,7 @@ public class game {
 				cond = false;
 			}
 			else {
-				System.out.println("Please enter an appropriate number of players [3-4]");
+				System.out.println("Please enter an appropriate number of players [3-4].");
 			}
 		}		
 	}
@@ -558,8 +554,9 @@ public class game {
 		for(Player p: Pl.getPlayerList()) {
 			if(p.getPlayerTurn()) {
 				if(p.getInventory().get(Inventory.LAIR) == 0 || (p.getInventory().get(Inventory.LAIR) == 1 && p.getLeading() == true)) {
+					//System.out.println("The game is over. Player: "+p.getPlayerName()+" has won the game");
 					try {
-						winnerSequence(p.getColour());
+						this.winnerSequence(p.getColour());
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -570,6 +567,7 @@ public class game {
 		return false;
 	}
 	
+
 	public String getWinStatementOrange() {
 		return(COLOUR.valueOfEscCode(COLOUR.ORANGE)+"________                                       \r\n"
 				+ "\\_____  \\____________    ____    ____   ____   \r\n"
@@ -657,14 +655,9 @@ public class game {
 		+ "                                                                                               ");
 	}
 	
-	public static game getInstance() {
-		if(single_instance == null) {
-			single_instance = new game();
-		}
-		
-		return single_instance;
-	}
-	
+
+
+
 	public void winnerSequence(COLOUR c) throws InterruptedException {
 		for(int i = 0; i < 10; i++) {
 			System.out.println("\n");
@@ -696,6 +689,14 @@ public class game {
 			System.out.println("\n");
 			Thread.sleep(100);
 		}
+	}
+	
+	public static game getInstance() {
+		if(single_instance == null) {
+			single_instance = new game();
+		}
+		
+		return single_instance;
 	}
 	
 	public void printGottenResources(int die_result) {
