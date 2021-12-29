@@ -6,6 +6,7 @@ import Board.Stockpile;
 import logistic.Inventory;
 import map.RESOURCE;
 import map.ShipLairBoardCtrl;
+import map.TileCtrl;
 import map.veiwMap;
 import player.Player;
 import player.PlayerCtrl;
@@ -18,6 +19,7 @@ public class buildUI {
 		boolean var = true;
 		String s = null;
 		ShipLairBoardCtrl cont = ShipLairBoardCtrl.getInstance();
+		TileCtrl tcont = TileCtrl.getInstance(); 
 		
 		while(var) {
 			System.out.println("What option would you like to choose?");
@@ -50,7 +52,9 @@ public class buildUI {
 						ShipLairBoardCtrl a = ShipLairBoardCtrl.getInstance();
 						veiwMap map1 = new veiwMap();
 						cont.toggleDisplayLr();
+						tcont.toggleDisplayLabel();
 						System.out.println(map1.toString());
+						tcont.toggleDisplayLabel();
 						cont.toggleDisplayNone();
 						
 						if(a.allowedLairs(x.getActivePlayer().getColour()).isEmpty()) {
@@ -65,11 +69,34 @@ public class buildUI {
 							System.out.println("Please choose a location:");
 							s = sc.nextLine();
 							//error check for invalid input
+							
+							while(true) {
+								try {
+									Integer.parseInt(s);
+									break;
+								}
+								catch(Exception e) {
+									System.out.println("\u001b[1m\u001b[41;1m"+"Please input a valid lair location from list above"+"\u001b[0m");
+									s = sc.nextLine();
+								}
+							}
+							
+							while(true) {
+								if(!a.allowedLairs(x.getActivePlayer().getColour()).contains(Integer.parseInt(s))) {
+									System.out.println("\u001b[1m\u001b[41;1m"+"Please input a valid lair location from list above"+"\u001b[0m");
+									s = sc.nextLine();
+								}
+								else {
+									break;
+								}
+							}
+							
 							a.buyLr(Integer.parseInt(s), x.getActivePlayer().getColour());
 							System.out.println(map1.toString());
 							
 							var = false;
 						}
+							
 					}		
 					else {
 						System.out.println("\u001b[1m\u001b[41;1m"+"You do not have enough resources"+"\u001b[0m");
@@ -106,7 +133,9 @@ public class buildUI {
 						ShipLairBoardCtrl a = ShipLairBoardCtrl.getInstance();
 						veiwMap map1 = new veiwMap();
 						cont.toggleDisplaySp();
+						tcont.toggleDisplayLabel();
 						System.out.println(map1.toString());
+						tcont.toggleDisplayLabel();
 						cont.toggleDisplayNone();
 						
 						if(a.allowedShips(x.getActivePlayer().getColour()).isEmpty()) {
@@ -121,6 +150,27 @@ public class buildUI {
 							System.out.println("Please choose a location:");
 							s = sc.nextLine();
 							//error check for invalid input
+							
+							while(true) {
+								try {
+									Integer.parseInt(s);
+									break;
+								}
+								catch(Exception e) {
+									System.out.println("\u001b[1m\u001b[41;1m"+"Please input a valid ship location from list above"+"\u001b[0m");
+									s = sc.nextLine();
+								}
+							}
+							
+							while(true) {
+								if(!a.allowedShips(x.getActivePlayer().getColour()).contains(Integer.parseInt(s))) {
+									System.out.println("\u001b[1m\u001b[41;1m"+"Please input a valid ship location from list above"+"\u001b[0m");
+									s = sc.nextLine();
+								}
+								else {
+									break;
+								}
+							}
 							a.buySp(Integer.parseInt(s), x.getActivePlayer().getColour());
 							System.out.println(map1.toString());
 					

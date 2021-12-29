@@ -2,7 +2,6 @@ package map;
 
 import java.util.Hashtable;
 
-import map.RESOURCE;
 import pile.Pile;
 
 public class GainsAmount extends Pile{
