@@ -7,7 +7,7 @@ import logistic.Inventory;
 import map.RESOURCE;
 import map.ShipLairBoardCtrl;
 import map.TileCtrl;
-import map.veiwMap;
+import map.ViewMap;
 import player.Player;
 import player.PlayerCtrl;
 
@@ -50,7 +50,7 @@ public class buildUI {
 						p.decrementInventory(Inventory.LAIR, 1);
 						
 						ShipLairBoardCtrl a = ShipLairBoardCtrl.getInstance();
-						veiwMap map1 = new veiwMap();
+						ViewMap map1 = new ViewMap();
 						cont.toggleDisplayLr();
 						tcont.toggleDisplayLabel();
 						System.out.println(map1.toString());
@@ -131,7 +131,7 @@ public class buildUI {
 						p.decrementInventory(Inventory.SHIP, 1);
 						
 						ShipLairBoardCtrl a = ShipLairBoardCtrl.getInstance();
-						veiwMap map1 = new veiwMap();
+						ViewMap map1 = new ViewMap();
 						cont.toggleDisplaySp();
 						tcont.toggleDisplayLabel();
 						System.out.println(map1.toString());

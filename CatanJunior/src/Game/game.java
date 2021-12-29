@@ -17,7 +17,7 @@ import map.RESOURCE;
 import map.TileCtrl;
 import map.ShipLairBoardCtrl;
 import logistic.Inventory;
-import map.veiwMap;
+import map.ViewMap;
 import pile.Pile;
 
 public class game {
@@ -92,7 +92,7 @@ public class game {
 	
 	public void chooseStartingLocs() {
 		PlayerCtrl Pl = PlayerCtrl.getInstance();
-		veiwMap m = new veiwMap();	 
+		ViewMap m = new ViewMap();	 
 		for(Player p: Pl.getPlayerList()) {
 			COLOUR c = p.getColour();
 			
@@ -200,7 +200,7 @@ public class game {
 			return str;
 		}
 		else if(i == 5) {
-			veiwMap map1 = new veiwMap();
+			ViewMap map1 = new ViewMap();
 			ShipLairBoardCtrl cont = ShipLairBoardCtrl.getInstance();
 			TileCtrl tileCont = TileCtrl.getInstance();
 			cont.toggleDisplayNone();
