@@ -46,7 +46,6 @@ public class PlayerCtrl {
 		map = A.getGainsAmount(die_result);
 
 		for(COLOUR c: getListOfColours()) {
-				Player p = getPlayer(c);
 				Pile pile = map.getPileforColour(c);
 				
 				for(RESOURCE r: pile.getPile().keySet()) {

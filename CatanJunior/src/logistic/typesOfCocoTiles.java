@@ -1,6 +1,4 @@
 package logistic;
-import map.COLOUR;
-import map.RESOURCE;
 
 public enum typesOfCocoTiles {
 	//only 20 coco tiles

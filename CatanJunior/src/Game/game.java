@@ -23,133 +23,10 @@ import pile.Pile;
 public class game {
 
 	private static game single_instance = null;
-	
-
-	private String no_of_players;
-	private ColourHandling c_h = new ColourHandling();
 	private Dice dice = new Dice();
-	
 	private Scanner sc = new Scanner(System.in);
 	private CocoTiles cocotile = new CocoTiles();
-	private Stockpile stockpile = Stockpile.getInstance();
-	
-	private veiwMap map = new veiwMap();
-	
 	private MoveGhostCaptain moveUX = new MoveGhostCaptain();
-	
-	// Constructor
-	private game() {}
-	
-	
-	public void initialiseGame() {
-		boolean cond = true;
-		printIntroMessage();
-		
-		while(cond) {
-			System.out.println("Please enter how many players would like to play? [3-4]");
-			no_of_players = sc.nextLine();
-			
-			while(true) {
-				try {
-					Integer.valueOf(no_of_players);
-					break;
-				}
-				catch(Exception e) {
-					System.out.println("Please input a number between 3 and 4");
-					no_of_players = sc.nextLine();
-				}
-			}
-			
-			if(Integer.valueOf(no_of_players) == 4 || Integer.valueOf(no_of_players) == 3) {
-				getPlayers(Integer.valueOf(no_of_players));
-				playGame();
-				cond = false;
-			}
-			else {
-				System.out.println("Please enter an appropriate number of players [3-4].");
-			}
-		}		
-	}
-	
-	// update list of players after initialization
-	public void getPlayers(int numberOfPlayers){
-		int i = 1;
-		PlayerCtrl p = PlayerCtrl.getInstance();
-		while(i <= numberOfPlayers) {
-			boolean nn = true;
-			String player_name = null;
-			
-			while(nn) {
-				System.out.println("\nPlease enter player " + i +"'s name: ");
-				player_name = sc.nextLine();
-				if(checkName(player_name) || p.getNumofPlayers() < 1) {
-					nn = false;
-				}
-				else {
-					System.out.println("Please enter a unique name from other players.\n");
-				}
-			}
-			
-			
-			COLOUR c = null;
-			boolean cc = true;
-			
-			while(cc) {
-				System.out.println("Please choose a colour:\n");
-				c_h.printListOfColours();
-				String player_colour = sc.nextLine();
-				
-				c = convertColour(player_colour);
-				if(c != null) {
-					cc = false;
-				}
-				else {
-					System.out.println("Please input a correct colour option.\n");
-				}
-			}
-			
-			Player player = new Player(player_name, c);
-			p.addPlayer(player);
-			i++;
-		}
-	}
-	
-	private void getStartingLocs(COLOUR c, int lr_1, int sp_1, int lr_2, int sp_2) {
-		ShipLairBoardCtrl SPLR = ShipLairBoardCtrl.getInstance();
-		
-		SPLR.buyLr(lr_1, c);
-		SPLR.buySp(sp_1, c);
-		SPLR.buyLr(lr_2, c);
-		SPLR.buySp(sp_2, c);
-		
-	}
-	
-	public void chooseStartingLocs() {
-		PlayerCtrl Pl = PlayerCtrl.getInstance();
-		veiwMap m = new veiwMap();	 
-		for(Player p: Pl.getPlayerList()) {
-			COLOUR c = p.getColour();
-			
-			if(c.equals(COLOUR.RED)) {
-				getStartingLocs(c, 10, 10, 29, 36);
-			}
-			else if(c.equals(COLOUR.BLUE)) {
-				getStartingLocs(c, 7, 9, 30, 37);
-			}
-			else if(c.equals(COLOUR.WHITE)) {
-				getStartingLocs(c, 4, 5, 23, 31);
-			}
-			else if(c.equals(COLOUR.ORANGE)) {
-				getStartingLocs(c, 3, 4, 26, 32);
-			}
-			
-			p.decrementInventory(Inventory.SHIP, 2);
-			p.decrementInventory(Inventory.LAIR, 2);
-		}
-		
-		System.out.println(m.toString());
-		System.out.println("All players have their starting positions, LET THE GAMES BEGIN!");
-	}
 	
 	public void playGame() {
 		String die = null;
@@ -202,6 +79,45 @@ public class game {
 			}
 		}
 	}
+	
+	private void getStartingLocs(COLOUR c, int lr_1, int sp_1, int lr_2, int sp_2) {
+		ShipLairBoardCtrl SPLR = ShipLairBoardCtrl.getInstance();
+		
+		SPLR.buyLr(lr_1, c);
+		SPLR.buySp(sp_1, c);
+		SPLR.buyLr(lr_2, c);
+		SPLR.buySp(sp_2, c);
+		
+	}
+	
+	public void chooseStartingLocs() {
+		PlayerCtrl Pl = PlayerCtrl.getInstance();
+		veiwMap m = new veiwMap();	 
+		for(Player p: Pl.getPlayerList()) {
+			COLOUR c = p.getColour();
+			
+			if(c.equals(COLOUR.RED)) {
+				getStartingLocs(c, 10, 10, 29, 36);
+			}
+			else if(c.equals(COLOUR.BLUE)) {
+				getStartingLocs(c, 7, 9, 30, 37);
+			}
+			else if(c.equals(COLOUR.WHITE)) {
+				getStartingLocs(c, 4, 5, 23, 31);
+			}
+			else if(c.equals(COLOUR.ORANGE)) {
+				getStartingLocs(c, 3, 4, 26, 32);
+			}
+			
+			p.decrementInventory(Inventory.SHIP, 2);
+			p.decrementInventory(Inventory.LAIR, 2);
+		}
+		
+		System.out.println(m.toString());
+		System.out.println("All players have their starting positions, LET THE GAMES BEGIN!");
+	}
+	
+
 	
 	
 	public void MostCoco() {
@@ -521,32 +437,7 @@ public class game {
 		return result;
 	}
 	
-	private boolean checkName(String name) {
-		
-		PlayerCtrl Pl = PlayerCtrl.getInstance();
-		int count = 0;
-		for(Player n: Pl.getPlayerList()) {
-			if(!n.getPlayerStr().equals(name)) {
-				count++;
-			}
-		}
-		if(count == Pl.getNumofPlayers()) {
-			return true;
-		}
-		return false;
-	}
-	
-	// Error check if colour is correct format and convert into type Colour
-	private COLOUR convertColour(String col) {
-		for(COLOUR type: c_h.getListOfColours()) {
-			if(col.equals(type.toString().substring(0,1)) || col.equals(type.toString().toLowerCase().substring(0,1))){
-				c_h.changeListOfColours(type);
-				return type;
-			}	
-		}
-		return null;
-	}
-	
+
 	
 	// checks for the end of game condition for a player
 	public boolean checkForEOG() {
@@ -628,35 +519,6 @@ public class game {
 		+ "       \\/              \\/        \\/  \\/"+COLOUR.valueOfEscCode(COLOUR.NONE));
 	}
 	
-	public void printIntroMessage(){
-		
-		System.out.println(" ___       __    _______    ___        ________   ________   _____ ______    _______            \r\n"
-		+ "|\\  \\     |\\  \\ |\\  ___ \\  |\\  \\      |\\   ____\\ |\\   __  \\ |\\   _ \\  _   \\ |\\  ___ \\           \r\n"
-		+ "\\ \\  \\    \\ \\  \\\\ \\   __/| \\ \\  \\     \\ \\  \\___| \\ \\  \\|\\  \\\\ \\  \\\\\\__\\ \\  \\\\ \\   __/|          \r\n"
-		+ " \\ \\  \\  __\\ \\  \\\\ \\  \\_|/__\\ \\  \\     \\ \\  \\     \\ \\  \\\\\\  \\\\ \\  \\\\|__| \\  \\\\ \\  \\_|/__        \r\n"
-		+ "  \\ \\  \\|\\__\\_\\  \\\\ \\  \\_|\\ \\\\ \\  \\____ \\ \\  \\____ \\ \\  \\\\\\  \\\\ \\  \\    \\ \\  \\\\ \\  \\_|\\ \\       \r\n"
-		+ "   \\ \\____________\\\\ \\_______\\\\ \\_______\\\\ \\_______\\\\ \\_______\\\\ \\__\\    \\ \\__\\\\ \\_______\\      \r\n"
-		+ "    \\|____________| \\|_______| \\|_______| \\|_______| \\|_______| \\|__|     \\|__| \\|_______|      \r\n"
-		+ "                                     _________   ________                                       \r\n"
-		+ "                                    |\\___   ___\\|\\   __  \\                                      \r\n"
-		+ "                                    \\|___ \\  \\_|\\ \\  \\|\\  \\                                     \r\n"
-		+ "                                         \\ \\  \\  \\ \\  \\\\\\  \\                                    \r\n"
-		+ "                                          \\ \\  \\  \\ \\  \\\\\\  \\                                   \r\n"
-		+ "                                           \\ \\__\\  \\ \\_______\\                                  \r\n"
-		+ "                                            \\|__|   \\|_______|                                  \r\n"
-		+ "     ________   ________   _________   ________   ________              ___   ________          \r\n"
-		+ "    |\\   ____\\ |\\   __  \\ |\\___   ___\\|\\   __  \\ |\\   ___  \\           |\\  \\ |\\   __  \\         \r\n"
-		+ "    \\ \\  \\___| \\ \\  \\|\\  \\\\|___ \\  \\_|\\ \\  \\|\\  \\\\ \\  \\\\ \\  \\          \\ \\  \\\\ \\  \\|\\  \\        \r\n"
-		+ "     \\ \\  \\     \\ \\   __  \\    \\ \\  \\  \\ \\   __  \\\\ \\  \\\\ \\  \\       __ \\ \\  \\\\ \\   _  _\\       \r\n"
-		+ "      \\ \\  \\____ \\ \\  \\ \\  \\    \\ \\  \\  \\ \\  \\ \\  \\\\ \\  \\\\ \\  \\     |\\  \\\\_\\  \\\\ \\  \\\\  \\|  ___ \r\n"
-		+ "       \\ \\_______\\\\ \\__\\ \\__\\    \\ \\__\\  \\ \\__\\ \\__\\\\ \\__\\\\ \\__\\    \\ \\________\\\\ \\__\\\\ _\\ |\\__\\\r\n"
-		+ "        \\|_______| \\|__|\\|__|     \\|__|   \\|__|\\|__| \\|__| \\|__|     \\|________| \\|__|\\|__|\\|__|\r\n"
-		+ "                                                                                                \r\n"
-		+ "                                                                                               ");
-	}
-	
-
-
 
 	public void winnerSequence(COLOUR c) throws InterruptedException {
 		for(int i = 0; i < 10; i++) {

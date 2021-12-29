@@ -1,13 +1,10 @@
 package Board;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
-
 import map.RESOURCE;
 import pile.Pile;
 import player.Player;
 import player.PlayerCtrl;
-import Game.game;
 
 public class Stockpile extends Pile{
 	

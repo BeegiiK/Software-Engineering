@@ -37,7 +37,7 @@ public class Player{
 	// method to declare all internal inventory types
 	private void createInventory() {
 		//getInventory().put(Inventory.LAIR, 7);
-		getInventory().put(Inventory.LAIR, 7);
+		getInventory().put(Inventory.LAIR, 4);
 		getInventory().put(Inventory.SHIP, 8);
 	}
 
@@ -112,7 +112,6 @@ public class Player{
 		String Base = "   ---------------------------------------------------------------------------------";
 		ArrayList<String> each_R = new ArrayList<String>();
 		String format = "%7s%s";
-		int sum = 0;
 		
 		System.out.println(" ");
 		System.out.println(Base);

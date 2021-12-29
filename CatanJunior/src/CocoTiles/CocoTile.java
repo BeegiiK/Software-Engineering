@@ -2,13 +2,11 @@ package CocoTiles;
 
 	public class CocoTile {
 	
-	private boolean isUsed = false;
 	private CocoTilesType type = CocoTilesType.NONE;
 	
 	
 	public void use()
 	{
-		isUsed = true;
 		if(this.type == CocoTilesType.BUILD){
 			//Insert build code
 		}

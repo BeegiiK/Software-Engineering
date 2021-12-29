@@ -1,14 +1,15 @@
 package test;
 
-import Game.game;
+import Game.*;
 
 public class test {
 	
 	public static void main(String[] args) {
 		
-		game g = game.getInstance();
+		gameInitialisation newGame = new gameInitialisation();
 		
-		g.initialiseGame();
+		newGame.initialiseGame();
+		
 	}
 
 }

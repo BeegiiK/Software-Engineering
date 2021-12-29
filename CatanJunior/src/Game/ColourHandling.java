@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import map.COLOUR;
 
 public class ColourHandling {
-	
 	private ArrayList<COLOUR> listOfColours = new ArrayList<COLOUR>();
 
 	// create initial list of colors
@@ -31,5 +30,4 @@ public class ColourHandling {
 	public ArrayList<COLOUR> getListOfColours(){
 		return listOfColours;
 	}
-
 }
