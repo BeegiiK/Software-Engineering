@@ -1,5 +1,5 @@
 package logistic;
-import map.Colour;
+import map.COLOUR;
 import map.RESOURCE;
 
 public enum typesOfCocoTiles {

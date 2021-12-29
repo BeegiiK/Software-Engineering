@@ -3,7 +3,7 @@ package map;
 import java.util.ArrayList;
 import java.util.List;
 
-public class tile extends boardPart{
+public class tile extends BoardPiece{
 	
 	private ArrayList<Integer> lairs = new ArrayList<Integer>();
 	private boolean active = true;
@@ -33,23 +33,23 @@ public class tile extends boardPart{
 	
 	public List<String> veiw() {
 		if(active == true && rollNum != 0) {
-			this.setBoardPart(".···.", "¦ "+rollNum+" ¦", "'···'", "     ", RESOURCE.getString(resource));
+			this.setBoardPieceArt(".···.", "¦ "+rollNum+" ¦", "'···'", "     ", RESOURCE.getString(resource));
 		}
 		else if(active == false){
-			this.setBoardPart( "\033[0;38;2;34;174;34m_____\033[0;0m","\033[0;38;2;34;174;34m\\X X/\033[0;0m", "\033[0;38;2;34;174;34m |‡| \033[0;0m", "     \033[0;0m", RESOURCE.getString(resource));
+			this.setBoardPieceArt( "\033[0;38;2;34;174;34m_____\033[0;0m","\033[0;38;2;34;174;34m\\X X/\033[0;0m", "\033[0;38;2;34;174;34m |‡| \033[0;0m", "     \033[0;0m", RESOURCE.getString(resource));
 		}
 		else {
-			this.setBoardPart( "  _  "," / \\ ", "/___\\", "     ", RESOURCE.getString(resource));
+			this.setBoardPieceArt( "  _  "," / \\ ", "/___\\", "     ", RESOURCE.getString(resource));
 		}
 		
 		return this.getPart();
 	}
 	
-    public ArrayList<Colour> getLairOwners(){
-        ArrayList<Colour> C = new ArrayList<Colour>();
-        shipLairCtrl a = shipLairCtrl.getInstance(); 
+    public ArrayList<COLOUR> getLairOwners(){
+        ArrayList<COLOUR> C = new ArrayList<COLOUR>();
+        ShipLairBoardCtrl a = ShipLairBoardCtrl.getInstance(); 
         for(int i = 0; i < lairs.size(); i = i+1) {
-            if(a.getLrColour(lairs.get(i) - 1) != Colour.NONE) {
+            if(a.getLrColour(lairs.get(i) - 1) != COLOUR.NONE) {
                 C.add(a.getLrColour(lairs.get(i) - 1));
             }
         }

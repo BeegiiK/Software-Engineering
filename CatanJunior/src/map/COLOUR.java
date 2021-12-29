@@ -1,6 +1,6 @@
 package map;
 
-public enum Colour {
+public enum COLOUR {
 	WHITE("\033[0;38;2;180;254;200m"),
 	ORANGE("\033[0;38;2;245;154;17m"),
 	RED("\033[0;38;2;232;27;16m"),
@@ -8,11 +8,11 @@ public enum Colour {
 	NONE("\033[0;0m");
 	
 	public final String escCode;
-	private Colour(String escCode) {
+	private COLOUR(String escCode) {
 		this.escCode = escCode;
 	}
 	
-    public static String valueOfEscCode(Colour C) {
+    public static String valueOfEscCode(COLOUR C) {
         return C.escCode;
     }
 }

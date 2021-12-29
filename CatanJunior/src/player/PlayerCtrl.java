@@ -6,7 +6,7 @@ import java.util.Hashtable;
 import Board.Stockpile;
 import map.RESOURCE;
 import map.TileCtrl;
-import map.Colour;
+import map.COLOUR;
 import map.GainsAmount;
 import pile.Pile;
 
@@ -21,7 +21,7 @@ public class PlayerCtrl {
 		list.add(p);	
 	}
 	
-	public Player getPlayer(Colour c) {
+	public Player getPlayer(COLOUR c) {
 		for(Player p: list) {
 			if(p.getColour().equals(c)) {
 				return p;
@@ -30,8 +30,8 @@ public class PlayerCtrl {
 		return null;
 	}
 	
-	public ArrayList<Colour> getListOfColours(){
-		ArrayList<Colour> c = new ArrayList<Colour>();
+	public ArrayList<COLOUR> getListOfColours(){
+		ArrayList<COLOUR> c = new ArrayList<COLOUR>();
 		for(Player p: list) {
 			c.add(p.getColour());
 		}
@@ -45,7 +45,7 @@ public class PlayerCtrl {
 		GainsAmount map = new GainsAmount();
 		map = A.getGainsAmount(die_result);
 
-		for(Colour c: getListOfColours()) {
+		for(COLOUR c: getListOfColours()) {
 				Player p = getPlayer(c);
 				Pile pile = map.getPileforColour(c);
 				
@@ -54,7 +54,7 @@ public class PlayerCtrl {
 				}
 		}
 		
-		for(Colour c: getListOfColours()) {
+		for(COLOUR c: getListOfColours()) {
 			Player p = getPlayer(c);
 			Pile pile = map.getPileforColour(c);
 			

@@ -2,33 +2,33 @@ package Game;
 
 import java.util.ArrayList;
 
-import map.Colour;
+import map.COLOUR;
 
 public class ColourHandling {
 	
-	private ArrayList<Colour> listOfColours = new ArrayList<Colour>();
+	private ArrayList<COLOUR> listOfColours = new ArrayList<COLOUR>();
 
 	// create initial list of colors
 	public ColourHandling(){
-		for(Colour type: Colour.values()) {
-			if(type != Colour.NONE) {
+		for(COLOUR type: COLOUR.values()) {
+			if(type != COLOUR.NONE) {
 				listOfColours.add(type);
 			}
 		}
 	}
 	
 	// change list of colors according to colors chosen
-	public void changeListOfColours(Colour c){
+	public void changeListOfColours(COLOUR c){
 		listOfColours.remove(c);
 	}
 	
 	public void printListOfColours() {
-		for(Colour type: listOfColours) {
-			System.out.println(type.escCode + "["+type.toString().substring(0,1)+"] " + type +"\n" + Colour.NONE.escCode);
+		for(COLOUR type: listOfColours) {
+			System.out.println(type.escCode + "["+type.toString().substring(0,1)+"] " + type +"\n" + COLOUR.NONE.escCode);
 		}
 	}
 	
-	public ArrayList<Colour> getListOfColours(){
+	public ArrayList<COLOUR> getListOfColours(){
 		return listOfColours;
 	}
 

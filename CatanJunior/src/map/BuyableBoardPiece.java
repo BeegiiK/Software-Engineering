@@ -1,25 +1,50 @@
 package map;
-
-public abstract class buyableSpot extends boardPart{
-		
-	private Colour owned = Colour.NONE;
+/**
+ * The BuyableBoardPiece defines any board Piece 
+ * that can be bought by a player.
+ *  
+ * @category Board Piece
+ */
+public abstract class BuyableBoardPiece extends BoardPiece{
+	
+	/** 
+	 * Colour of the player who owns this piece.
+	 * Set to NONE upon initialization.
+	 */
+	private COLOUR owned = COLOUR.NONE;
+	/**
+	 * ID number of the Buyable board Piece,
+	 * will be needed for the players to identify
+	 * different buyable Pieces 
+	 */
 	private int id;	
 	
-	public buyableSpot(int id) {
+	/**
+	 * Constructor
+	 *  
+	 * @param id
+	 */
+	public BuyableBoardPiece(int id) {
 		this.id = id;
 	}
-
-	public Colour ownedBy() {
+	
+	/**
+	 * Return the colour of the current owner of
+	 * this buyable Piece, if no one has bought it
+	 * yet return NONE
+	 * @return
+	 */
+	public COLOUR ownedBy() {
 		return owned;
 	}
 
-	public void boughtBy(Colour C) {
-		if(veiw.isEmpty() == false && owned == Colour.NONE) {
+	public void boughtBy(COLOUR C) {
+		if(veiw.isEmpty() == false && owned == COLOUR.NONE) {
 			this.owned = C;
 			String s;
 			for(int i=0; i < veiw.size(); i=i+1) {
 				s = veiw.get(i);
-				veiw.set(i, (Colour.valueOfEscCode(C)+s+Colour.valueOfEscCode(Colour.NONE)));
+				veiw.set(i, (COLOUR.valueOfEscCode(C)+s+COLOUR.valueOfEscCode(COLOUR.NONE)));
 			}
 		}
 	}

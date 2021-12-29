@@ -7,7 +7,7 @@ import java.util.Stack;
 import Game.MoveGhostCaptain;
 import Game.game;
 import map.RESOURCE;
-import map.shipLairCtrl;
+import map.ShipLairBoardCtrl;
 import map.veiwMap;
 import logistic.Inventory;
 import logistic.typesOfCocoTiles;
@@ -118,7 +118,7 @@ public class CocoTiles {
 		boolean var = true;
 		String s = null;
 		veiwMap map = new veiwMap();
-		shipLairCtrl controller = shipLairCtrl.getInstance();
+		ShipLairBoardCtrl controller = ShipLairBoardCtrl.getInstance();
 		
 		System.out.println(map.toString());
 		System.out.println("What would you like to build for free?");

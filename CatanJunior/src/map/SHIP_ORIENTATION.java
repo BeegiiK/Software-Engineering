@@ -1,6 +1,6 @@
 package map;
 
-public enum ShipVeiw {
+public enum SHIP_ORIENTATION {
 	Diagleft,
 	DiagRight,
 	Horizontal,

@@ -91,32 +91,32 @@ public class TileCtrl {
 		Pile white = new Pile();
 		Pile orange = new Pile();
 		
-		ArrayList<Colour> A = new ArrayList<Colour>();
+		ArrayList<COLOUR> A = new ArrayList<COLOUR>();
 		
 		for(int i = 0; i < tl.size(); i = i +1) {
 			if(rolled_number == tl.get(i).getRollNum() && tl.get(i).isActive()) {
 				A = tl.get(i).getLairOwners();
 				for(int j = 0; j < A.size(); j = j+1) {
-					if(A.get(j) == Colour.RED) {
+					if(A.get(j) == COLOUR.RED) {
 						red.incrementPile(tl.get(i).getResource(), 1);
 					}
-					else if(A.get(j) == Colour.BLUE) {
+					else if(A.get(j) == COLOUR.BLUE) {
 						blue.incrementPile(tl.get(i).getResource(), 1);
 					}
-					else if(A.get(j) == Colour.WHITE) {
+					else if(A.get(j) == COLOUR.WHITE) {
 						white.incrementPile(tl.get(i).getResource(), 1);
 
 					}
-					else if(A.get(j) == Colour.ORANGE) {
+					else if(A.get(j) == COLOUR.ORANGE) {
 						orange.incrementPile(tl.get(i).getResource(), 1);
 					}
 				}
 			}
 		}
-		G.setPileforColour(Colour.ORANGE, orange);
-		G.setPileforColour(Colour.RED, red);
-		G.setPileforColour(Colour.BLUE, blue);
-		G.setPileforColour(Colour.WHITE, white);
+		G.setPileforColour(COLOUR.ORANGE, orange);
+		G.setPileforColour(COLOUR.RED, red);
+		G.setPileforColour(COLOUR.BLUE, blue);
+		G.setPileforColour(COLOUR.WHITE, white);
 		return G;	
 	}
 	

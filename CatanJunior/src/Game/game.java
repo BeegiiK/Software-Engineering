@@ -11,12 +11,12 @@ import java.util.Collections;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-import map.Colour;
+import map.COLOUR;
 import map.GainsAmount;
 import map.MarketPlace;
 import map.RESOURCE;
 import map.TileCtrl;
-import map.shipLairCtrl;
+import map.ShipLairBoardCtrl;
 import logistic.Inventory;
 import map.veiwMap;
 import pile.Pile;
@@ -95,7 +95,7 @@ public class game {
 			}
 			
 			
-			Colour c = null;
+			COLOUR c = null;
 			boolean cc = true;
 			
 			while(cc) {
@@ -118,8 +118,8 @@ public class game {
 		}
 	}
 	
-	private void getStartingLocs(Colour c, int lr_1, int sp_1, int lr_2, int sp_2) {
-		shipLairCtrl SPLR = shipLairCtrl.getInstance();
+	private void getStartingLocs(COLOUR c, int lr_1, int sp_1, int lr_2, int sp_2) {
+		ShipLairBoardCtrl SPLR = ShipLairBoardCtrl.getInstance();
 		
 		SPLR.buyLr(lr_1, c);
 		SPLR.buySp(sp_1, c);
@@ -132,18 +132,18 @@ public class game {
 		PlayerCtrl Pl = PlayerCtrl.getInstance();
 		veiwMap m = new veiwMap();	 
 		for(Player p: Pl.getPlayerList()) {
-			Colour c = p.getColour();
+			COLOUR c = p.getColour();
 			
-			if(c.equals(Colour.RED)) {
+			if(c.equals(COLOUR.RED)) {
 				getStartingLocs(c, 10, 10, 29, 36);
 			}
-			else if(c.equals(Colour.BLUE)) {
+			else if(c.equals(COLOUR.BLUE)) {
 				getStartingLocs(c, 7, 9, 30, 37);
 			}
-			else if(c.equals(Colour.WHITE)) {
+			else if(c.equals(COLOUR.WHITE)) {
 				getStartingLocs(c, 4, 5, 23, 31);
 			}
-			else if(c.equals(Colour.ORANGE)) {
+			else if(c.equals(COLOUR.ORANGE)) {
 				getStartingLocs(c, 3, 4, 26, 32);
 			}
 			
@@ -266,7 +266,7 @@ public class game {
 				exit = false;
 			}
 			else {
-				System.out.println("Please give a valid input for an option to be chosen [1-7].\n");
+				System.out.println("Please give a valid input for an option to be chosen [1-5].\n");
 				chosen = sc.nextLine();
 			}
 		}
@@ -289,7 +289,7 @@ public class game {
 		}
 		else if(i == 5) {
 			veiwMap map1 = new veiwMap();
-			shipLairCtrl cont = shipLairCtrl.getInstance();
+			ShipLairBoardCtrl cont = ShipLairBoardCtrl.getInstance();
 			TileCtrl tileCont = TileCtrl.getInstance();
 			cont.toggleDisplayNone();
 			tileCont.toggleDisplayLabel();
@@ -372,9 +372,6 @@ public class game {
 					System.out.println("\u001b[1m\u001b[41;1m" + "Invalid entry" + "\u001b[0m");
 					retval = true;
 				}
-			}
-			else if(res.equals("3")) {
-				return false;
 			}
 			else {
 				System.out.println("\u001b[1m\u001b[41;1m" + "Invalid entry" + "\u001b[0m");
@@ -544,8 +541,8 @@ public class game {
 	}
 	
 	// Error check if colour is correct format and convert into type Colour
-	private Colour convertColour(String col) {
-		for(Colour type: c_h.getListOfColours()) {
+	private COLOUR convertColour(String col) {
+		for(COLOUR type: c_h.getListOfColours()) {
 			if(col.equals(type.toString().substring(0,1)) || col.equals(type.toString().toLowerCase().substring(0,1))){
 				c_h.changeListOfColours(type);
 				return type;
@@ -574,7 +571,7 @@ public class game {
 	}
 	
 	public String getWinStatementOrange() {
-		return(Colour.valueOfEscCode(Colour.ORANGE)+"________                                       \r\n"
+		return(COLOUR.valueOfEscCode(COLOUR.ORANGE)+"________                                       \r\n"
 				+ "\\_____  \\____________    ____    ____   ____   \r\n"
 				+ " /   |   \\_  __ \\__  \\  /    \\  / ___\\_/ __ \\  \r\n"
 				+ "/    |    \\  | \\// __ \\|   |  \\/ /_/  >  ___/  \r\n"
@@ -585,11 +582,11 @@ public class game {
 				+ "\\   \\/\\/   /   |/   |   \\ \\_____  \\ | |        \r\n"
 				+ " \\        /|   /    |    \\/        \\ \\|        \r\n"
 				+ "  \\__/\\  / |___\\____|__  /_______  / __        \r\n"
-				+ "       \\/              \\/        \\/  \\/ "+Colour.valueOfEscCode(Colour.NONE));
+				+ "       \\/              \\/        \\/  \\/ "+COLOUR.valueOfEscCode(COLOUR.NONE));
 	}
 	
 	public String getWinStatementRed() {
-		return(Colour.valueOfEscCode(Colour.RED)+"      __________           .___        \r\n"
+		return(COLOUR.valueOfEscCode(COLOUR.RED)+"      __________           .___        \r\n"
 				+ "      \\______   \\ ____   __| _/        \r\n"
 				+ "       |       _// __ \\ / __ |         \r\n"
 				+ "       |    |   \\  ___// /_/ |         \r\n"
@@ -600,11 +597,11 @@ public class game {
 				+ "\\   \\/\\/   /   |/   |   \\ \\_____  \\ | |\r\n"
 				+ " \\        /|   /    |    \\/        \\ \\|\r\n"
 				+ "  \\__/\\  / |___\\____|__  /_______  / __\r\n"
-				+ "       \\/              \\/        \\/  \\/"+Colour.valueOfEscCode(Colour.NONE));
+				+ "       \\/              \\/        \\/  \\/"+COLOUR.valueOfEscCode(COLOUR.NONE));
 	}
 	
 	public String getWinStatementBlue() {
-		return(Colour.valueOfEscCode(Colour.BLUE)+"    __________.__                      \r\n"
+		return(COLOUR.valueOfEscCode(COLOUR.BLUE)+"    __________.__                      \r\n"
 		+ "    \\______   \\  |  __ __   ____       \r\n"
 		+ "     |    |  _/  | |  |  \\_/ __ \\      \r\n"
 		+ "     |    |   \\  |_|  |  /\\  ___/      \r\n"
@@ -615,11 +612,11 @@ public class game {
 		+ "\\   \\/\\/   /   |/   |   \\ \\_____  \\ | |\r\n"
 		+ " \\        /|   /    |    \\/        \\ \\|\r\n"
 		+ "  \\__/\\  / |___\\____|__  /_______  / __\r\n"
-		+ "       \\/              \\/        \\/  \\/"+Colour.valueOfEscCode(Colour.NONE));
+		+ "       \\/              \\/        \\/  \\/"+COLOUR.valueOfEscCode(COLOUR.NONE));
 	}
 	
 	public String getWinStatementWhite() {
-		return(Colour.valueOfEscCode(Colour.WHITE)+"   __      __.__    .__  __            \r\n"
+		return(COLOUR.valueOfEscCode(COLOUR.WHITE)+"   __      __.__    .__  __            \r\n"
 		+ "  /  \\    /  \\  |__ |__|/  |_  ____    \r\n"
 		+ "  \\   \\/\\/   /  |  \\|  \\   __\\/ __ \\   \r\n"
 		+ "   \\        /|   Y  \\  ||  | \\  ___/   \r\n"
@@ -630,7 +627,7 @@ public class game {
 		+ "\\   \\/\\/   /   |/   |   \\ \\_____  \\ | |\r\n"
 		+ " \\        /|   /    |    \\/        \\ \\|\r\n"
 		+ "  \\__/\\  / |___\\____|__  /_______  / __\r\n"
-		+ "       \\/              \\/        \\/  \\/"+Colour.valueOfEscCode(Colour.NONE));
+		+ "       \\/              \\/        \\/  \\/"+COLOUR.valueOfEscCode(COLOUR.NONE));
 	}
 	
 	public void printIntroMessage(){
@@ -668,13 +665,13 @@ public class game {
 		return single_instance;
 	}
 	
-	public void winnerSequence(Colour c) throws InterruptedException {
+	public void winnerSequence(COLOUR c) throws InterruptedException {
 		for(int i = 0; i < 10; i++) {
 			System.out.println("\n");
 			Thread.sleep(100);
 		}
 
-		System.out.println("\033[5m          \u001b[7m WAIT     A      SECOND\\u001b[0m     \033[25m\n\n\n");
+		System.out.println("\033[5m          \u001b[7mWAIT     A      SECOND\u001b[0m     \033[25m\n\n\n");
         
         Thread.sleep(1000);
 		System.out.println("       \033[0;38;2;200;17;124mI "
@@ -683,16 +680,16 @@ public class game {
 				+ "\033[0;38;2;98;137;224mC\033[0;38;2;137;16;224mE\033[0;38;2;224;137;16mL\033[0;38;2;160;137;224mE\033[0;38;2;144;17;224mB\033[0;38;2;140;137;1554mR\033[0;38;2;16;137;224mA\033[0;38;2;106;17;24mT\033[0;38;2;160;165;215mI\033[0;38;2;213;107;104mO\033[0;38;2;45;137;224mN"
 				+ " \033[0;38;2;160;1;224mC\033[0;38;2;78;137;173mO\033[0;38;2;137;137;224mM\033[0;38;2;204;137;204mI\033[0;38;2;167;17;24mN\033[0;38;98;16;10;254mG\033[0;0m\n\n");
 		Thread.sleep(1000);
-		if(c.equals(Colour.BLUE)) {
+		if(c.equals(COLOUR.BLUE)) {
 			System.out.println(getWinStatementBlue());
 		}
-		else if(c.equals(Colour.WHITE)) {
+		else if(c.equals(COLOUR.WHITE)) {
 			System.out.println(getWinStatementWhite());
 		}
-		else if(c.equals(Colour.RED)) {
+		else if(c.equals(COLOUR.RED)) {
 			System.out.println(getWinStatementRed());
 		}
-		else if(c.equals(Colour.ORANGE)) {
+		else if(c.equals(COLOUR.ORANGE)) {
 			System.out.println(getWinStatementOrange());
 		}
 		for(int i = 0; i < 10; i++) {
@@ -719,7 +716,7 @@ public class game {
 		String r1;
 		String r2 ="   |                                                                                 |";
 		
-		for(Colour c: P.getListOfColours()) {
+		for(COLOUR c: P.getListOfColours()) {
 			Player p = P.getPlayer(c);
 			Pile pile = G.getPileforColour(c);
 			r1 = new String(new char[43 - p.getPlayerStr().length()]).replace("\0", " ");

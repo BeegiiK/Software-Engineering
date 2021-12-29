@@ -5,7 +5,7 @@ import java.util.Scanner;
 import Board.Stockpile;
 import logistic.Inventory;
 import map.RESOURCE;
-import map.shipLairCtrl;
+import map.ShipLairBoardCtrl;
 import map.veiwMap;
 import player.Player;
 import player.PlayerCtrl;
@@ -17,7 +17,7 @@ public class buildUI {
 	public void buy() {
 		boolean var = true;
 		String s = null;
-		shipLairCtrl cont = shipLairCtrl.getInstance();
+		ShipLairBoardCtrl cont = ShipLairBoardCtrl.getInstance();
 		
 		while(var) {
 			System.out.println("What option would you like to choose?");
@@ -47,7 +47,7 @@ public class buildUI {
 						}
 						p.decrementInventory(Inventory.LAIR, 1);
 						
-						shipLairCtrl a = shipLairCtrl.getInstance();
+						ShipLairBoardCtrl a = ShipLairBoardCtrl.getInstance();
 						veiwMap map1 = new veiwMap();
 						cont.toggleDisplayLr();
 						System.out.println(map1.toString());
@@ -103,7 +103,7 @@ public class buildUI {
 						}
 						p.decrementInventory(Inventory.SHIP, 1);
 						
-						shipLairCtrl a = shipLairCtrl.getInstance();
+						ShipLairBoardCtrl a = ShipLairBoardCtrl.getInstance();
 						veiwMap map1 = new veiwMap();
 						cont.toggleDisplaySp();
 						System.out.println(map1.toString());

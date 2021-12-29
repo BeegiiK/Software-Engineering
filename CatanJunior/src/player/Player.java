@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Stack;
 
-import map.Colour;
+import map.COLOUR;
 import map.RESOURCE;
 import logistic.Inventory;
 
 
 public class Player{
 	
-	private Colour colour;
+	private COLOUR colour;
 	private String name;
 	private boolean turn;
 	private boolean rolled;
@@ -23,7 +23,7 @@ public class Player{
 	private Stack<String> usedCocoTiles = new Stack<String>();
 	private boolean leading = false;
 	
-	public Player(String name, Colour colour) {
+	public Player(String name, COLOUR colour) {
 		this.colour = colour;
 		this.name = name;
 		this.tiles = 0;
@@ -54,7 +54,7 @@ public class Player{
 		return this.tradedWithMarketPlace;
 	}
 	
-	public Colour getColour() {
+	public COLOUR getColour() {
 		return this.colour;
 	}
 	
@@ -76,7 +76,7 @@ public class Player{
 	
 	public String getPlayerName() {
 		
-		return (Colour.valueOfEscCode(colour)+name+Colour.valueOfEscCode(Colour.NONE));
+		return (COLOUR.valueOfEscCode(colour)+name+COLOUR.valueOfEscCode(COLOUR.NONE));
 	}
 	
 	public String getPlayerStr() {

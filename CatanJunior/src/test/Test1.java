@@ -1,9 +1,9 @@
 package test;
 
 
-import map.Colour;
+import map.COLOUR;
 import map.TileCtrl;
-import map.shipLairCtrl;
+import map.ShipLairBoardCtrl;
 import map.veiwMap;
 //
 //public class Test1 {

@@ -3,33 +3,33 @@ package map;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class shipLairCtrl {//Define singleton
-	private static shipLairCtrl onlyInstance = null;
+public class ShipLairBoardCtrl {//Define singleton
+	private static ShipLairBoardCtrl onlyInstance = null;
 	
 	private final int lairMax = 32;
-	private ArrayList<lair> lr = new ArrayList<>(lairMax);
+	private ArrayList<LairPiece> lr = new ArrayList<>(lairMax);
 	
 	private final int shipMax = 40;
-	private ArrayList<ship> sp = new ArrayList<>(shipMax);
+	private ArrayList<ShipPiece> sp = new ArrayList<>(shipMax);
 	
 	private int displayMode = 0;
 	
-	private shipLairCtrl() {
-		ShipVeiw[] shipTypeByID = new ShipVeiw[] {ShipVeiw.Horizontal, 	ShipVeiw.DiagRight, 	ShipVeiw.Diagleft, 	ShipVeiw.Diagleft, 		ShipVeiw.DiagRight,
-				ShipVeiw.Horizontal, 	ShipVeiw.DiagRight, 	ShipVeiw.Diagleft, 	ShipVeiw.Horizontal, 	ShipVeiw.Horizontal,
-				ShipVeiw.DiagRight, 	ShipVeiw.Diagleft, 		ShipVeiw.DiagRight, ShipVeiw.Diagleft, 		ShipVeiw.Horizontal,
-				ShipVeiw.Diagleft, 		ShipVeiw.DiagRight, 	ShipVeiw.Diagleft, 	ShipVeiw.DiagRight, 	ShipVeiw.Horizontal,
-				ShipVeiw.Horizontal, 	ShipVeiw.DiagRight, 	ShipVeiw.Diagleft,	ShipVeiw.DiagRight, 	ShipVeiw.Diagleft,
-				ShipVeiw.Horizontal, 	ShipVeiw.Diagleft, 		ShipVeiw.DiagRight, ShipVeiw.Diagleft, 		ShipVeiw.DiagRight,
-				ShipVeiw.Horizontal, 	ShipVeiw.Horizontal, 	ShipVeiw.Diagleft, 	ShipVeiw.DiagRight, 	ShipVeiw.Horizontal,
-				ShipVeiw.DiagRight,		ShipVeiw.Diagleft, 		ShipVeiw.Diagleft, 	ShipVeiw.DiagRight, 	ShipVeiw.Horizontal};
+	private ShipLairBoardCtrl() {
+		SHIP_ORIENTATION[] shipTypeByID = new SHIP_ORIENTATION[] {SHIP_ORIENTATION.Horizontal, 	SHIP_ORIENTATION.DiagRight, 	SHIP_ORIENTATION.Diagleft, 	SHIP_ORIENTATION.Diagleft, 		SHIP_ORIENTATION.DiagRight,
+				SHIP_ORIENTATION.Horizontal, 	SHIP_ORIENTATION.DiagRight, 	SHIP_ORIENTATION.Diagleft, 	SHIP_ORIENTATION.Horizontal, 	SHIP_ORIENTATION.Horizontal,
+				SHIP_ORIENTATION.DiagRight, 	SHIP_ORIENTATION.Diagleft, 		SHIP_ORIENTATION.DiagRight, SHIP_ORIENTATION.Diagleft, 		SHIP_ORIENTATION.Horizontal,
+				SHIP_ORIENTATION.Diagleft, 		SHIP_ORIENTATION.DiagRight, 	SHIP_ORIENTATION.Diagleft, 	SHIP_ORIENTATION.DiagRight, 	SHIP_ORIENTATION.Horizontal,
+				SHIP_ORIENTATION.Horizontal, 	SHIP_ORIENTATION.DiagRight, 	SHIP_ORIENTATION.Diagleft,	SHIP_ORIENTATION.DiagRight, 	SHIP_ORIENTATION.Diagleft,
+				SHIP_ORIENTATION.Horizontal, 	SHIP_ORIENTATION.Diagleft, 		SHIP_ORIENTATION.DiagRight, SHIP_ORIENTATION.Diagleft, 		SHIP_ORIENTATION.DiagRight,
+				SHIP_ORIENTATION.Horizontal, 	SHIP_ORIENTATION.Horizontal, 	SHIP_ORIENTATION.Diagleft, 	SHIP_ORIENTATION.DiagRight, 	SHIP_ORIENTATION.Horizontal,
+				SHIP_ORIENTATION.DiagRight,		SHIP_ORIENTATION.Diagleft, 		SHIP_ORIENTATION.Diagleft, 	SHIP_ORIENTATION.DiagRight, 	SHIP_ORIENTATION.Horizontal};
 		
 		for(int i = 1; i <= lairMax; i = i+1) {
-			lair x = new lair(i);
+			LairPiece x = new LairPiece(i);
 			lr.add(x);
 		}
 		for(int i = 1; i <= shipMax; i = i+1) {
-			ship y = new ship(i, shipTypeByID[i-1]);
+			ShipPiece y = new ShipPiece(i, shipTypeByID[i-1]);
 			sp.add(y);
 		}
 		
@@ -108,11 +108,11 @@ public class shipLairCtrl {//Define singleton
 		sp.get(39).setNeighbours(lr.get(30), lr.get(31));	
 	}
 	
-	public ArrayList<Integer> allowedLairs(Colour playerColour) {
+	public ArrayList<Integer> allowedLairs(COLOUR playerColour) {
 		ArrayList<Integer> allowedLocs = new ArrayList<Integer>();
 		for(int i = 0; i<lairMax; i = i+1) {
 			
-			if(lr.get(i).ownedBy() == Colour.NONE) {
+			if(lr.get(i).ownedBy() == COLOUR.NONE) {
 				int numberOfNeighbours =  lr.get(i).getNeighbourShipIDs().size();
 				ArrayList<Integer> IDs = lr.get(i).getNeighbourShipIDs();
 				
@@ -131,11 +131,11 @@ public class shipLairCtrl {//Define singleton
 		return allowedLocs;
 	}
 	
-	public ArrayList<Integer> allowedShips(Colour playerColour) {
+	public ArrayList<Integer> allowedShips(COLOUR playerColour) {
 		ArrayList<Integer> allowedLocs = new ArrayList<Integer>();
 		for(int i = 0; i<shipMax; i = i+1) {
 			
-			if(sp.get(i).ownedBy() == Colour.NONE) {
+			if(sp.get(i).ownedBy() == COLOUR.NONE) {
 				int numberOfNeighbours =  sp.get(i).getNeighbourLairIDs().size();
 				ArrayList<Integer> IDs = sp.get(i).getNeighbourLairIDs();
 				
@@ -155,9 +155,9 @@ public class shipLairCtrl {//Define singleton
 	}
 	
 	
-    public static shipLairCtrl getInstance(){
+    public static ShipLairBoardCtrl getInstance(){
         if (onlyInstance == null)
-        	onlyInstance = new shipLairCtrl();
+        	onlyInstance = new ShipLairBoardCtrl();
         return onlyInstance;
     }
     
@@ -169,11 +169,11 @@ public class shipLairCtrl {//Define singleton
     	return sp.get(id-1).getPart().get(elementNum);
     }
     
-    public void buyLr(int id, Colour C) {
+    public void buyLr(int id, COLOUR C) {
     	lr.get(id-1).boughtBy(C);
     }
     
-    public void buySp(int id, Colour C) {
+    public void buySp(int id, COLOUR C) {
     	sp.get(id-1).boughtBy(C);
     }
     
@@ -205,7 +205,7 @@ public class shipLairCtrl {//Define singleton
     	}
     }
     
-    public Colour getLrColour(int id) {
+    public COLOUR getLrColour(int id) {
     	return lr.get(id).ownedBy();
     }
     
