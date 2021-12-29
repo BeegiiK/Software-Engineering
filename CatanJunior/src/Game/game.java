@@ -266,7 +266,7 @@ public class game {
 				exit = false;
 			}
 			else {
-				System.out.println("Please give a valid input for an option to be chosen [1-5].\n");
+				System.out.println("Please give a valid input for an option to be chosen [1-7].\n");
 				chosen = sc.nextLine();
 			}
 		}
@@ -372,6 +372,9 @@ public class game {
 					System.out.println("\u001b[1m\u001b[41;1m" + "Invalid entry" + "\u001b[0m");
 					retval = true;
 				}
+			}
+			else if(res.equals("3")) {
+				return false;
 			}
 			else {
 				System.out.println("\u001b[1m\u001b[41;1m" + "Invalid entry" + "\u001b[0m");

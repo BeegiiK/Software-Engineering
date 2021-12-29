@@ -6,8 +6,8 @@ public enum options {
 	BUILD("Build"),
 	END("End my turn"),
 	VIEW("View map"),
-	PRINT_CARD("Veiw resources & Inventory"),
-	PRINT_STOCKPILE("Veiw Stockpile");
+	PRINT_CARD("View resources & Inventory"),
+	PRINT_STOCKPILE("View Stockpile");
 	
 	private String displayName;
 	
