@@ -9,6 +9,7 @@ import Board.Stockpile;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import map.Colour;
 import map.GainsAmount;
@@ -43,7 +44,10 @@ public class game {
 	
 	public void initialiseGame() {
 		boolean cond = true;
-		System.out.println("Welcome to Catan Jr!\n");
+
+		printIntroMessage();
+
+
 		
 		while(cond) {
 			System.out.println("Please enter how many players would like to play? [3-4]");
@@ -66,7 +70,7 @@ public class game {
 				cond = false;
 			}
 			else {
-				System.out.println("Please enter an appropriate number of players [3-4].");
+				System.out.println("Please enter an appropriate number of players [3-4]");
 			}
 		}		
 	}
@@ -554,12 +558,103 @@ public class game {
 		for(Player p: Pl.getPlayerList()) {
 			if(p.getPlayerTurn()) {
 				if(p.getInventory().get(Inventory.LAIR) == 0 || (p.getInventory().get(Inventory.LAIR) == 1 && p.getLeading() == true)) {
-					System.out.println("The game is over. Player: "+p.getPlayerName()+" has won the game");
+					try {
+						winnerSequence(p.getColour());
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 					return true;
 				}
 			}
 		}
 		return false;
+	}
+	
+	public String getWinStatementOrange() {
+		return(Colour.valueOfEscCode(Colour.ORANGE)+"________                                       \r\n"
+				+ "\\_____  \\____________    ____    ____   ____   \r\n"
+				+ " /   |   \\_  __ \\__  \\  /    \\  / ___\\_/ __ \\  \r\n"
+				+ "/    |    \\  | \\// __ \\|   |  \\/ /_/  >  ___/  \r\n"
+				+ "\\_______  /__|  (____  /___|  /\\___  / \\___  > \r\n"
+				+ "        \\/           \\/     \\//_____/      \\/  \r\n"
+				+ " __      __.___ _______    _________._.        \r\n"
+				+ "/  \\    /  \\   |\\      \\  /   _____/| |        \r\n"
+				+ "\\   \\/\\/   /   |/   |   \\ \\_____  \\ | |        \r\n"
+				+ " \\        /|   /    |    \\/        \\ \\|        \r\n"
+				+ "  \\__/\\  / |___\\____|__  /_______  / __        \r\n"
+				+ "       \\/              \\/        \\/  \\/ "+Colour.valueOfEscCode(Colour.NONE));
+	}
+	
+	public String getWinStatementRed() {
+		return(Colour.valueOfEscCode(Colour.RED)+"      __________           .___        \r\n"
+				+ "      \\______   \\ ____   __| _/        \r\n"
+				+ "       |       _// __ \\ / __ |         \r\n"
+				+ "       |    |   \\  ___// /_/ |         \r\n"
+				+ "       |____|_  /\\___  >____ |         \r\n"
+				+ "              \\/     \\/     \\/         \r\n"
+				+ " __      __.___ _______    _________._.\r\n"
+				+ "/  \\    /  \\   |\\      \\  /   _____/| |\r\n"
+				+ "\\   \\/\\/   /   |/   |   \\ \\_____  \\ | |\r\n"
+				+ " \\        /|   /    |    \\/        \\ \\|\r\n"
+				+ "  \\__/\\  / |___\\____|__  /_______  / __\r\n"
+				+ "       \\/              \\/        \\/  \\/"+Colour.valueOfEscCode(Colour.NONE));
+	}
+	
+	public String getWinStatementBlue() {
+		return(Colour.valueOfEscCode(Colour.BLUE)+"    __________.__                      \r\n"
+		+ "    \\______   \\  |  __ __   ____       \r\n"
+		+ "     |    |  _/  | |  |  \\_/ __ \\      \r\n"
+		+ "     |    |   \\  |_|  |  /\\  ___/      \r\n"
+		+ "     |______  /____/____/  \\___  >     \r\n"
+		+ "            \\/                 \\/      \r\n"
+		+ " __      __.___ _______    _________._.\r\n"
+		+ "/  \\    /  \\   |\\      \\  /   _____/| |\r\n"
+		+ "\\   \\/\\/   /   |/   |   \\ \\_____  \\ | |\r\n"
+		+ " \\        /|   /    |    \\/        \\ \\|\r\n"
+		+ "  \\__/\\  / |___\\____|__  /_______  / __\r\n"
+		+ "       \\/              \\/        \\/  \\/"+Colour.valueOfEscCode(Colour.NONE));
+	}
+	
+	public String getWinStatementWhite() {
+		return(Colour.valueOfEscCode(Colour.WHITE)+"   __      __.__    .__  __            \r\n"
+		+ "  /  \\    /  \\  |__ |__|/  |_  ____    \r\n"
+		+ "  \\   \\/\\/   /  |  \\|  \\   __\\/ __ \\   \r\n"
+		+ "   \\        /|   Y  \\  ||  | \\  ___/   \r\n"
+		+ "    \\__/\\  / |___|  /__||__|  \\___  >  \r\n"
+		+ "         \\/       \\/              \\/   \r\n"
+		+ " __      __.___ _______    _________._.\r\n"
+		+ "/  \\    /  \\   |\\      \\  /   _____/| |\r\n"
+		+ "\\   \\/\\/   /   |/   |   \\ \\_____  \\ | |\r\n"
+		+ " \\        /|   /    |    \\/        \\ \\|\r\n"
+		+ "  \\__/\\  / |___\\____|__  /_______  / __\r\n"
+		+ "       \\/              \\/        \\/  \\/"+Colour.valueOfEscCode(Colour.NONE));
+	}
+	
+	public void printIntroMessage(){
+		
+		System.out.println(" ___       __    _______    ___        ________   ________   _____ ______    _______            \r\n"
+		+ "|\\  \\     |\\  \\ |\\  ___ \\  |\\  \\      |\\   ____\\ |\\   __  \\ |\\   _ \\  _   \\ |\\  ___ \\           \r\n"
+		+ "\\ \\  \\    \\ \\  \\\\ \\   __/| \\ \\  \\     \\ \\  \\___| \\ \\  \\|\\  \\\\ \\  \\\\\\__\\ \\  \\\\ \\   __/|          \r\n"
+		+ " \\ \\  \\  __\\ \\  \\\\ \\  \\_|/__\\ \\  \\     \\ \\  \\     \\ \\  \\\\\\  \\\\ \\  \\\\|__| \\  \\\\ \\  \\_|/__        \r\n"
+		+ "  \\ \\  \\|\\__\\_\\  \\\\ \\  \\_|\\ \\\\ \\  \\____ \\ \\  \\____ \\ \\  \\\\\\  \\\\ \\  \\    \\ \\  \\\\ \\  \\_|\\ \\       \r\n"
+		+ "   \\ \\____________\\\\ \\_______\\\\ \\_______\\\\ \\_______\\\\ \\_______\\\\ \\__\\    \\ \\__\\\\ \\_______\\      \r\n"
+		+ "    \\|____________| \\|_______| \\|_______| \\|_______| \\|_______| \\|__|     \\|__| \\|_______|      \r\n"
+		+ "                                     _________   ________                                       \r\n"
+		+ "                                    |\\___   ___\\|\\   __  \\                                      \r\n"
+		+ "                                    \\|___ \\  \\_|\\ \\  \\|\\  \\                                     \r\n"
+		+ "                                         \\ \\  \\  \\ \\  \\\\\\  \\                                    \r\n"
+		+ "                                          \\ \\  \\  \\ \\  \\\\\\  \\                                   \r\n"
+		+ "                                           \\ \\__\\  \\ \\_______\\                                  \r\n"
+		+ "                                            \\|__|   \\|_______|                                  \r\n"
+		+ "     ________   ________   _________   ________   ________              ___   ________          \r\n"
+		+ "    |\\   ____\\ |\\   __  \\ |\\___   ___\\|\\   __  \\ |\\   ___  \\           |\\  \\ |\\   __  \\         \r\n"
+		+ "    \\ \\  \\___| \\ \\  \\|\\  \\\\|___ \\  \\_|\\ \\  \\|\\  \\\\ \\  \\\\ \\  \\          \\ \\  \\\\ \\  \\|\\  \\        \r\n"
+		+ "     \\ \\  \\     \\ \\   __  \\    \\ \\  \\  \\ \\   __  \\\\ \\  \\\\ \\  \\       __ \\ \\  \\\\ \\   _  _\\       \r\n"
+		+ "      \\ \\  \\____ \\ \\  \\ \\  \\    \\ \\  \\  \\ \\  \\ \\  \\\\ \\  \\\\ \\  \\     |\\  \\\\_\\  \\\\ \\  \\\\  \\|  ___ \r\n"
+		+ "       \\ \\_______\\\\ \\__\\ \\__\\    \\ \\__\\  \\ \\__\\ \\__\\\\ \\__\\\\ \\__\\    \\ \\________\\\\ \\__\\\\ _\\ |\\__\\\r\n"
+		+ "        \\|_______| \\|__|\\|__|     \\|__|   \\|__|\\|__| \\|__| \\|__|     \\|________| \\|__|\\|__|\\|__|\r\n"
+		+ "                                                                                                \r\n"
+		+ "                                                                                               ");
 	}
 	
 	public static game getInstance() {
@@ -568,6 +663,39 @@ public class game {
 		}
 		
 		return single_instance;
+	}
+	
+	public void winnerSequence(Colour c) throws InterruptedException {
+		for(int i = 0; i < 10; i++) {
+			System.out.println("\n");
+			Thread.sleep(100);
+		}
+
+		System.out.println("\033[5m          \u001b[7m WAIT     A      SECOND\\u001b[0m     \033[25m\n\n\n");
+        
+        Thread.sleep(1000);
+		System.out.println("       \033[0;38;2;200;17;124mI "
+				+ "\033[0;38;2;160;137;64mH\033[0;38;2;156;137;224mE\033[0;38;2;200;167;198mA\033[0;38;2;16;137;20mR "
+				+ "\033[0;38;2;16;224;224mA "
+				+ "\033[0;38;2;98;137;224mC\033[0;38;2;137;16;224mE\033[0;38;2;224;137;16mL\033[0;38;2;160;137;224mE\033[0;38;2;144;17;224mB\033[0;38;2;140;137;1554mR\033[0;38;2;16;137;224mA\033[0;38;2;106;17;24mT\033[0;38;2;160;165;215mI\033[0;38;2;213;107;104mO\033[0;38;2;45;137;224mN"
+				+ " \033[0;38;2;160;1;224mC\033[0;38;2;78;137;173mO\033[0;38;2;137;137;224mM\033[0;38;2;204;137;204mI\033[0;38;2;167;17;24mN\033[0;38;98;16;10;254mG\033[0;0m\n\n");
+		Thread.sleep(1000);
+		if(c.equals(Colour.BLUE)) {
+			System.out.println(getWinStatementBlue());
+		}
+		else if(c.equals(Colour.WHITE)) {
+			System.out.println(getWinStatementWhite());
+		}
+		else if(c.equals(Colour.RED)) {
+			System.out.println(getWinStatementRed());
+		}
+		else if(c.equals(Colour.ORANGE)) {
+			System.out.println(getWinStatementOrange());
+		}
+		for(int i = 0; i < 10; i++) {
+			System.out.println("\n");
+			Thread.sleep(100);
+		}
 	}
 	
 	public void printGottenResources(int die_result) {
