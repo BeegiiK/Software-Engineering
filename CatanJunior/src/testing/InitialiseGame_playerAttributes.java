@@ -56,7 +56,7 @@ public class InitialiseGame_playerAttributes {
 		assertEquals("Check if B chooses colour blue",expected_b, game.convertColour(B,c_h));
 	}
 	@Test
-	public void playerAttributes_playerColour_incorrect_2() {
+	public void playerAttributes_playerColour_incorrect_4() {
 		gameInitialisation game = new gameInitialisation();
 		ColourHandling c_h = new ColourHandling();
 		String ww = "ww";
@@ -70,7 +70,7 @@ public class InitialiseGame_playerAttributes {
 		assertNull("Check if BLUE is an invalid colour option",game.convertColour(BLUE,c_h));
 	}
 	@Test
-	public void playerAttributes_playerColour_sameColour_() {
+	public void playerAttributes_playerColour_sameColour_5() {
 		gameInitialisation game = new gameInitialisation();
 		ColourHandling c_h = new ColourHandling();
 		String r = "r";
