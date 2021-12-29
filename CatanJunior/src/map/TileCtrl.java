@@ -3,7 +3,11 @@ package map;
 import java.util.ArrayList;
 
 import pile.Pile;
-
+/**
+ * Singleton
+ * The TileCtrl class sets up all tiles on the and calculates
+ * the earnings for each player given their owned lairs
+ */
 public class TileCtrl {
 	private static TileCtrl single_instance = null;
 	public ArrayList<Tile> tl = new ArrayList<Tile>();
