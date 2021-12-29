@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import Board.Stockpile;
 import player.Player;
 
-public class MarketPlace {
+public class MarketPlaceCtrl {
 	
-	private static MarketPlace single_instance = null;
+	private static MarketPlaceCtrl single_instance = null;
 	private ArrayList<RESOURCE> stand = new ArrayList<RESOURCE>();
 	
-	private MarketPlace() {
+	private MarketPlaceCtrl() {
 		stand.add(0, RESOURCE.CUTLASSES);
 		stand.add(1, RESOURCE.GOATS);
 		stand.add(2, RESOURCE.GOLD);
@@ -31,9 +31,9 @@ public class MarketPlace {
 		return stand.get(id).label;
 	}
 	
-	public static MarketPlace getInstance() {
+	public static MarketPlaceCtrl getInstance() {
 		if(single_instance == null) {
-			single_instance = new MarketPlace();
+			single_instance = new MarketPlaceCtrl();
 		}
 		
 		return single_instance;

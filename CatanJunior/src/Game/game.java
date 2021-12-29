@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 import map.COLOUR;
 import map.GainsAmount;
-import map.MarketPlace;
+import map.MarketPlaceCtrl;
 import map.RESOURCE;
 import map.TileCtrl;
 import map.ShipLairBoardCtrl;
@@ -364,7 +364,7 @@ public class game {
 	}
 	
 	private void marketTrade(Player p) {
-		MarketPlace mp = MarketPlace.getInstance();
+		MarketPlaceCtrl mp = MarketPlaceCtrl.getInstance();
 		ArrayList<RESOURCE> i = new ArrayList<RESOURCE>();
 		ArrayList<RESOURCE> k = new ArrayList<RESOURCE>();
 		RESOURCE mp_desired = null;
