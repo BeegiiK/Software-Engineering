@@ -29,51 +29,41 @@ public class game {
 	private MoveGhostCaptain moveUX = new MoveGhostCaptain();
 	
 	public void playGame() {
-		String die = null;
-		String chosenOption = "6";
 		PlayerCtrl Pl = PlayerCtrl.getInstance();
+		boolean keepPlaying = true;
+		boolean stay = true;
 		
 		chooseStartingLocs();
-		int die_result;
-		boolean keepPlaying = true;
-		boolean var = true;
+		
 		while(keepPlaying) {
 			for(int i=0; i<Pl.getNumofPlayers();i++) {
-				boolean str = false;
-				chosenOption = "6";
+				String chosenOption = "0";
 				Pl.getPlayerList().get(i).setPlayerTurn(true);
 				
 				System.out.println("\n"+Pl.getPlayerList().get(i).getPlayerName() + ", it's your turn to roll the die!\n[R] Roll die");
-				die = sc.nextLine();
-				die_result = checkDieRoll(die);
-				
+				int die_result = returnDieRoll();
 				
 				if(die_result == 6) {
-					System.out.println("You have rolled a 6, you can now move the ghost captain!");
-					moveUX.move();
-					while(!str) {
-						printOptions(i);
-						chosenOption = sc.nextLine();
-						str = checkChosenOption(chosenOption,Pl.getPlayerList().get(i));
-					}
+					callGhostCaptain_diceRoll(i);
 				}
 				else {
 					printGottenResources(die_result);
 					Pl.giveDiceResources(die_result);
+					
 					while(!(Integer.parseInt(chosenOption) == 4)) {
 						printOptions(i);
 						chosenOption = sc.nextLine();
-						str = checkChosenOption(chosenOption,Pl.getPlayerList().get(i));
+						checkChosenOption(chosenOption,Pl.getPlayerList().get(i));
 						if(checkForEOG()) {
 							keepPlaying = false;
-							var = false;
+							stay = false;
 							break;
 						}
 					}
 				}
 				Pl.getPlayerList().get(i).setPlayerTurn(false);
 				Pl.getPlayerList().get(i).setTradedWithMarketPlace(false);
-				if(var == false) {
+				if(stay == false) {
 					break;
 				}
 			}
@@ -138,11 +128,10 @@ public class game {
 				unique++;
 				leader = counts.indexOf(i);
 			}
-				
 		}
 		if(unique == 1) {
 			Pl.getPlayerList().get(leader).setLeading(true);
-			System.out.println(Pl.getPlayerList().get(leader).getPlayerName() + " ,you are now leading with most cocotiles.");
+			System.out.println(Pl.getPlayerList().get(leader).getPlayerName() + " ,you are leading with most cocotiles.");
 			System.out.println("Your lair now sits on Spooky Island!");
 		}
 	}
@@ -156,12 +145,12 @@ public class game {
 			System.out.println("["+j+"] "+o.displayName() +"\n");
 			j++;
 		}
-		System.out.println("Please choose one of the options");
+		System.out.println("\u001b[1m\u001b[41;1m"+"Please choose one of the options"+"\u001b[0m");
 	}
 	
 	private boolean checkChosenOption(String chosen, Player p) {
 		ArrayList<Integer> idx = new ArrayList<Integer>();
-		boolean exit = true;
+		boolean stay = true;
 		boolean str = false;
 		idx.add(1);
 		idx.add(2);
@@ -171,14 +160,14 @@ public class game {
 		idx.add(6);
 		idx.add(7);
 		
-		while(exit) {
+		while(stay) {
 			if(idx.contains(Integer.parseInt(chosen))) {
 				//call a function which call functions depending on input option to navigate
 				str = navigateTurnInput(Integer.parseInt(chosen), p);
-				exit = false;
+				stay = false;
 			}
 			else {
-				System.out.println("Please give a valid input for an option to be chosen [1-5].\n");
+				System.out.println("\u001b[1m\u001b[41;1m"+"Please give a valid input for an option to be chosen [1-5].\n"+"\u001b[0m");
 				chosen = sc.nextLine();
 			}
 		}
@@ -186,60 +175,54 @@ public class game {
 	}
 	
 	private boolean navigateTurnInput(int i, Player p) {
-		boolean str;
 		if(i == 1) {
-			str = cocotile.buy(p);
-			return str;
+			cocotile.buy(p);
+			return false;
 		}
 		else if(i == 2) {
-			str = tradeOption(p);
-			return str;
+			tradeOption(p);
+			return false;
 		}
 		else if(i == 3) {
-			str = buildOption(p);
-			return str;
-		}
-		else if(i == 5) {
-			ViewMap map1 = new ViewMap();
-			ShipLairBoardCtrl cont = ShipLairBoardCtrl.getInstance();
-			TileCtrl tileCont = TileCtrl.getInstance();
-			cont.toggleDisplayNone();
-			tileCont.toggleDisplayLabel();
-			System.out.println(map1.toString());
-			tileCont.toggleDisplayLabel();
-			
+			buildOption(p);
 			return false;
 		}
 		else if(i == 4) {
 			// End of turn
 			return true;
 		}
+		else if(i == 5) {
+			ViewMap map1 = new ViewMap();
+			ShipLairBoardCtrl cont = ShipLairBoardCtrl.getInstance();
+			TileCtrl tileCont = TileCtrl.getInstance();
+			
+			cont.toggleDisplayNone();
+			tileCont.toggleDisplayLabel();
+			System.out.println(map1.toString());
+			tileCont.toggleDisplayLabel();
+			return false;
+		}
 		else if(i == 6) {
 			PlayerCtrl p1 = PlayerCtrl.getInstance();
 			p1.getActivePlayer().printCard();
 			return false;
 		}
-		else if(i == 7) {
+		else {
 			Stockpile S = Stockpile.getInstance();
 			S.printStockPile();
 			return false;
 		}
-		return true;
 	}
 	
-	private boolean buildOption(Player p) {
-		boolean retval= true;
-		while(retval) {
-			System.out.println("\nWelcome to the build option. You have three options:");
-			buildUI b = new buildUI();
-			b.buy();
-			retval = false;
-		}
-		return true;
+	private void buildOption(Player p) {
+		System.out.println("\nWelcome to the build option. You have three options:");
+		buildUI b = new buildUI();
+		b.buy();
 	}
-	private boolean tradeOption(Player p) {
-		boolean retval=true;
-		while(retval) {
+	
+	private void tradeOption(Player p) {
+		boolean var = true;
+		while(var) {
 			System.out.println("\nWelcome to the trade option. You have three options:");
 			System.out.println("[1] Trade with marketplace");
 			System.out.println("[2] Trade with stockpile");
@@ -251,46 +234,54 @@ public class game {
 				System.out.println("[2] Go back to trade screen");
 				
 				res = sc.nextLine();
-				if(res.equals("1")) {
-					if(p.getTradedWithMarketPlace() == false) {
-						marketTrade(p);
-						retval = false;
-					}
-					else {
-						System.out.println("You have already traded with marketplace");
-						retval = false;
-					}
-				}
-				else if(res.equals("2")){
-					retval = true;
-				}
-				else {
-					System.out.println("\u001b[1m\u001b[41;1m" + "Invalid entry" + "\u001b[0m");
-					retval = true;
-				}
+				var = marketplaceOptionSelect(res,p);
 			}
 			else if(res.equals("2")) {
 				System.out.println("[1] Trade with stockpile (2:1 trading)");
 				System.out.println("[2] Go back to trade screen");
+				
 				res = sc.nextLine();
-				if(res.equals("1")) {
-					stockTrade(p);
-					retval = false;
-				}
-				else if(res.equals("2")){
-					retval = true;
-				}
-				else {
-					System.out.println("\u001b[1m\u001b[41;1m" + "Invalid entry" + "\u001b[0m");
-					retval = true;
-				}
+				var = stockpileOptionSelect(res,p);
 			}
 			else {
 				System.out.println("\u001b[1m\u001b[41;1m" + "Invalid entry" + "\u001b[0m");
-				return false;
+				var = false;
 			}	
 		}
-		return true;
+	}
+	
+	public boolean marketplaceOptionSelect(String s, Player p) {
+		if(s.equals("1")) {
+			if(p.getTradedWithMarketPlace() == false) {
+				marketTrade(p);
+				return false;
+			}
+			else {
+				System.out.println("\u001b[1m\u001b[41;1m"+"You have already traded with marketplace"+"\u001b[0m");
+				return false;
+			}
+		}
+		else if(s.equals("2")){
+			return true;
+		}
+		else {
+			System.out.println("\u001b[1m\u001b[41;1m"+"Invalid entry"+"\u001b[0m");
+			return true;
+		}
+	}
+	
+	public boolean stockpileOptionSelect(String s, Player p) {
+		if(s.equals("1")) {
+			stockTrade(p);
+			return false;
+		}
+		else if(s.equals("2")){
+			return false;
+		}
+		else {
+			System.out.println("\u001b[1m\u001b[41;1m" + "Invalid entry" + "\u001b[0m");
+			return true;
+		}
 	}
 	
 	private void stockTrade(Player p) {
@@ -310,7 +301,7 @@ public class game {
 		}
 		
 		if(count == 0) {
-			System.out.println("\u001b[1m\u001b[41;1m"+"You do not have enough resources to trade with stockpile" + "\u001b[0m");
+			System.out.println("\u001b[1m\u001b[41;1m"+"You do not have enough resources to trade with stockpile"+"\u001b[0m");
 		}
 		else {
 			System.out.println("What resources would you like to give?");
@@ -330,7 +321,7 @@ public class game {
 					break;
 				}
 				else {
-					System.out.println("Please choose one unwanted resource from the list above.");
+					System.out.println("\u001b[1m\u001b[41;1m"+"Please choose one unwanted resource from the list above."+"\u001b[0m");
 				}
 			}
 			
@@ -341,20 +332,9 @@ public class game {
 					System.out.println("["+j+"] "+ r.label);
 					k.add(r);
 					j++;
-				}
-				
-			}
-			
-			while(true) {
-				String desired = sc.nextLine();
-				if(Integer.parseInt(desired) <= j && Integer.parseInt(desired) >= 0){
-					mp_desired = k.get(Integer.parseInt(desired));
-					break;
-				}
-				else {
-					System.out.println("Please choose one desired resource from the list above.");
 				}	
 			}
+			checkIfOutsideList(j, mp_desired, k);
 			
 			p.getPlayerPile().decrementPile(mp_unwanted, 2);
 			stockpile.incrementPile(mp_unwanted, 2);
@@ -389,7 +369,7 @@ public class game {
 				break;
 			}
 			else {
-				System.out.println("Please choose one unwanted resource from the list above.");
+				System.out.println("\u001b[1m\u001b[41;1m"+"Please choose one unwanted resource from the list above."+"\u001b[0m");
 			}
 		}
 		
@@ -400,19 +380,10 @@ public class game {
 			System.out.println("["+j+"] "+r.label);
 			k.add(r);
 		}
-		
-		while(true) {
-			String desired = sc.nextLine();
-			if(Integer.parseInt(desired) <= j && Integer.parseInt(desired) >= 0){
-				mp_desired = k.get(Integer.parseInt(desired));
-				break;
-			}
-			else {
-				System.out.println("Please choose one desired resource from the list above.");
-			}	
-		}
-		
+	
+		checkIfOutsideList(j, mp_desired, k);
 		mp.swap(p, mp_desired, mp_unwanted);
+		
 		if(mp.allSameResources()) {
 			System.out.println("Marketplace will reset as all resources are of similar type");
 			mp.shuffle();
@@ -420,24 +391,61 @@ public class game {
 		p.setTradedWithMarketPlace(true);
 	}
 	
-	private int checkDieRoll(String die) {
-		boolean exit = false;
-		while(!exit) {
-			if(die.equals("R") || die.equals("r")) {
-				exit = true;
+	public void checkIfOutsideList(int j, RESOURCE mp_desired, ArrayList<RESOURCE> k) {
+		while(true) {
+			String desired = sc.nextLine();
+			if(Integer.parseInt(desired) <= j && Integer.parseInt(desired) >= 0){
+				mp_desired = k.get(Integer.parseInt(desired));
+				break;
 			}
 			else {
-				System.out.println("Please enter valid input to roll die!\n");
-				System.out.println("Please roll the die!\n[R] Roll die\n");
-				die = sc.nextLine();
-			}
+				System.out.println("\u001b[1m\u001b[41;1m"+"Please choose one desired resource from the list above."+"\u001b[0m");
+			}	
 		}
-		int result = dice.roll();
-		System.out.println("You have rolled: " + result + "\n");
-		return result;
 	}
 	
-
+	public void callGhostCaptain_diceRoll(int i) {
+		String chosenOption = "";
+		PlayerCtrl Pl = PlayerCtrl.getInstance();
+		boolean str = false;
+		
+		System.out.println("You have rolled a 6, you can now move the ghost captain!");
+		moveUX.move();
+		
+		while(!str) {
+			printOptions(i);
+			chosenOption = sc.nextLine();
+			str = checkChosenOption(chosenOption,Pl.getPlayerList().get(i));
+		}
+	}
+	
+	
+	public int returnDieRoll() {
+		String die = sc.nextLine();
+		int die_result = 0;
+		
+		while(true) {
+			if(checkDieRoll(die)) {
+				die_result = dice.roll();
+				System.out.println("You have rolled: " + die_result + "\n");
+				return die_result;
+			}
+			else {
+				die = sc.nextLine();
+				checkDieRoll(die);
+			}
+		}
+	}
+	
+	public boolean checkDieRoll(String die) {
+		if(die.equals("R") || die.equals("r")) {
+			return true;
+		}
+		else {
+			System.out.println("\u001b[1m\u001b[41;1m"+"Please enter valid input to roll die!\n"+ "\u001b[0m");
+			return false;
+		}
+	}
 	
 	// checks for the end of game condition for a player
 	public boolean checkForEOG() {
@@ -458,6 +466,17 @@ public class game {
 		return false;
 	}
 	
+	public static game getInstance() {
+		if(single_instance == null) {
+			single_instance = new game();
+		}
+		
+		return single_instance;
+	}
+	
+	// Print methods -------------------------------------------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------------------------------------------------------
 
 	public String getWinStatementOrange() {
 		return(COLOUR.valueOfEscCode(COLOUR.ORANGE)+"________                                       \r\n"
@@ -553,13 +572,6 @@ public class game {
 		}
 	}
 	
-	public static game getInstance() {
-		if(single_instance == null) {
-			single_instance = new game();
-		}
-		
-		return single_instance;
-	}
 	
 	public void printGottenResources(int die_result) {
 		TileCtrl T = TileCtrl.getInstance();

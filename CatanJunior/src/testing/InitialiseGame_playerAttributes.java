@@ -16,7 +16,7 @@ public class InitialiseGame_playerAttributes {
 	COLOUR expected_b = COLOUR.BLUE;
 	
 	@Test
-	public void playerAttributes_playerName_unique_1() {
+	public void test_playerAttributes_playerName_unique_1() {
 		gameInitialisation game = new gameInitialisation();
 		PlayerCtrl Pl = PlayerCtrl.getInstance();
 		
@@ -28,7 +28,7 @@ public class InitialiseGame_playerAttributes {
 	}
 	
 	@Test
-	public void playerAttributes_playerColour_letter_2() {
+	public void test_playerAttributes_playerColour_letter_2() {
 		gameInitialisation game = new gameInitialisation();
 		ColourHandling c_h = new ColourHandling();
 		String w = "w";
@@ -42,7 +42,7 @@ public class InitialiseGame_playerAttributes {
 		assertEquals("Check if b chooses colour blue",expected_b, game.convertColour(b,c_h));
 	}
 	@Test
-	public void playerAttributes_playerColour_uppercaseLetter_3() {
+	public void test_playerAttributes_playerColour_uppercaseLetter_3() {
 		gameInitialisation game = new gameInitialisation();
 		ColourHandling c_h = new ColourHandling();
 		String W = "W";
@@ -56,7 +56,7 @@ public class InitialiseGame_playerAttributes {
 		assertEquals("Check if B chooses colour blue",expected_b, game.convertColour(B,c_h));
 	}
 	@Test
-	public void playerAttributes_playerColour_incorrect_4() {
+	public void test_playerAttributes_playerColour_incorrect_4() {
 		gameInitialisation game = new gameInitialisation();
 		ColourHandling c_h = new ColourHandling();
 		String ww = "ww";
@@ -70,7 +70,7 @@ public class InitialiseGame_playerAttributes {
 		assertNull("Check if BLUE is an invalid colour option",game.convertColour(BLUE,c_h));
 	}
 	@Test
-	public void playerAttributes_playerColour_sameColour_5() {
+	public void test_playerAttributes_playerColour_sameColour_5() {
 		gameInitialisation game = new gameInitialisation();
 		ColourHandling c_h = new ColourHandling();
 		String r = "r";

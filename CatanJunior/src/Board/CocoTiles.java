@@ -41,68 +41,62 @@ public class CocoTiles {
 		return cocoTiles.pop();
 	}
 	
-	public boolean buy(Player p) {
-		String input = null;
-		boolean var = true;
-		game currentGame = game.getInstance();
+	public void buy(Player p) {
 		System.out.println("\nWelcome to the buy screen. Would you like to buy a cocotile?");
 		System.out.println("[Y] (Your resources will be taken - 1 Cutlass, 1 Molasses & 1 Gold)");
 		System.out.println("[N] You will be escorted back to the options screen.");
-		input = sc.nextLine();
+		String input = sc.nextLine();
 		
-		while(var) {
+		while(true) {
 			if(!(input.equals("y") || input.equals("Y") || input.equals("n") || input.equals("N"))) {
-				System.out.println("Please select one of the above options");
+				System.out.println("\u001b[1m\u001b[41;1m"+"Please select one of the above options"+ "\u001b[0m");
 				input = sc.nextLine();
-				var = true;
 			}
 			else {
-				var = false;
+				break;
 			}
 		}
 		
 		if(input.equals("y") || input.equals("Y")) {
-			if(p.getPlayerPile().checkDecrement(RESOURCE.CUTLASSES, 1) && p.getPlayerPile().checkDecrement(RESOURCE.MOLASSES, 1) &&
-					p.getPlayerPile().checkDecrement(RESOURCE.GOLD, 1)) {
-				String coco = null;
-				p.getPlayerPile().decrementPile(RESOURCE.CUTLASSES, 1);
-				p.getPlayerPile().decrementPile(RESOURCE.MOLASSES, 1);
-				p.getPlayerPile().decrementPile(RESOURCE.GOLD, 1);
-				coco = getCocoTile();
-				System.out.println("You have obtained the " + coco + " cocotile");
-				
-				p.updateUsedCocoTiles(coco);
-				takeAction(coco, p);
+			confirmedBuyCocoTile(p);
+		}
+	}
+	
+	public void confirmedBuyCocoTile(Player p) {
+		game currentGame = game.getInstance();
+		boolean con1 = p.getPlayerPile().checkDecrement(RESOURCE.CUTLASSES, 1);
+		boolean con2 = p.getPlayerPile().checkDecrement(RESOURCE.MOLASSES, 1);
+		boolean con3 = p.getPlayerPile().checkDecrement(RESOURCE.GOLD, 1);
 		
-				currentGame.MostCoco();
-				return true;
-			}
-			else {
-				System.out.println("You do not have enough resources to buy a cocotile.");
-				return false;
-			}
+		if(con1 && con2 && con3) {
+			p.getPlayerPile().decrementPile(RESOURCE.CUTLASSES, 1);
+			p.getPlayerPile().decrementPile(RESOURCE.MOLASSES, 1);
+			p.getPlayerPile().decrementPile(RESOURCE.GOLD, 1);
+			String coco = getCocoTile();
+			System.out.println("You have obtained the " + coco + " cocotile");
+			
+			p.updateUsedCocoTiles(coco);
+			takeAction(coco, p);
+	
+			currentGame.MostCoco();
 		}
 		else {
-			return false;
+			System.out.println("\u001b[1m\u001b[41;1m"+"You do not have enough resources to buy a cocotile."+ "\u001b[0m");
 		}
 	}
 	
 	public void takeAction(String input, Player p) {
 		if(input == typesOfCocoTiles.GOAT_CUTLASSES.toString()) {
-			//need to check if this will make a resource zero
-			p.getPlayerPile().incrementPile(RESOURCE.GOATS, 2);
-			p.getPlayerPile().incrementPile(RESOURCE.CUTLASSES, 2);
-			
 			stockpile.decrementPile(RESOURCE.GOATS, 2);
 			stockpile.decrementPile(RESOURCE.CUTLASSES, 2);
+			p.getPlayerPile().incrementPile(RESOURCE.GOATS, 2);
+			p.getPlayerPile().incrementPile(RESOURCE.CUTLASSES, 2);
 		}
 		else if(input == typesOfCocoTiles.MOLASSES_WOOD.toString()) {
-			//need to check if this will make a resource zero
-			p.getPlayerPile().incrementPile(RESOURCE.MOLASSES, 2);
-			p.getPlayerPile().incrementPile(RESOURCE.WOOD, 2);
-	
 			stockpile.decrementPile(RESOURCE.MOLASSES, 2);
 			stockpile.decrementPile(RESOURCE.WOOD, 2);
+			p.getPlayerPile().incrementPile(RESOURCE.MOLASSES, 2);
+			p.getPlayerPile().incrementPile(RESOURCE.WOOD, 2);		
 		}
 		else if(input == typesOfCocoTiles.MOVEGHOSTPIRATE.toString()) {
 			MoveGhostCaptain moveUX = new MoveGhostCaptain();
@@ -114,10 +108,8 @@ public class CocoTiles {
 	}
 	
 	public void shipLairCocoTile(Player p) {
-		boolean var = true;
 		String s = null;
 		ViewMap map = new ViewMap();
-		ShipLairBoardCtrl controller = ShipLairBoardCtrl.getInstance();
 		
 		System.out.println(map.toString());
 		System.out.println("What would you like to build for free?");
@@ -125,71 +117,63 @@ public class CocoTiles {
 		System.out.println("[L] Lair");
 		s = sc.nextLine();
 		
-		while(var) {
+		while(true) {
 			if(s.equals("s") || s.equals("S")) {
 				if(p.checkShip()) {
-					System.out.println("Please choose a ship location:");
-					p.decrementInventory(Inventory.SHIP, 1);
-					for(Integer i: controller.allowedShips(p.getColour())) {
-						System.out.println("["+i+"] "+ "S"+i);
-					}
-					boolean stay = true;
-					
-					while(stay) {
-						s = sc.nextLine();
-						if(controller.allowedShips(p.getColour()).contains(Integer.parseInt(s))) {
-							controller.buySp(Integer.parseInt(s), p.getColour());
-							stay = false;
-							var = false;
-						}
-						else {
-							System.out.println("Please choose another valid location");
-							System.out.println("Please choose a ship location:");
-						}
-					}
+					buyShipOrLair("ship",p);
+					break;
 				}
 			}
 			else if(s.equals("l") || s.equals("L")) {
-				System.out.println("Please choose a lair location:");
-				p.decrementInventory(Inventory.LAIR, 1);
-				for(Integer i: controller.allowedLairs(p.getColour())) {
-					System.out.println("["+i+"] "+ "L"+i);
-				}
-				
-				boolean stay = true;
-				while(stay) {
-					s = sc.nextLine();
-					if(controller.allowedLairs(p.getColour()).contains(Integer.parseInt(s))) {
-						controller.buyLr(Integer.parseInt(s), p.getColour());
-						stay = false;
-						var = false;
-					}
-					else {
-						System.out.println("Please choose another valid location");
-						System.out.println("Please choose a lair location:");
-					}
-				}
+				buyShipOrLair("lair",p);
+				break;
 			}
 			else {
-				System.out.println("Please choose a ship or lair.");
+				System.out.println("\u001b[1m\u001b[41;1m"+"Please choose a ship or lair."+ "\u001b[0m");
 				s = sc.nextLine();
 			}
 		}
 		
 	}
 	
-	// a method to check if the cocotile will disrupt the stockpile, i.e. 0 or 1 for a resource --NB
-	public void checkStockPile(String input) {
-		if(input == typesOfCocoTiles.GOAT_CUTLASSES.toString()) {
-			if(stockpile.getPile().get(RESOURCE.GOATS) < 2 || stockpile.getPile().get(RESOURCE.CUTLASSES) < 2) {
-				// do something
+	public void buyShipOrLair(String s, Player p) {
+		ShipLairBoardCtrl controller = ShipLairBoardCtrl.getInstance();
+		System.out.println("Please choose a "+s+" location:");
+		
+		if(s.equals("ship")) {
+			p.decrementInventory(Inventory.SHIP, 1);
+			for(Integer i: controller.allowedShips(p.getColour())) {
+				System.out.println("["+i+"] "+ "S"+i);
 			}
 		}
-		else if(input == typesOfCocoTiles.MOLASSES_WOOD.toString()) {
-			if(stockpile.getPile().get(RESOURCE.MOLASSES) < 2 || stockpile.getPile().get(RESOURCE.WOOD) < 2) {
-				// do something
+		else {
+			p.decrementInventory(Inventory.LAIR, 1);
+			for(Integer i: controller.allowedLairs(p.getColour())) {
+				System.out.println("["+i+"] "+ "L"+i);
+			}
+		}
+	
+		while(true) {
+			String ss = sc.nextLine();
+			if(s.equals("ship")) {
+				if(controller.allowedShips(p.getColour()).contains(Integer.parseInt(ss))) {
+					controller.buySp(Integer.parseInt(ss), p.getColour());
+					break;
+				}
+				else {
+					System.out.println("\u001b[1m\u001b[41;1m"+"Please choose another valid location"+ "\u001b[0m");
+					System.out.println("\u001b[1m\u001b[41;1m"+"Please choose a "+s+" location:"+ "\u001b[0m");
+				}
+			}
+			else {
+				if(controller.allowedLairs(p.getColour()).contains(Integer.parseInt(ss))) {
+					controller.buyLr(Integer.parseInt(ss), p.getColour());
+					break;
+				}
+				else {
+					System.out.println("\u001b[1m\u001b[41;1m"+"Please choose a "+s+" location:"+ "\u001b[0m");
+				}
 			}
 		}
 	}
-	
 }
