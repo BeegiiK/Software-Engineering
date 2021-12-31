@@ -8,14 +8,14 @@ import org.junit.Test;
 import Controller.Player.PlayerCtrl;
 import Enum.COLOUR;
 import Model.Player.Player;
-import View.buildUI;
+import View.GameComponents.Menu_Build;
 
 public class Player_buildOption_ship {
 	@Test
 	public void test_playerBuild_ShipOption_1() {
 		Player p = new Player("Derek",COLOUR.BLUE);
 		PlayerCtrl ctrl = PlayerCtrl.getInstance();
-		buildUI bui = new buildUI();
+		Menu_Build bui = new Menu_Build();
 	
 		p.setPlayerTurn(true);
 		ctrl.addPlayer(p);
@@ -33,7 +33,7 @@ public class Player_buildOption_ship {
 	public void test_playerBuild_notEnoughResources_BuyShip_2() {
 		Player p = new Player("Derek",COLOUR.BLUE);
 		PlayerCtrl ctrl = PlayerCtrl.getInstance();
-		buildUI bui = new buildUI();
+		Menu_Build bui = new Menu_Build();
 		
 		p.setPlayerTurn(true);
 		ctrl.addPlayer(p);
@@ -45,7 +45,7 @@ public class Player_buildOption_ship {
 	public void test_playerBuild_noAvailableShip_3() {
 		Player p = new Player("Derek",COLOUR.WHITE);
 		PlayerCtrl ctrl = PlayerCtrl.getInstance();
-		buildUI bui = new buildUI();
+		Menu_Build bui = new Menu_Build();
 
 		p.setPlayerTurn(true);
 		ctrl.addPlayer(p);

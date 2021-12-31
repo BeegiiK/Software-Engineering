@@ -7,8 +7,8 @@ import org.junit.Test;
 import Controller.Player.PlayerCtrl;
 import Enum.COLOUR;
 import Enum.RESOURCE;
+import Model.Player.Inventory;
 import Model.Player.Player;
-import Model.Player.Player.Inventory;
 import View.GameComponents.Menu_Build;
 
 public class Player_buildOption_buildLair {

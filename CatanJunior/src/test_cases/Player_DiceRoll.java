@@ -8,8 +8,7 @@ import Enum.COLOUR;
 import Enum.RESOURCE;
 import Model.Player.Player;
 import View.Menu_PlayerActions;
-import View.MoveGhostCaptain;
-
+import View.GameComponents.*;
 import static org.junit.Assert.*;
 
 public class Player_DiceRoll {
@@ -60,7 +59,7 @@ public class Player_DiceRoll {
 		Player p2 = new Player("Larry",COLOUR.ORANGE);
 		Player p3 = new Player("James",COLOUR.RED);
 		PlayerCtrl Pl = PlayerCtrl.getInstance();
-		MoveGhostCaptain moveUX = new MoveGhostCaptain();
+		Menu_MoveGhostCaptain moveUX = new Menu_MoveGhostCaptain();
 		TileCtrl cont = TileCtrl.getInstance();
 
 		Pl.addPlayer(p1);

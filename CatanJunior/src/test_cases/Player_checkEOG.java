@@ -9,7 +9,7 @@ import Controller.Player.PlayerCtrl;
 import Enum.COLOUR;
 import Enum.RESOURCE;
 import Model.Player.Player;
-import Model.Player.Player.Inventory;
+import Model.Player.Inventory;
 import View.Menu_PlayerActions;
 import View.GameComponents.Menu_CocoTiles;
 
