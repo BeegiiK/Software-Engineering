@@ -24,20 +24,23 @@ import Controller.Player.PlayerCtrl;
 import Controller.Player.ShipLairBoardCtrl;
 
 public class Menu_PlayerActions {
-
-	private static Menu_PlayerActions single_instance = null;
-	private Dice dice = new Dice();
-	private Scanner sc = new Scanner(System.in);
-	private Menu_CocoTiles cocotile = new Menu_CocoTiles();
-	private Menu_MoveGhostCaptain moveUX = new Menu_MoveGhostCaptain();
 	
+	private static Menu_PlayerActions single_instance = null; 			//Initialisation of Menu Player Action singleton
+	private Dice dice = new Dice(); 									//Dice object required for rolling in each players turn
+	private Scanner sc = new Scanner(System.in); 						//Scanner object to scan inputs from user
+	private Menu_CocoTiles cocotile = new Menu_CocoTiles(); 			//Cocotile object containing the cocotiles stack
+	private Menu_MoveGhostCaptain moveUX = new Menu_MoveGhostCaptain(); //Move Ghost Captain object to be called when required 
+	
+	// main method of running game until winner conditions have been met
 	public void playGame() {
-		PlayerCtrl Pl = PlayerCtrl.getInstance();
+		PlayerCtrl Pl = PlayerCtrl.getInstance(); 
 		boolean keepPlaying = true;
 		boolean stay = true;
 		
+		// Assign each player their starting postions depending on their colour
 		chooseStartingLocs();
 		
+		// while a player has not won the game
 		while(keepPlaying) {
 			for(int i=0; i<Pl.getNumofPlayers();i++) {
 				String chosenOption = "0";
@@ -46,17 +49,23 @@ public class Menu_PlayerActions {
 				System.out.println("\n"+Pl.getPlayerList().get(i).getPlayerName() + ", it's your turn to roll the die!\n[R] Roll die");
 				int die_result = returnDieRoll();
 				
+				// If die roll is 6, call the ghost captain method
 				if(die_result == 6) {
 					callGhostCaptain_diceRoll(i);
 				}
 				else {
+					//Else die roll is other than 6, allocate resources to each player if rewarded
 					printGottenResources(die_result);
 					Pl.giveDiceResources(die_result);
 					
+					// While user does not end his turn
 					while(!(Integer.parseInt(chosenOption) == 4)) {
+						// Allow player to explore other options
 						printOptions(i);
 						chosenOption = sc.nextLine();
+						// Check if input to select option is valid and take action of input
 						checkChosenOption(chosenOption,Pl.getPlayerList().get(i));
+						// Check if end of game condition has been met
 						if(checkForEOG()) {
 							keepPlaying = false;
 							stay = false;
@@ -73,6 +82,7 @@ public class Menu_PlayerActions {
 		}
 	}
 	
+	// Buy ships and lairs for specific locations and colour type
 	private void getStartingLocs(COLOUR c, int lr_1, int sp_1, int lr_2, int sp_2) {
 		ShipLairBoardCtrl SPLR = ShipLairBoardCtrl.getInstance();
 		
@@ -80,9 +90,9 @@ public class Menu_PlayerActions {
 		SPLR.buySp(sp_1, c);
 		SPLR.buyLr(lr_2, c);
 		SPLR.buySp(sp_2, c);
-		
 	}
 	
+	// Choose the starting locations depending on specific player colour
 	public void chooseStartingLocs() {
 		PlayerCtrl Pl = PlayerCtrl.getInstance();
 		ViewMap m = new ViewMap();	 
@@ -110,9 +120,7 @@ public class Menu_PlayerActions {
 		System.out.println("All players have their starting positions, LET THE GAMES BEGIN!");
 	}
 	
-
-	
-	
+	// Check player list who has the most used cocotiles in their possession
 	public void MostCoco() {
 		PlayerCtrl Pl = PlayerCtrl.getInstance();
 		ArrayList<Integer> counts = new ArrayList<Integer>();
@@ -132,6 +140,7 @@ public class Menu_PlayerActions {
 				leader = counts.indexOf(i);
 			}
 		}
+		// If only one clear winner, set his leading attribute to true
 		if(unique == 1) {
 			Pl.getPlayerList().get(leader).setLeading(true);
 			System.out.println(Pl.getPlayerList().get(leader).getPlayerName() + " ,you are leading with most cocotiles.");
@@ -139,6 +148,7 @@ public class Menu_PlayerActions {
 		}
 	}
 
+	// Print out the available player options for a player turn
 	private void printOptions(int i) {
 		PlayerCtrl Pl = PlayerCtrl.getInstance();
 		System.out.println(Pl.getPlayerList().get(i).getPlayerName()+", you now have the following options:\n");
@@ -149,6 +159,8 @@ public class Menu_PlayerActions {
 		}
 	}
 	
+	// Check if user input to select an option is valid. Prompts user to select a right option until user selects
+	// a correct option
 	public boolean checkChosenOption(String chosen, Player p) {
 		ArrayList<Integer> idx = new ArrayList<Integer>();
 		boolean stay = true;
@@ -175,24 +187,29 @@ public class Menu_PlayerActions {
 		return str;
 	}
 	
+	// Navigate to the particular option method for a player
 	private boolean navigateTurnInput(int i, Player p) {
 		if(i == 1) {
+			// Buy a cocotile
 			cocotile.buy(p);
 			return false;
 		}
 		else if(i == 2) {
+			// Trade with Stockpile or Marketplace
 			tradeOption(p);
 			return false;
 		}
 		else if(i == 3) {
+			// Build a ship or lair inventory
 			buildOption(p);
 			return false;
 		}
 		else if(i == 4) {
-			// End of turn
+			// End player turn
 			return true;
 		}
 		else if(i == 5) {
+			// View catan junior map
 			ViewMap map1 = new ViewMap();
 			ShipLairBoardCtrl cont = ShipLairBoardCtrl.getInstance();
 			TileCtrl tileCont = TileCtrl.getInstance();
@@ -204,23 +221,28 @@ public class Menu_PlayerActions {
 			return false;
 		}
 		else if(i == 6) {
+			// Print player resources and inventory
 			PlayerCtrl p1 = PlayerCtrl.getInstance();
 			p1.getActivePlayer().printCard();
 			return false;
 		}
 		else {
+			// Print stockpile attributes
 			Stockpile S = Stockpile.getInstance();
 			S.printStockPile();
 			return false;
 		}
 	}
 	
+	// Welcome user to the build option screen
 	private void buildOption(Player p) {
 		System.out.println("\nWelcome to the build option. You have three options:");
 		Menu_Build b = new Menu_Build();
 		b.buy();
 	}
 	
+	// Check if user inserts correct inputs for trade option, stokpile option and
+	// marketplace option
 	private void tradeOption(Player p) {
 		boolean var = true;
 		while(var) {
@@ -230,6 +252,7 @@ public class Menu_PlayerActions {
 			System.out.println("[3] Go back to options screen");
 			String res = sc.nextLine();
 			
+			// Marketplace option
 			if(res.equals("1")){
 				System.out.println("[1] Trade with marketplace (1:1 trading)");
 				System.out.println("[2] Go back to trade screen");
@@ -240,6 +263,7 @@ public class Menu_PlayerActions {
 					proceedMarketPlaceTrade(p);
 				}
 			}
+			// Stockpile option
 			else if(res.equals("2")) {
 				System.out.println("[1] Trade with stockpile (2:1 trading)");
 				System.out.println("[2] Go back to trade screen");
@@ -247,9 +271,11 @@ public class Menu_PlayerActions {
 				res = sc.nextLine();
 				var = stockpileOptionSelect(res,p);
 			}
+			// Exit the trade option
 			else if(res.equals("3")) {
 				var = false;
 			}
+			// Output error message for invalid input to player
 			else {
 				System.out.println("\u001b[1m\u001b[41;1m" + "Invalid entry" + "\u001b[0m");
 				var = false;
@@ -257,6 +283,7 @@ public class Menu_PlayerActions {
 		}
 	}
 	
+	// Check if player has not traded with marketplace, then proceed. If traded, don't trade
 	public boolean proceedMarketPlaceTrade(Player p) {
 		if(p.getTradedWithMarketPlace() == false) {
 			marketTrade(p);
@@ -268,6 +295,7 @@ public class Menu_PlayerActions {
 		}
 	}
 	
+	// Prompt the user to confirm if he wants to trade with marketplace
 	public boolean marketplaceOptionSelect(String s, Player p) {
 		if(s.equals("1")) {
 			return false;
@@ -281,6 +309,7 @@ public class Menu_PlayerActions {
 		}
 	}
 	
+	// Check if user input is valid and trade with stockpile, else don't trade
 	public boolean stockpileOptionSelect(String s, Player p) {
 		if(s.equals("1")) {
 			stockTrade(p);
@@ -295,6 +324,8 @@ public class Menu_PlayerActions {
 		}
 	}
 	
+	// Check if user has enough resources to trade with stockpile, then proceed with prompting
+	// user for resource to give and resource they want. Execute stock trade.
 	private void stockTrade(Player p) {
 		Stockpile stockpile = Stockpile.getInstance();
 		ArrayList<RESOURCE> i = new ArrayList<RESOURCE>();
@@ -344,6 +375,7 @@ public class Menu_PlayerActions {
 		}
 	}
 	
+	// Check if user input is one of the listed options for selected the unwanted resource from player
 	public RESOURCE checkUnwantedResourceStockPile(int j, ArrayList<RESOURCE> i, String unwanted) {
 		if(Integer.parseInt(unwanted) <= j && Integer.parseInt(unwanted) >= 0){
 			RESOURCE mp_unwanted = i.get(Integer.parseInt(unwanted));
@@ -355,6 +387,7 @@ public class Menu_PlayerActions {
 		}
 	}
 	
+	// Check if resources in player pile is more than two (required for stock trade)
 	public int checkResourceForTwo(Player p) {
 		int count = 0;
 		for(RESOURCE r: p.getPlayerPile().getPile().keySet()) {
@@ -365,6 +398,8 @@ public class Menu_PlayerActions {
 		return count;
 	}
 	
+	// Prompt user for resource to give up and resource to acquire and check if the inputs are valid.
+	// Execute the marketplace trade and check if marketplace has all same resources
 	private void marketTrade(Player p) {
 		MarketPlaceCtrl mp = MarketPlaceCtrl.getInstance();
 		ArrayList<RESOURCE> i = new ArrayList<RESOURCE>();
@@ -413,6 +448,7 @@ public class Menu_PlayerActions {
 		p.setTradedWithMarketPlace(true);
 	}
 	
+	// Error check to see if the user input is one of the options in the desired reosurce list printed
 	public RESOURCE checkIfOutsideList(int j, RESOURCE mp_desired, ArrayList<RESOURCE> k) {
 		while(true) {
 			String desired = sc.nextLine();
@@ -425,6 +461,7 @@ public class Menu_PlayerActions {
 		}
 	}
 	
+	// Call the ghost captain and execute the move. Print out player options and execute them until user ends turn
 	public void callGhostCaptain_diceRoll(int i) {
 		String chosenOption = "";
 		PlayerCtrl Pl = PlayerCtrl.getInstance();
@@ -442,7 +479,7 @@ public class Menu_PlayerActions {
 		}
 	}
 	
-	
+	// Return the die roll result 
 	public int returnDieRoll() {
 		String die = sc.nextLine();
 		int die_result = 0;
@@ -460,6 +497,7 @@ public class Menu_PlayerActions {
 		}
 	}
 	
+	// check if the user input to roll die is valid until user inputs correct input
 	public boolean checkDieRoll(String die) {
 		if(die.equals("R") || die.equals("r")) {
 			return true;
@@ -470,7 +508,7 @@ public class Menu_PlayerActions {
 		}
 	}
 	
-	// checks for the end of game condition for a player
+	// checks for the end of game condition for a player (All lairs down on board or one lair left to build while holding most cocotiles
 	public boolean checkForEOG() {
 		PlayerCtrl Pl = PlayerCtrl.getInstance();
 		for(Player p: Pl.getPlayerList()) {
@@ -488,6 +526,7 @@ public class Menu_PlayerActions {
 		return false;
 	}
 	
+	// Return instance of Menu Player Actions singleton
 	public static Menu_PlayerActions getInstance() {
 		if(single_instance == null) {
 			single_instance = new Menu_PlayerActions();
@@ -496,10 +535,10 @@ public class Menu_PlayerActions {
 		return single_instance;
 	}
 	
-	// Print methods -------------------------------------------------------------------------------------------------------------
-	// ---------------------------------------------------------------------------------------------------------------------------
-	// ---------------------------------------------------------------------------------------------------------------------------
-
+	// =====================================Print Methods================================================
+	// ==================================================================================================
+	
+	// print win statement for player with orange colour
 	public String getWinStatementOrange() {
 		return(COLOUR.valueOfEscCode(COLOUR.ORANGE)+"________                                       \r\n"
 				+ "\\_____  \\____________    ____    ____   ____   \r\n"
@@ -515,6 +554,7 @@ public class Menu_PlayerActions {
 				+ "       \\/              \\/        \\/  \\/ "+COLOUR.valueOfEscCode(COLOUR.NONE));
 	}
 	
+	// print win statement for player with red colour
 	public String getWinStatementRed() {
 		return(COLOUR.valueOfEscCode(COLOUR.RED)+"      __________           .___        \r\n"
 				+ "      \\______   \\ ____   __| _/        \r\n"
@@ -530,6 +570,7 @@ public class Menu_PlayerActions {
 				+ "       \\/              \\/        \\/  \\/"+COLOUR.valueOfEscCode(COLOUR.NONE));
 	}
 	
+	// print win statement for player with blue colour
 	public String getWinStatementBlue() {
 		return(COLOUR.valueOfEscCode(COLOUR.BLUE)+"    __________.__                      \r\n"
 		+ "    \\______   \\  |  __ __   ____       \r\n"
@@ -545,6 +586,7 @@ public class Menu_PlayerActions {
 		+ "       \\/              \\/        \\/  \\/"+COLOUR.valueOfEscCode(COLOUR.NONE));
 	}
 	
+	// print win statement for player with white colour
 	public String getWinStatementWhite() {
 		return(COLOUR.valueOfEscCode(COLOUR.WHITE)+"   __      __.__    .__  __            \r\n"
 		+ "  /  \\    /  \\  |__ |__|/  |_  ____    \r\n"
@@ -560,7 +602,7 @@ public class Menu_PlayerActions {
 		+ "       \\/              \\/        \\/  \\/"+COLOUR.valueOfEscCode(COLOUR.NONE));
 	}
 	
-
+	// Print winner message when EOG condition is reached
 	public void winnerSequence(COLOUR c) throws InterruptedException {
 		for(int i = 0; i < 10; i++) {
 			System.out.println("\n");
@@ -594,7 +636,7 @@ public class Menu_PlayerActions {
 		}
 	}
 	
-	
+	// Print achieved resources for each player from a dice roll
 	public void printGottenResources(int die_result) {
 		TileCtrl T = TileCtrl.getInstance();
 		GainsAmount G = new GainsAmount();
@@ -618,8 +660,6 @@ public class Menu_PlayerActions {
 			Pile pile = G.getPileforColour(c);
 			r1 = new String(new char[43 - p.getPlayerStr().length()]).replace("\0", " ");
 
-			//System.out.println(Colour.valueOfEscCode(c) + Base +Colour.valueOfEscCode(Colour.NONE));
-			//System.out.println('\n'+Base);
 			System.out.println("   |                               "+p.getPlayerName()+" Gains:" +r1+"|\n"+r2);
 			for(RESOURCE r: pile.getPile().keySet()) {
 				each_R.add(r.label+ " : +" + pile.getPile().get(r));
@@ -628,7 +668,6 @@ public class Menu_PlayerActions {
 			}
 			System.out.print("     |");
 			System.out.println('\n'+Base);
-			//System.out.println('\n'+Colour.valueOfEscCode(c) + Base +Colour.valueOfEscCode(Colour.NONE));
 		}
 	}
 

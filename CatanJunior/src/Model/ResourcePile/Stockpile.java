@@ -8,9 +8,10 @@ import Model.Player.Player;
 
 public class Stockpile extends Pile{
 	
+	// Initialisation singleton stockpile object
 	private static Stockpile single_instance = null;
 
-	//when game is started, 18 of each resources is created
+	//when game is started, 18 of each resources is allocated
 	public Stockpile() {
 		for(RESOURCE type : RESOURCE.values()) {
 			if(!type.equals(RESOURCE.NONE)) {
@@ -18,8 +19,8 @@ public class Stockpile extends Pile{
 			}
 		}
 	}
-
 	
+	// Reset stockpile when a resource is empty by taking it from resources
 	public void resetStockPile(RESOURCE r) {
 		PlayerCtrl playerCont = PlayerCtrl.getInstance();
 		ArrayList<Player> playerList = playerCont.getPlayerList();
@@ -32,7 +33,8 @@ public class Stockpile extends Pile{
 		
 	}
 	
-	
+	// decrement stockpile by i amount for resource r and also checking if stockpile can be 
+	// decremented or not
 	public boolean decrementPile(RESOURCE r, int i) {
 		if(pile.get(r) <= i) {
 			resetStockPile(r);
@@ -41,11 +43,8 @@ public class Stockpile extends Pile{
 		return x;
 	}
 	
+	// Print out all amounts for each resource in stockpile
 	public void printStockPile() {
-//		System.out.println("Stockpile");
-//		for(RESOURCE r: pile.keySet()) {
-//			System.out.println(r.label + " - "+ pile.get(r));
-//		}
 		String Base = "   ---------------------------------------------------------------------------------";
 		ArrayList<String> each_R = new ArrayList<String>();
 		String format = "%7s%s";
@@ -75,6 +74,7 @@ public class Stockpile extends Pile{
 		return "Stockpile [stockPile=" + pile + "]";
 	}
 	
+	// return instance of the stockpile
 	public static Stockpile getInstance() {
 		if(single_instance == null) {
 			single_instance = new Stockpile();

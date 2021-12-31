@@ -12,22 +12,25 @@ import Model.ResourcePile.PlayerPile;
 
 public class Player{
 	
-	private COLOUR colour;
-	private String name;
-	private boolean turn;
-	private boolean rolled;
-	private PlayerPile pile = new PlayerPile();
+	private COLOUR colour;							 // Player colour type
+	private String name; 							 // Player name
+	private boolean turn;							 // Player turn (active or not)
+	private boolean rolled;							 // Has player rolled the dice or not
+	private PlayerPile pile = new PlayerPile();		 // Create player resources pile
 
-	Hashtable<Inventory, Integer> inventory = new Hashtable<Inventory, Integer>();
-	private int tiles;
+	// Inventory (Ship or Lair) dictionary
+	Hashtable<Inventory, Integer> inventory = new Hashtable<Inventory, Integer>(); 
+	// Attribute to see if player has already traded with marketplace
 	private boolean tradedWithMarketPlace;
+	// Local player used cocotiles stack incremented when buying cocotiles
 	private Stack<String> usedCocoTiles = new Stack<String>();
+	// Attribute to see if used is leading with most cocotiles out of all players in game
 	private boolean leading = false;
 	
+	// Constructor
 	public Player(String name, COLOUR colour) {
 		this.colour = colour;
 		this.name = name;
-		this.tiles = 0;
 		this.turn = false;
 		this.rolled = false;
 		this.tradedWithMarketPlace = false;
@@ -45,8 +48,8 @@ public class Player{
 	public String toString() {
 		return "Player [playerColour=" + colour + ", playerName=" + name + ", playerTurn=" + turn
 				+ ", rolled=" + rolled + ", playerResources=" + pile + ", playerInventory=" + inventory
-				+ ", playerTiles=" + tiles + ", tradedWithMarketPlace=" + tradedWithMarketPlace
-				+ ", usedCocoTiles=" + usedCocoTiles + ", leading=" + leading + "]";
+				+ ", tradedWithMarketPlace=" + tradedWithMarketPlace + ", usedCocoTiles=" + usedCocoTiles 
+				+ ", leading=" + leading + "]";
 	}
 	
 	// setters and getters
@@ -75,7 +78,6 @@ public class Player{
 	}
 	
 	public String getPlayerName() {
-		
 		return (COLOUR.valueOfEscCode(colour)+name+COLOUR.valueOfEscCode(COLOUR.NONE));
 	}
 	
@@ -87,6 +89,7 @@ public class Player{
 		return this.usedCocoTiles;
 	}
 	
+	// Add the newly bought cocotile to local player cocotile stack
 	public void updateUsedCocoTiles(String tile) {
 		usedCocoTiles.add(tile);
 	}
@@ -103,11 +106,12 @@ public class Player{
 		return this.pile;
 	}
 	
-	// method for decrement an inventory
+	// Decrement inventory type for a player
 	public void decrementInventory(Inventory type, int value) {
 		getInventory().put(type, getInventory().get(type) - value);
 	}
 	
+	// Print all of player details in a condensed card format during call
 	public void printCard() {
 		String Base = "   ---------------------------------------------------------------------------------";
 		ArrayList<String> each_R = new ArrayList<String>();
@@ -148,6 +152,7 @@ public class Player{
 
 	}
 	
+	// Check if user's ship inventory is empty or not
 	public boolean checkShip() {
 		if(inventory.get(Inventory.SHIP).equals(0)) {
 			return false;

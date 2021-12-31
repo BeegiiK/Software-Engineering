@@ -6,10 +6,11 @@ public class Demo {
 	
 	public static void main(String[] args) {
 		
+		// Construct a new Menu_CreateGame() class
 		Menu_CreateGame newGame = new Menu_CreateGame();
 		
-		newGame.initialiseGame();
-		
+		// Start the game
+		newGame.initialiseGame();	
 	}
 
 }

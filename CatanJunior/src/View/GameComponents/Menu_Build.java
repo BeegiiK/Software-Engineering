@@ -12,8 +12,10 @@ import Model.ResourcePile.Stockpile;
 
 public class Menu_Build {
 	
-	private Scanner sc = new Scanner(System.in);
+	private Scanner sc = new Scanner(System.in); // Scanner object to scan user inputs
 
+	// Build lair or ship inventory by prompting user to choose an option. Also prompts user to
+	// to choose a correct answer.
 	public void buy() {
 		boolean var = true;
 		
@@ -25,6 +27,7 @@ public class Menu_Build {
 			
 			String s = sc.nextLine();
 			
+			// Build a lair
 			if(s.equals("1")) {
 				System.out.println("A lair will cost: 1 Cutlass, 1 Molasses, 1 Goat and 1 Wood");
 				System.out.println("Do you still want to purchase a lair?");
@@ -34,6 +37,7 @@ public class Menu_Build {
 				s = sc.nextLine();
 				var = checkLairInput(s);
 			}
+			// Build a ship
 			else if(s.equals("2")) {
 				System.out.println("A ship will cost: 1 Goat & 1 Wood");
 				System.out.println("Do you still want to purchase a ship?");
@@ -44,15 +48,18 @@ public class Menu_Build {
 				var = checkShipInput(s);
 				
 			}
+			// Exit the build option
 			else if(s.equals("3")) {
 				var = false;
 			}
+			// Invalid entry to the build option screen
 			else {
 				System.out.println("\u001b[1m\u001b[41;1m"+"Please enter one of the listed options above."+"\u001b[0m");
 			}
 		}
 	}
 	
+	// Check if user input to confirming the build option for lair is correct
 	public boolean checkLairInput(String s) {
 		if(s.equals("y") || s.equals("Y")) {
 			return buyLairInput();
@@ -66,10 +73,10 @@ public class Menu_Build {
 		}
 	}
 	
+	// Check if user has enough resources to build a lair
 	public boolean buyLairInput() {
 		PlayerCtrl x = PlayerCtrl.getInstance();
 		if(x.checkPlayerPile(Inventory.cost(Inventory.LAIR))) {
-			
 			return checkAvailableLairs();			
 		}		
 		else {
@@ -78,6 +85,8 @@ public class Menu_Build {
 		}
 	}
 	
+	// Print out available lair locations if any and prompt user for one of the listed options including 
+	// error checking for invalid inputs
 	public boolean checkAvailableLairs() {
 		PlayerCtrl x = PlayerCtrl.getInstance();
 		ShipLairBoardCtrl a = ShipLairBoardCtrl.getInstance();
@@ -94,6 +103,7 @@ public class Menu_Build {
 		}
 	}
 	
+	// 
 	public boolean checkShipInput(String s) {
 		if(s.equals("y") || s.equals("Y")) {
 			return checkAvailableShips();
