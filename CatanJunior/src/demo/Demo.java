@@ -1,8 +1,8 @@
-package test;
+package demo;
 
 import Game.*;
 
-public class test {
+public class Demo {
 	
 	public static void main(String[] args) {
 		
