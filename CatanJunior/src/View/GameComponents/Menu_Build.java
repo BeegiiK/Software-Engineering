@@ -103,7 +103,7 @@ public class Menu_Build {
 		}
 	}
 	
-	// 
+	// Check if user input to confirm building ship is valid, and if valid check for available ships
 	public boolean checkShipInput(String s) {
 		if(s.equals("y") || s.equals("Y")) {
 			return checkAvailableShips();
@@ -116,7 +116,9 @@ public class Menu_Build {
 			return true;
 		}
 	}
-	
+	 
+	// Check if user has enough resources to purchase building a ship, and if so check for allowable 
+	// ship locations
 	public boolean buyShipInput() {
 		PlayerCtrl x = PlayerCtrl.getInstance();
 
@@ -129,6 +131,7 @@ public class Menu_Build {
 		}
 	}
 	
+	// Check for available ship locations and if present, prompt user to choose location and purchase a ship
 	public boolean checkAvailableShips() {
 		PlayerCtrl x = PlayerCtrl.getInstance();
 		ShipLairBoardCtrl a = ShipLairBoardCtrl.getInstance();
@@ -145,6 +148,7 @@ public class Menu_Build {
 		}
 	}
 	
+	// Purchase the required resources to build a certain inventory
 	public void purchaseInventory(String ss){
 		PlayerCtrl x = PlayerCtrl.getInstance();
 		Player p = x.getActivePlayer();
@@ -182,7 +186,7 @@ public class Menu_Build {
 		}	
 	}
 
-
+	// Placing the ship on the desired map location
 	public void getShipLocations(String s) {
 		ShipLairBoardCtrl a = ShipLairBoardCtrl.getInstance();
 		PlayerCtrl x = PlayerCtrl.getInstance();
@@ -192,6 +196,7 @@ public class Menu_Build {
 		System.out.println(map1.toString());
 	}
 	
+	// Checking if user input is valud for the listed ship locations and if not, prompt user for valid input
 	public String retrieveShipLocation() {
 		ShipLairBoardCtrl a = ShipLairBoardCtrl.getInstance();
 		PlayerCtrl x = PlayerCtrl.getInstance();
@@ -216,6 +221,7 @@ public class Menu_Build {
 		}
 	}
 	
+	// Placing the lair on the desired map location
 	public void getLairLocations(String s) {
 		ShipLairBoardCtrl a = ShipLairBoardCtrl.getInstance();
 		PlayerCtrl x = PlayerCtrl.getInstance();
@@ -225,6 +231,7 @@ public class Menu_Build {
 		System.out.println(map1.toString());
 	}
 	
+	// Checking if the user input is one of the listed options and ensuring that it is valid
 	public String retrieveLairLocation() {
 		ShipLairBoardCtrl a = ShipLairBoardCtrl.getInstance();
 		PlayerCtrl x = PlayerCtrl.getInstance();
@@ -249,6 +256,7 @@ public class Menu_Build {
 		}
 	}
 	
+	// checking if user input is not a number and handling the exception until user inputs a valid option
 	public void checkForInvalid(String ss, String input) {
 		while(true) {
 			try {

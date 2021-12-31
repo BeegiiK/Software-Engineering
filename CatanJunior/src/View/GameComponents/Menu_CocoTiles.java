@@ -15,11 +15,11 @@ import java.util.Scanner;
 
 public class Menu_CocoTiles {
 	
-	private Scanner sc = new Scanner(System.in);
-	private Stack<String> cocoTiles = new Stack<String>();
-	private Stockpile stockpile = Stockpile.getInstance();
+	private Scanner sc = new Scanner(System.in); 			// scanner object to scan user inputs
+	private Stack<String> cocoTiles = new Stack<String>();	// create a CocoTiles object
+	private Stockpile stockpile = Stockpile.getInstance();	// get the instance of stockpile
 
-	
+	// Constructor, create a stack of the following cocotiles and shuffling so it can be ready of use
 	public Menu_CocoTiles() {
 		for(int i = 0; i<11; i++) {
 			cocoTiles.add(COCOTILE_TYPES.MOVEGHOSTPIRATE.toString());
@@ -32,14 +32,18 @@ public class Menu_CocoTiles {
 		shuffle();
 	}
 	
+	// Shuffle the stack of cocotiles
 	public void shuffle() {
 		Collections.shuffle(cocoTiles);
 	}
 	
+	// Return the cocotile from the top of stack
 	public String getCocoTile() {
 		return cocoTiles.pop();
 	}
 	
+	// Print the buy cocotile screen option and check if user input is a valid option. Buy cocotile if user input is yes
+	// and find which player has most cocotiles
 	public void buy(Player p) {
 		Menu_PlayerActions currentGame = Menu_PlayerActions.getInstance();
 		System.out.println("\nWelcome to the buy screen. Would you like to buy a cocotile?");
@@ -69,6 +73,8 @@ public class Menu_CocoTiles {
 		}
 	}
 	
+	// If user has enough resources to purchase a cocotile, take it form their resource pile
+	// and update his used cocotile pile
 	public String confirmedBuyCocoTile(Player p) {
 		boolean con1 = p.getPlayerPile().checkDecrement(RESOURCE.CUTLASSES, 1);
 		boolean con2 = p.getPlayerPile().checkDecrement(RESOURCE.MOLASSES, 1);
@@ -89,6 +95,7 @@ public class Menu_CocoTiles {
 		}
 	}
 	
+	// Execute the action of the bought cocotile
 	public void takeAction(String input, Player p) {
 		if(input == COCOTILE_TYPES.GOAT_CUTLASSES.toString()) {
 			stockpile.decrementPile(RESOURCE.GOATS, 2);
@@ -113,6 +120,7 @@ public class Menu_CocoTiles {
 		}
 	}
 	
+	// Prompt user to select which inventory type they desire and make sure it is a valid input
 	public void shipLairCocoTile(Player p) {
 		String s = null;
 		ViewMap map = new ViewMap();
@@ -142,6 +150,8 @@ public class Menu_CocoTiles {
 		
 	}
 	
+	// Check if ship and lair locations exist and prompt user to select which location they want. Check if user input
+	// is valid and place the desired inventory on the chosen map location
 	public void buyShipOrLair(String s, Player p) {
 		ShipLairBoardCtrl controller = ShipLairBoardCtrl.getInstance();
 		

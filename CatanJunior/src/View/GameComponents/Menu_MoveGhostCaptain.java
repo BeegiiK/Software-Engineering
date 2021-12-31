@@ -8,8 +8,10 @@ import Model.ResourcePile.Stockpile;
 
 public class Menu_MoveGhostCaptain {
 	
-	private Scanner sc = new Scanner(System.in);
+	private Scanner sc = new Scanner(System.in); // scanner object to scan user inputs
 
+	// Rewarding player for moving ghost captain to a different tile and incrementing his resource by two 
+	// dictated by the ghost captain tile location
 	public void move(String s) {
 		TileCtrl t = TileCtrl.getInstance();
 		PlayerCtrl cont = PlayerCtrl.getInstance();
@@ -24,7 +26,7 @@ public class Menu_MoveGhostCaptain {
 		System.out.println("You have recieved x2 " + t.getTileResource(Integer.parseInt(s)).label);
 	}
 	
-	
+	// print the available locations for ghost captain on the map
 	public void printLocation() {
 		TileCtrl t = TileCtrl.getInstance();
 		ViewMap map1 = new ViewMap();
@@ -38,6 +40,8 @@ public class Menu_MoveGhostCaptain {
 		System.out.println(" ");
 	}
 	
+	// Prompt the user to choose a location and checking if that location is one of the listed 
+	// options. Re-prompt the user to choose a location until it is a valid one.
 	public String chooseLocation() {
 		TileCtrl t = TileCtrl.getInstance();
 

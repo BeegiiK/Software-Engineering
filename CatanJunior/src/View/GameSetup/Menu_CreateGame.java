@@ -8,8 +8,10 @@ import Model.Player.Player;
 import View.Menu_PlayerActions;
 
 public class Menu_CreateGame {
-	private Scanner sc = new Scanner(System.in);
+	private Scanner sc = new Scanner(System.in); // scanner object to scan user inputs 
 
+	// Initialise the game by prompting the user for the total number of players and applying
+	// error check
 	public void initialiseGame() {
 		String no_of_players = null;
 		Menu_PlayerActions g = Menu_PlayerActions.getInstance();
@@ -28,6 +30,7 @@ public class Menu_CreateGame {
 		}
 	}
 	
+	// Create and add the valid players into the game alongside their chosen colours
 	public void getPlayers(String input){
 		int i = 1;
 		int numberOfPlayers = Integer.parseInt(input);
@@ -43,6 +46,7 @@ public class Menu_CreateGame {
 		}
 	}
 	
+	// check if the name is unique from all other player names in the game instance
 	public String validName(int i) {
 		String name = "";
 		
@@ -60,6 +64,7 @@ public class Menu_CreateGame {
 		}
 	}
 	
+	// checking if user correctly picks a colour not assigned to any other player and in the list
 	public COLOUR validColour(Menu_ColourAssignments c_h) {
 		String player_colour = "";
 		COLOUR c = null;
@@ -80,6 +85,7 @@ public class Menu_CreateGame {
 		}
 	}
 	
+	// checking if the input is a digit and if not, handle the exception until user inputs a valid number
 	public boolean validDigit(String num) {
 		try {
 			Integer.parseInt(num);
@@ -91,6 +97,7 @@ public class Menu_CreateGame {
 		}
 	}
 	
+	// Check if user picks a valid number of players in catan junior or else, prompt user to do so
 	public boolean validNumOfPlayers(String num) {
 		int number = Integer.parseInt(num);
 		if(number == 4 || number == 3) {
@@ -102,6 +109,7 @@ public class Menu_CreateGame {
 		}
 	}
 	
+	// check if the current name string is a unique/not unqiue name from current list of players
 	public boolean checkName(String name) {
 		PlayerCtrl Pl = PlayerCtrl.getInstance();
 		int count = 0;
@@ -133,6 +141,7 @@ public class Menu_CreateGame {
 		return null;
 	}
 	
+	// print the welcoming message
 	public void printIntroMessage(){
 		System.out.println(" ___       __    _______    ___        ________   ________   _____ ______    _______            \r\n"
 		+ "|\\  \\     |\\  \\ |\\  ___ \\  |\\  \\      |\\   ____\\ |\\   __  \\ |\\   _ \\  _   \\ |\\  ___ \\           \r\n"
