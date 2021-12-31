@@ -42,6 +42,7 @@ public class CocoTiles {
 	}
 	
 	public void buy(Player p) {
+		game currentGame = game.getInstance();
 		System.out.println("\nWelcome to the buy screen. Would you like to buy a cocotile?");
 		System.out.println("[Y] (Your resources will be taken - 1 Cutlass, 1 Molasses & 1 Gold)");
 		System.out.println("[N] You will be escorted back to the options screen.");
@@ -58,12 +59,18 @@ public class CocoTiles {
 		}
 		
 		if(input.equals("y") || input.equals("Y")) {
-			confirmedBuyCocoTile(p);
+			String coco = confirmedBuyCocoTile(p);
+			if(coco != null) {
+				takeAction(coco, p);
+				currentGame.MostCoco();
+			}
+			else {
+				System.out.println("\u001b[1m\u001b[41;1m"+"You do not have enough resources to buy a cocotile."+ "\u001b[0m");
+			}
 		}
 	}
 	
-	public void confirmedBuyCocoTile(Player p) {
-		game currentGame = game.getInstance();
+	public String confirmedBuyCocoTile(Player p) {
 		boolean con1 = p.getPlayerPile().checkDecrement(RESOURCE.CUTLASSES, 1);
 		boolean con2 = p.getPlayerPile().checkDecrement(RESOURCE.MOLASSES, 1);
 		boolean con3 = p.getPlayerPile().checkDecrement(RESOURCE.GOLD, 1);
@@ -76,12 +83,10 @@ public class CocoTiles {
 			System.out.println("You have obtained the " + coco + " cocotile");
 			
 			p.updateUsedCocoTiles(coco);
-			takeAction(coco, p);
-	
-			currentGame.MostCoco();
+			return coco;
 		}
 		else {
-			System.out.println("\u001b[1m\u001b[41;1m"+"You do not have enough resources to buy a cocotile."+ "\u001b[0m");
+			return null;
 		}
 	}
 	
@@ -100,7 +105,9 @@ public class CocoTiles {
 		}
 		else if(input == typesOfCocoTiles.MOVEGHOSTPIRATE.toString()) {
 			MoveGhostCaptain moveUX = new MoveGhostCaptain();
-			moveUX.move();
+			moveUX.printLocation();
+			String s = moveUX.chooseLocation();
+			moveUX.move(s);
 		}
 		else if(input == typesOfCocoTiles.SHIP_LAIR.toString()) {
 			shipLairCocoTile(p);
@@ -138,40 +145,50 @@ public class CocoTiles {
 	
 	public void buyShipOrLair(String s, Player p) {
 		ShipLairBoardCtrl controller = ShipLairBoardCtrl.getInstance();
-		System.out.println("Please choose a "+s+" location:");
 		
-		if(s.equals("ship")) {
-			p.decrementInventory(Inventory.SHIP, 1);
-			for(Integer i: controller.allowedShips(p.getColour())) {
-				System.out.println("["+i+"] "+ "S"+i);
-			}
+		if(controller.allowedShips(p.getColour()).isEmpty()) {
+			System.out.println("\u001b[1m\u001b[41;1m"+"You have no valid ship locations"+ "\u001b[0m");
+		}
+		else if(controller.allowedLairs(p.getColour()).isEmpty()) {
+			System.out.println("\u001b[1m\u001b[41;1m"+"You have no valid lair locations"+ "\u001b[0m");
+
 		}
 		else {
-			p.decrementInventory(Inventory.LAIR, 1);
-			for(Integer i: controller.allowedLairs(p.getColour())) {
-				System.out.println("["+i+"] "+ "L"+i);
-			}
-		}
-	
-		while(true) {
-			String ss = sc.nextLine();
+			System.out.println("Please choose a "+s+" location:");
+			
 			if(s.equals("ship")) {
-				if(controller.allowedShips(p.getColour()).contains(Integer.parseInt(ss))) {
-					controller.buySp(Integer.parseInt(ss), p.getColour());
-					break;
-				}
-				else {
-					System.out.println("\u001b[1m\u001b[41;1m"+"Please choose another valid location"+ "\u001b[0m");
-					System.out.println("\u001b[1m\u001b[41;1m"+"Please choose a "+s+" location:"+ "\u001b[0m");
+				p.decrementInventory(Inventory.SHIP, 1);
+				for(Integer i: controller.allowedShips(p.getColour())) {
+					System.out.println("["+i+"] "+ "S"+i);
 				}
 			}
 			else {
-				if(controller.allowedLairs(p.getColour()).contains(Integer.parseInt(ss))) {
-					controller.buyLr(Integer.parseInt(ss), p.getColour());
-					break;
+				p.decrementInventory(Inventory.LAIR, 1);
+				for(Integer i: controller.allowedLairs(p.getColour())) {
+					System.out.println("["+i+"] "+ "L"+i);
+				}
+			}
+		
+			while(true) {
+				String ss = sc.nextLine();
+				if(s.equals("ship")) {
+					if(controller.allowedShips(p.getColour()).contains(Integer.parseInt(ss))) {
+						controller.buySp(Integer.parseInt(ss), p.getColour());
+						break;
+					}
+					else {
+						System.out.println("\u001b[1m\u001b[41;1m"+"Please choose another valid location"+ "\u001b[0m");
+						System.out.println("\u001b[1m\u001b[41;1m"+"Please choose a "+s+" location:"+ "\u001b[0m");
+					}
 				}
 				else {
-					System.out.println("\u001b[1m\u001b[41;1m"+"Please choose a "+s+" location:"+ "\u001b[0m");
+					if(controller.allowedLairs(p.getColour()).contains(Integer.parseInt(ss))) {
+						controller.buyLr(Integer.parseInt(ss), p.getColour());
+						break;
+					}
+					else {
+						System.out.println("\u001b[1m\u001b[41;1m"+"Please choose a "+s+" location:"+ "\u001b[0m");
+					}
 				}
 			}
 		}

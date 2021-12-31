@@ -56,24 +56,7 @@ public class buildUI {
 	
 	public boolean checkLairInput(String s) {
 		if(s.equals("y") || s.equals("Y")) {
-			PlayerCtrl x = PlayerCtrl.getInstance();
-			if(x.checkPlayerPile(Inventory.cost(Inventory.LAIR))) {
-				ShipLairBoardCtrl a = ShipLairBoardCtrl.getInstance();
-
-				purchaseInventory("lair");
-				if(a.allowedLairs(x.getActivePlayer().getColour()).isEmpty()) {
-					System.out.println("\u001b[1m\u001b[41;1m"+"There is no allowable lair locations"+"\u001b[0m");
-					return false;
-				}
-				else {
-					getLairLocations();
-					return false;
-				}
-			}		
-			else {
-				System.out.println("\u001b[1m\u001b[41;1m"+"You do not have enough resources"+"\u001b[0m");
-				return true;
-			}
+			return buyLairInput();
 		}
 		else if(s.equals("n") || s.equals("N")){
 			return false;
@@ -84,27 +67,37 @@ public class buildUI {
 		}
 	}
 	
+	public boolean buyLairInput() {
+		PlayerCtrl x = PlayerCtrl.getInstance();
+		if(x.checkPlayerPile(Inventory.cost(Inventory.LAIR))) {
+			
+			return checkAvailableLairs();			
+		}		
+		else {
+			System.out.println("\u001b[1m\u001b[41;1m"+"You do not have enough resources"+"\u001b[0m");
+			return true;
+		}
+	}
+	
+	public boolean checkAvailableLairs() {
+		PlayerCtrl x = PlayerCtrl.getInstance();
+		ShipLairBoardCtrl a = ShipLairBoardCtrl.getInstance();
+
+		if(a.allowedLairs(x.getActivePlayer().getColour()).isEmpty()) {
+			System.out.println("\u001b[1m\u001b[41;1m"+"There is no allowable lair locations"+"\u001b[0m");
+			return false;
+		}
+		else {
+			purchaseInventory("lair");
+			String str = retrieveLairLocation();
+			getLairLocations(str);
+			return false;
+		}
+	}
+	
 	public boolean checkShipInput(String s) {
 		if(s.equals("y") || s.equals("Y")) {
-			PlayerCtrl x = PlayerCtrl.getInstance();
-
-			if(x.checkPlayerPile(Inventory.cost(Inventory.SHIP))) {
-				ShipLairBoardCtrl a = ShipLairBoardCtrl.getInstance();
-				
-				purchaseInventory("ship");
-				if(a.allowedShips(x.getActivePlayer().getColour()).isEmpty()) {
-					System.out.println("\u001b[1m\u001b[41;1m"+"There is no allowable ship locations"+"\u001b[0m");
-					return false;
-				}
-				else {
-					getShipLocations();
-					return false;
-				}
-			}
-			else {
-				System.out.println("\u001b[1m\u001b[41;1m"+"You do not have enough resources"+"\u001b[0m");
-				return true;
-			}
+			return checkAvailableShips();
 		}
 		else if(s.equals("n") || s.equals("N")){
 			return false;
@@ -112,6 +105,34 @@ public class buildUI {
 		else {
 			System.out.println("\u001b[1m\u001b[41;1m"+"Invalid input"+"\u001b[0m");
 			return true;
+		}
+	}
+	
+	public boolean buyShipInput() {
+		PlayerCtrl x = PlayerCtrl.getInstance();
+
+		if(x.checkPlayerPile(Inventory.cost(Inventory.SHIP))) {
+			return checkAvailableShips();			
+		}
+		else {
+			System.out.println("\u001b[1m\u001b[41;1m"+"You do not have enough resources"+"\u001b[0m");
+			return true;
+		}
+	}
+	
+	public boolean checkAvailableShips() {
+		PlayerCtrl x = PlayerCtrl.getInstance();
+		ShipLairBoardCtrl a = ShipLairBoardCtrl.getInstance();
+		
+		if(a.allowedShips(x.getActivePlayer().getColour()).isEmpty()) {
+			System.out.println("\u001b[1m\u001b[41;1m"+"There is no allowable ship locations"+"\u001b[0m");
+			return false;
+		}
+		else {
+			purchaseInventory("ship");
+			String str = retrieveShipLocation();
+			getShipLocations(str);
+			return false;
 		}
 	}
 	
@@ -153,10 +174,18 @@ public class buildUI {
 	}
 
 
-	public void getShipLocations() {
+	public void getShipLocations(String s) {
 		ShipLairBoardCtrl a = ShipLairBoardCtrl.getInstance();
 		PlayerCtrl x = PlayerCtrl.getInstance();
 		ViewMap map1 = new ViewMap();
+		
+		a.buySp(Integer.parseInt(s), x.getActivePlayer().getColour());
+		System.out.println(map1.toString());
+	}
+	
+	public String retrieveShipLocation() {
+		ShipLairBoardCtrl a = ShipLairBoardCtrl.getInstance();
+		PlayerCtrl x = PlayerCtrl.getInstance();
 		
 		System.out.println("Choose a location for the ship");
 		for(Integer i: a.allowedShips(x.getActivePlayer().getColour())) {
@@ -173,25 +202,31 @@ public class buildUI {
 				s = sc.nextLine();
 			}
 			else {
-				break;
+				return s;
 			}
 		}
-		a.buySp(Integer.parseInt(s), x.getActivePlayer().getColour());
-		System.out.println(map1.toString());
 	}
 	
-	public void getLairLocations() {
+	public void getLairLocations(String s) {
 		ShipLairBoardCtrl a = ShipLairBoardCtrl.getInstance();
 		PlayerCtrl x = PlayerCtrl.getInstance();
 		ViewMap map1 = new ViewMap();
-
+		
+		a.buyLr(Integer.parseInt(s), x.getActivePlayer().getColour());
+		System.out.println(map1.toString());
+	}
+	
+	public String retrieveLairLocation() {
+		ShipLairBoardCtrl a = ShipLairBoardCtrl.getInstance();
+		PlayerCtrl x = PlayerCtrl.getInstance();
+		
 		System.out.println("Choose a location for the lair");
 		for(Integer i: a.allowedLairs(x.getActivePlayer().getColour())) {
 			System.out.println("["+i+"] " + "L"+i);
 		}
+		
 		System.out.println("Please choose a location:");
 		String s = sc.nextLine();
-		
 		checkForInvalid("lair",s);
 		
 		while(true) {
@@ -200,12 +235,9 @@ public class buildUI {
 				s = sc.nextLine();
 			}
 			else {
-				break;
+				return s;
 			}
 		}
-		
-		a.buyLr(Integer.parseInt(s), x.getActivePlayer().getColour());
-		System.out.println(map1.toString());
 	}
 	
 	public void checkForInvalid(String ss, String input) {

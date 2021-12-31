@@ -36,8 +36,7 @@ public class Player{
 	
 	// method to declare all internal inventory types
 	private void createInventory() {
-		//getInventory().put(Inventory.LAIR, 7);
-		getInventory().put(Inventory.LAIR, 4);
+		getInventory().put(Inventory.LAIR, 7);
 		getInventory().put(Inventory.SHIP, 8);
 	}
 

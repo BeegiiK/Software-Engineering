@@ -1,4 +1,4 @@
-package testing;
+package test_cases;
 
 import org.junit.*;
 import static org.junit.Assert.*;

@@ -14,8 +14,7 @@ public class Stockpile extends Pile{
 	public Stockpile() {
 		for(RESOURCE type : RESOURCE.values()) {
 			if(!type.equals(RESOURCE.NONE)) {
-				//change back to 18
-				pile.put(type, 14);
+				pile.put(type, 18);
 			}
 		}
 	}

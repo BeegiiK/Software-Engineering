@@ -137,7 +137,6 @@ public class game {
 	}
 
 	private void printOptions(int i) {
-		
 		PlayerCtrl Pl = PlayerCtrl.getInstance();
 		System.out.println(Pl.getPlayerList().get(i).getPlayerName()+", you now have the following options:\n");
 		int j = 1;
@@ -145,10 +144,9 @@ public class game {
 			System.out.println("["+j+"] "+o.displayName() +"\n");
 			j++;
 		}
-		System.out.println("\u001b[1m\u001b[41;1m"+"Please choose one of the options"+"\u001b[0m");
 	}
 	
-	private boolean checkChosenOption(String chosen, Player p) {
+	public boolean checkChosenOption(String chosen, Player p) {
 		ArrayList<Integer> idx = new ArrayList<Integer>();
 		boolean stay = true;
 		boolean str = false;
@@ -167,7 +165,7 @@ public class game {
 				stay = false;
 			}
 			else {
-				System.out.println("\u001b[1m\u001b[41;1m"+"Please give a valid input for an option to be chosen [1-5].\n"+"\u001b[0m");
+				System.out.println("\u001b[1m\u001b[41;1m"+"Please give a valid input for an option to be chosen [1-7].\n"+"\u001b[0m");
 				chosen = sc.nextLine();
 			}
 		}
@@ -235,6 +233,9 @@ public class game {
 				
 				res = sc.nextLine();
 				var = marketplaceOptionSelect(res,p);
+				if(var == false) {
+					proceedMarketPlaceTrade(p);
+				}
 			}
 			else if(res.equals("2")) {
 				System.out.println("[1] Trade with stockpile (2:1 trading)");
@@ -243,6 +244,9 @@ public class game {
 				res = sc.nextLine();
 				var = stockpileOptionSelect(res,p);
 			}
+			else if(res.equals("3")) {
+				var = false;
+			}
 			else {
 				System.out.println("\u001b[1m\u001b[41;1m" + "Invalid entry" + "\u001b[0m");
 				var = false;
@@ -250,16 +254,20 @@ public class game {
 		}
 	}
 	
+	public boolean proceedMarketPlaceTrade(Player p) {
+		if(p.getTradedWithMarketPlace() == false) {
+			marketTrade(p);
+			return true;
+		}
+		else {
+			System.out.println("\u001b[1m\u001b[41;1m"+"You have already traded with marketplace"+"\u001b[0m");
+			return false;
+		}
+	}
+	
 	public boolean marketplaceOptionSelect(String s, Player p) {
 		if(s.equals("1")) {
-			if(p.getTradedWithMarketPlace() == false) {
-				marketTrade(p);
-				return false;
-			}
-			else {
-				System.out.println("\u001b[1m\u001b[41;1m"+"You have already traded with marketplace"+"\u001b[0m");
-				return false;
-			}
+			return false;
 		}
 		else if(s.equals("2")){
 			return true;
@@ -276,7 +284,7 @@ public class game {
 			return false;
 		}
 		else if(s.equals("2")){
-			return false;
+			return true;
 		}
 		else {
 			System.out.println("\u001b[1m\u001b[41;1m" + "Invalid entry" + "\u001b[0m");
@@ -292,13 +300,7 @@ public class game {
 		RESOURCE mp_desired = null;
 		RESOURCE mp_unwanted = null;
 		
-		//check if a resource has less than 2
-		int count = 0;
-		for(RESOURCE r: p.getPlayerPile().getPile().keySet()) {
-			if(p.getPlayerPile().getPile().get(r) >= 2) {
-				count++;
-			}
-		}
+		int count = checkResourceForTwo(p);
 		
 		if(count == 0) {
 			System.out.println("\u001b[1m\u001b[41;1m"+"You do not have enough resources to trade with stockpile"+"\u001b[0m");
@@ -315,16 +317,12 @@ public class game {
 			
 			while(true) {
 				String unwanted = sc.nextLine();
-				
-				if(Integer.parseInt(unwanted) <= j && Integer.parseInt(unwanted) >= 0){
-					mp_unwanted = i.get(Integer.parseInt(unwanted));
+				mp_unwanted = checkUnwantedResourceStockPile(j, i, unwanted);
+				if(mp_unwanted != null) {
 					break;
 				}
-				else {
-					System.out.println("\u001b[1m\u001b[41;1m"+"Please choose one unwanted resource from the list above."+"\u001b[0m");
-				}
 			}
-			
+		
 			j = 0;
 			System.out.println("What resource would you like?");
 			for(RESOURCE r: RESOURCE.values()) {
@@ -338,9 +336,30 @@ public class game {
 			
 			p.getPlayerPile().decrementPile(mp_unwanted, 2);
 			stockpile.incrementPile(mp_unwanted, 2);
-			p.getPlayerPile().incrementPile(mp_desired, 1);
 			stockpile.decrementPile(mp_desired, 1);
+			p.getPlayerPile().incrementPile(mp_desired, 1);
 		}
+	}
+	
+	public RESOURCE checkUnwantedResourceStockPile(int j, ArrayList<RESOURCE> i, String unwanted) {
+		if(Integer.parseInt(unwanted) <= j && Integer.parseInt(unwanted) >= 0){
+			RESOURCE mp_unwanted = i.get(Integer.parseInt(unwanted));
+			return mp_unwanted;
+		}
+		else {
+			System.out.println("\u001b[1m\u001b[41;1m"+"Please choose one unwanted resource from the list above."+"\u001b[0m");
+			return null;
+		}
+	}
+	
+	public int checkResourceForTwo(Player p) {
+		int count = 0;
+		for(RESOURCE r: p.getPlayerPile().getPile().keySet()) {
+			if(p.getPlayerPile().getPile().get(r) >= 2) {
+				count++;
+			}
+		}
+		return count;
 	}
 	
 	private void marketTrade(Player p) {
@@ -410,7 +429,9 @@ public class game {
 		boolean str = false;
 		
 		System.out.println("You have rolled a 6, you can now move the ghost captain!");
-		moveUX.move();
+		moveUX.printLocation();
+		String s = moveUX.chooseLocation();
+		moveUX.move(s);
 		
 		while(!str) {
 			printOptions(i);
@@ -453,7 +474,6 @@ public class game {
 		for(Player p: Pl.getPlayerList()) {
 			if(p.getPlayerTurn()) {
 				if(p.getInventory().get(Inventory.LAIR) == 0 || (p.getInventory().get(Inventory.LAIR) == 1 && p.getLeading() == true)) {
-					//System.out.println("The game is over. Player: "+p.getPlayerName()+" has won the game");
 					try {
 						this.winnerSequence(p.getColour());
 					} catch (InterruptedException e) {

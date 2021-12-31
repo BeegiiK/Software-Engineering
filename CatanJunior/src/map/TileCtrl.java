@@ -46,6 +46,10 @@ public class TileCtrl {
 		
 	}
 	
+	public int getCurrGhostCaptainLoc() {
+		return currGhostCaptainLoc;
+	}
+	
 	public void moveGhostCaptain(int loc){
 		if(currGhostCaptainLoc != 0) {
 			tl.get(currGhostCaptainLoc-1).toggleActivate();
