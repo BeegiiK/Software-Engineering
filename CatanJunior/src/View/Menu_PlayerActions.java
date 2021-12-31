@@ -386,7 +386,7 @@ public class Menu_PlayerActions {
 		while(true) {
 			String unwanted = sc.nextLine();
 			
-			if(Integer.parseInt(unwanted) <= j && Integer.parseInt(unwanted) >= 0){
+			if(Integer.parseInt(unwanted) < j && Integer.parseInt(unwanted) >= 0){
 				mp_unwanted = i.get(Integer.parseInt(unwanted));
 				break;
 			}
@@ -403,7 +403,7 @@ public class Menu_PlayerActions {
 			k.add(r);
 		}
 	
-		checkIfOutsideList(j, mp_desired, k);
+		mp_desired = checkIfOutsideList(j, mp_desired, k);
 		mp.swap(p, mp_desired, mp_unwanted);
 		
 		if(mp.allSameResources()) {
@@ -413,12 +413,11 @@ public class Menu_PlayerActions {
 		p.setTradedWithMarketPlace(true);
 	}
 	
-	public void checkIfOutsideList(int j, RESOURCE mp_desired, ArrayList<RESOURCE> k) {
+	public RESOURCE checkIfOutsideList(int j, RESOURCE mp_desired, ArrayList<RESOURCE> k) {
 		while(true) {
 			String desired = sc.nextLine();
-			if(Integer.parseInt(desired) <= j && Integer.parseInt(desired) >= 0){
-				mp_desired = k.get(Integer.parseInt(desired));
-				break;
+			if(Integer.parseInt(desired) < j && Integer.parseInt(desired) >= 0){
+				return mp_desired = k.get(Integer.parseInt(desired));
 			}
 			else {
 				System.out.println("\u001b[1m\u001b[41;1m"+"Please choose one desired resource from the list above."+"\u001b[0m");
