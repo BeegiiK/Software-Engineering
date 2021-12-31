@@ -63,8 +63,20 @@ public class Menu_PlayerActions {
 						// Allow player to explore other options
 						printOptions(i);
 						chosenOption = sc.nextLine();
-						// Check if input to select option is valid and take action of input
-						checkChosenOption(chosenOption,Pl.getPlayerList().get(i));
+						while(true) {
+							try {
+								// Check if input to select option is valid and take action of input
+								checkChosenOption(chosenOption,Pl.getPlayerList().get(i));
+								break;
+							}
+							catch(Exception e) {
+								System.out.println("\u001b[1m\u001b[41;1mPlease select a valid option\u001b[0m");
+								chosenOption = sc.nextLine();
+							}
+						}
+
+						
+
 						// Check if end of game condition has been met
 						if(checkForEOG()) {
 							keepPlaying = false;
@@ -475,7 +487,17 @@ public class Menu_PlayerActions {
 		while(!str) {
 			printOptions(i);
 			chosenOption = sc.nextLine();
-			str = checkChosenOption(chosenOption,Pl.getPlayerList().get(i));
+			while(true) {
+				try {
+					// Check if input to select option is valid and take action of input
+					checkChosenOption(chosenOption,Pl.getPlayerList().get(i));
+					break;
+				}
+				catch(Exception e) {
+					System.out.println("\u001b[1m\u001b[41;1mPlease select a valid option\u001b[0m");
+					chosenOption = sc.nextLine();
+				}
+			}
 		}
 	}
 	
