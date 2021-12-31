@@ -75,8 +75,6 @@ public class Menu_PlayerActions {
 							}
 						}
 
-						
-
 						// Check if end of game condition has been met
 						if(checkForEOG()) {
 							keepPlaying = false;
