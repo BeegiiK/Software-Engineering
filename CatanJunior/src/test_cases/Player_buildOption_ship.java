@@ -5,10 +5,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import Game.buildUI;
-import map.COLOUR;
-import player.Player;
-import player.PlayerCtrl;
+import Controller.Player.PlayerCtrl;
+import Enum.COLOUR;
+import Model.Player.Player;
+import View.buildUI;
 
 public class Player_buildOption_ship {
 	@Test

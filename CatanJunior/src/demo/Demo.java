@@ -1,12 +1,12 @@
 package demo;
 
-import Game.*;
+import View.GameSetup.Menu_CreateGame;
 
 public class Demo {
 	
 	public static void main(String[] args) {
 		
-		gameInitialisation newGame = new gameInitialisation();
+		Menu_CreateGame newGame = new Menu_CreateGame();
 		
 		newGame.initialiseGame();
 		

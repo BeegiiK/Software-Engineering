@@ -1,17 +1,18 @@
 package test_cases;
 
 import org.junit.*;
-import static org.junit.Assert.*;
 
-import Game.game;
-import map.COLOUR;
-import player.Player;
+import Enum.COLOUR;
+import Model.Player.Player;
+import View.Menu_PlayerActions;
+
+import static org.junit.Assert.*;
 
 
 public class Player_OptionsScreen {
 	@Test
 	public void test_validPlayerOption_EndTurnOption() {
-		game g = game.getInstance();
+		Menu_PlayerActions g = Menu_PlayerActions.getInstance();
 		String s1 = "0";
 		String s2 = " ";
 		String s3 = "4";

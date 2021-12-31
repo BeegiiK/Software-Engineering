@@ -1,14 +1,17 @@
 package test_cases;
 
 import org.junit.*;
+
+import View.Menu_PlayerActions;
+import View.GameSetup.Menu_CreateGame;
+
 import static org.junit.Assert.*;
-import Game.gameInitialisation;
 
 
 public class InitiliaseGame_numberOfPlayers {
 	@Test
 	public void numberOfPlayers_invalidKeys_1() {
-		gameInitialisation game = new gameInitialisation();
+		Menu_CreateGame game = new Menu_CreateGame();
 		String invalidKey1 = " ";
 		String invalidKey2 = "q";
 		
@@ -18,7 +21,7 @@ public class InitiliaseGame_numberOfPlayers {
 	
 	@Test
 	public void numberOfPlayers_withinLimits_2() {
-		gameInitialisation game = new gameInitialisation();
+		Menu_CreateGame game = new Menu_CreateGame();
 		String three = "3";
 		String four = "4";
 		
@@ -28,7 +31,7 @@ public class InitiliaseGame_numberOfPlayers {
 	
 	@Test
 	public void numberOfPlayers_outsideLimits_3() {
-		gameInitialisation game = new gameInitialisation();
+		Menu_CreateGame game = new Menu_CreateGame();
 		String two = "2";
 		String five = "5";
 		String negativeOne = "-1";

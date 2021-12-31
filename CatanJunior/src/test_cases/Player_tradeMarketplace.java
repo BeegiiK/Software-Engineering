@@ -7,16 +7,16 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import Game.game;
-import map.COLOUR;
-import map.MarketPlaceCtrl;
-import map.RESOURCE;
-import player.Player;
+import Controller.Board.MarketPlaceCtrl;
+import Enum.COLOUR;
+import Enum.RESOURCE;
+import Model.Player.Player;
+import View.Menu_PlayerActions;
 
 public class Player_tradeMarketplace {
 	@Test
 	public void test_playerTrade_marketplaceOption_1() {
-		game g = new game();
+		Menu_PlayerActions g = new Menu_PlayerActions();
 		Player p = new Player("Derek",COLOUR.WHITE);
 		String s1 = "ghfj";
 		String s2 = "2";
@@ -90,7 +90,7 @@ public class Player_tradeMarketplace {
 	
 	@Test
 	public void test_playerTrade_marketplace_playerAlreadyTraded_4() {
-		game g = new game();
+		Menu_PlayerActions g = new Menu_PlayerActions();
 		Player p = new Player("Derek",COLOUR.ORANGE);
 		
 		p.setTradedWithMarketPlace(true);

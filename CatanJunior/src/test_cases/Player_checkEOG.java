@@ -5,21 +5,21 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import Board.CocoTiles;
-import Game.game;
-import logistic.Inventory;
-import map.COLOUR;
-import map.RESOURCE;
-import player.Player;
-import player.PlayerCtrl;
+import Controller.Player.PlayerCtrl;
+import Enum.COLOUR;
+import Enum.RESOURCE;
+import Model.Player.Player;
+import Model.Player.Player.Inventory;
+import View.Menu_PlayerActions;
+import View.GameComponents.Menu_CocoTiles;
 
 public class Player_checkEOG {
 	@Test
 	public void test_playerEOG_check_1() {
 		Player p = new Player("Derek",COLOUR.BLUE);
 		PlayerCtrl pl = PlayerCtrl.getInstance();
-		CocoTiles ct = new CocoTiles();
-		game g = new game();
+		Menu_CocoTiles ct = new Menu_CocoTiles();
+		Menu_PlayerActions g = new Menu_PlayerActions();
 
 		
 		p.setPlayerTurn(true);
@@ -44,7 +44,7 @@ public class Player_checkEOG {
 	public void test_playerEOG_check_2() {
 		Player p = new Player("Derek",COLOUR.BLUE);
 		PlayerCtrl pl = PlayerCtrl.getInstance();
-		game g = new game();
+		Menu_PlayerActions g = new Menu_PlayerActions();
 
 		
 		p.setPlayerTurn(true);

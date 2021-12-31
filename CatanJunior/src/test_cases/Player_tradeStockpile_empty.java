@@ -5,11 +5,11 @@ import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
-import Board.Stockpile;
-import map.COLOUR;
-import map.RESOURCE;
-import player.Player;
-import player.PlayerCtrl;
+import Controller.Player.PlayerCtrl;
+import Enum.COLOUR;
+import Enum.RESOURCE;
+import Model.Player.Player;
+import Model.ResourcePile.Stockpile;
 
 public class Player_tradeStockpile_empty {
 	@Test

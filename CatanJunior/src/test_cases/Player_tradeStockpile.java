@@ -8,19 +8,18 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
-import map.RESOURCE;
-
 import org.junit.Test;
 
-import Board.Stockpile;
-import Game.game;
-import map.COLOUR;
-import player.Player;
+import Enum.COLOUR;
+import Enum.RESOURCE;
+import Model.Player.Player;
+import Model.ResourcePile.Stockpile;
+import View.Menu_PlayerActions;
 
 public class Player_tradeStockpile {
 	@Test
 	public void test_playerTrade_stockpileOption_invalidEntry_1() {
-		game g = new game();
+		Menu_PlayerActions g = new Menu_PlayerActions();
 		Player p = new Player("Derek",COLOUR.WHITE);
 		String s1 = "ghfj";
 		String s2 = "2";
@@ -37,7 +36,7 @@ public class Player_tradeStockpile {
 	
 	@Test
 	public void test_playerTrade_stockpileOption_noValidResources_2() {
-		game g = new game();
+		Menu_PlayerActions g = new Menu_PlayerActions();
 		Player p = new Player("Derek",COLOUR.BLUE);
 		
 		int actual = g.checkResourceForTwo(p);
@@ -48,7 +47,7 @@ public class Player_tradeStockpile {
 	
 	@Test
 	public void test_playerTrade_stockpileOption_invalidUnwantedResourceOption_3() {
-		game g = new game();
+		Menu_PlayerActions g = new Menu_PlayerActions();
 		ArrayList<RESOURCE> i = new ArrayList<RESOURCE>();
 		i.add(RESOURCE.CUTLASSES);
 		i.add(RESOURCE.GOATS);

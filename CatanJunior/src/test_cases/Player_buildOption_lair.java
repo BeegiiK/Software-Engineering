@@ -5,18 +5,18 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import Game.buildUI;
-import map.COLOUR;
-import map.RESOURCE;
-import player.Player;
-import player.PlayerCtrl;
+import Controller.Player.PlayerCtrl;
+import Enum.COLOUR;
+import Enum.RESOURCE;
+import Model.Player.Player;
+import View.GameComponents.Menu_Build;
 
 public class Player_buildOption_lair {
 	@Test
 	public void test_playerBuild_LairOption_1() {
 		Player p = new Player("Derek",COLOUR.BLUE);
 		PlayerCtrl ctrl = PlayerCtrl.getInstance();
-		buildUI bui = new buildUI();
+		Menu_Build bui = new Menu_Build();
 	
 		p.setPlayerTurn(true);
 		ctrl.addPlayer(p);
@@ -34,7 +34,7 @@ public class Player_buildOption_lair {
 	public void test_playerBuild_notEnoughResources_BuyLair_2() {
 		Player p = new Player("Derek",COLOUR.BLUE);
 		PlayerCtrl ctrl = PlayerCtrl.getInstance();
-		buildUI bui = new buildUI();
+		Menu_Build bui = new Menu_Build();
 		
 		p.setPlayerTurn(true);
 		ctrl.addPlayer(p);
@@ -46,7 +46,7 @@ public class Player_buildOption_lair {
 	public void test_playerBuild_noAvailableLairs_3() {
 		Player p = new Player("Derek",COLOUR.WHITE);
 		PlayerCtrl ctrl = PlayerCtrl.getInstance();
-		buildUI bui = new buildUI();
+		Menu_Build bui = new Menu_Build();
 
 		p.setPlayerTurn(true);
 		ctrl.addPlayer(p);

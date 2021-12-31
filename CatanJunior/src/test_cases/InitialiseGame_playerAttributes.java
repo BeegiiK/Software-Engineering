@@ -1,13 +1,15 @@
 package test_cases;
 
 import org.junit.*;
-import static org.junit.Assert.*;
 
-import Game.ColourHandling;
-import Game.gameInitialisation;
-import map.COLOUR;
-import player.Player;
-import player.PlayerCtrl;
+import Controller.Player.PlayerCtrl;
+import Enum.COLOUR;
+import Model.Player.Player;
+import View.Menu_PlayerActions;
+import View.GameSetup.Menu_ColourAssignments;
+import View.GameSetup.Menu_CreateGame;
+
+import static org.junit.Assert.*;
 
 public class InitialiseGame_playerAttributes {
 	COLOUR expected_w = COLOUR.WHITE;
@@ -17,7 +19,7 @@ public class InitialiseGame_playerAttributes {
 	
 	@Test
 	public void test_playerAttributes_playerName_unique_1() {
-		gameInitialisation game = new gameInitialisation();
+		Menu_CreateGame game = new Menu_CreateGame();
 		PlayerCtrl Pl = PlayerCtrl.getInstance();
 		
 		assertTrue("Check if name Derek can be inputted",game.checkName("Derek"));
@@ -29,8 +31,8 @@ public class InitialiseGame_playerAttributes {
 	
 	@Test
 	public void test_playerAttributes_playerColour_letter_2() {
-		gameInitialisation game = new gameInitialisation();
-		ColourHandling c_h = new ColourHandling();
+		Menu_CreateGame game = new Menu_CreateGame();
+		Menu_ColourAssignments c_h = new Menu_ColourAssignments();
 		String w = "w";
 		String o = "o";
 		String r = "r";
@@ -43,8 +45,8 @@ public class InitialiseGame_playerAttributes {
 	}
 	@Test
 	public void test_playerAttributes_playerColour_uppercaseLetter_3() {
-		gameInitialisation game = new gameInitialisation();
-		ColourHandling c_h = new ColourHandling();
+		Menu_CreateGame game = new Menu_CreateGame();
+		Menu_ColourAssignments c_h = new Menu_ColourAssignments();
 		String W = "W";
 		String O = "O";
 		String R = "R";
@@ -57,8 +59,8 @@ public class InitialiseGame_playerAttributes {
 	}
 	@Test
 	public void test_playerAttributes_playerColour_incorrect_4() {
-		gameInitialisation game = new gameInitialisation();
-		ColourHandling c_h = new ColourHandling();
+		Menu_CreateGame game = new Menu_CreateGame();
+		Menu_ColourAssignments c_h = new Menu_ColourAssignments();
 		String ww = "ww";
 		String orange = "orange";
 		String Red = "Red";
@@ -71,8 +73,8 @@ public class InitialiseGame_playerAttributes {
 	}
 	@Test
 	public void test_playerAttributes_playerColour_sameColour_5() {
-		gameInitialisation game = new gameInitialisation();
-		ColourHandling c_h = new ColourHandling();
+		Menu_CreateGame game = new Menu_CreateGame();
+		Menu_ColourAssignments c_h = new Menu_ColourAssignments();
 		String r = "r";
 		
 		assertEquals("Check if red can be chosen",expected_r, game.convertColour(r,c_h));

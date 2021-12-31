@@ -4,19 +4,19 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import Game.buildUI;
-import logistic.Inventory;
-import map.COLOUR;
-import map.RESOURCE;
-import player.Player;
-import player.PlayerCtrl;
+import Controller.Player.PlayerCtrl;
+import Enum.COLOUR;
+import Enum.RESOURCE;
+import Model.Player.Player;
+import Model.Player.Player.Inventory;
+import View.GameComponents.Menu_Build;
 
 public class Player_buildOption_buildLair {
 	@Test
 	public void test_playerBuild_buildLair_1() {
 		Player p = new Player("Derek",COLOUR.WHITE);
 		PlayerCtrl ctrl = PlayerCtrl.getInstance();
-		buildUI bui = new buildUI();
+		Menu_Build bui = new Menu_Build();
 		
 		p.setPlayerTurn(true);
 		ctrl.addPlayer(p);

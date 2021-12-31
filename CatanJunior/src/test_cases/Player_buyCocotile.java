@@ -6,18 +6,18 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import Board.CocoTiles;
-import Game.game;
-import logistic.typesOfCocoTiles;
-import map.COLOUR;
-import map.RESOURCE;
-import player.Player;
-import player.PlayerCtrl;
+import Controller.Player.PlayerCtrl;
+import Enum.COCOTILE_TYPES;
+import Enum.COLOUR;
+import Enum.RESOURCE;
+import Model.Player.Player;
+import View.Menu_PlayerActions;
+import View.GameComponents.Menu_CocoTiles;
 
 public class Player_buyCocotile {
 	@Test
 	public void test_navigateTurnInput_BuyCocoTile_checkPiles_1() {
-		CocoTiles ct = new CocoTiles();
+		Menu_CocoTiles ct = new Menu_CocoTiles();
 		Player p = new Player("Derek",COLOUR.ORANGE);
 		PlayerCtrl Pl = PlayerCtrl.getInstance();
 		Pl.addPlayer(p);
@@ -30,7 +30,7 @@ public class Player_buyCocotile {
 	
 	@Test
 	public void test_navigateTurnInput_BuyCocoTile_2() {
-		CocoTiles ct = new CocoTiles();
+		Menu_CocoTiles ct = new Menu_CocoTiles();
 		Player p = new Player("Derek",COLOUR.ORANGE);
 		PlayerCtrl Pl = PlayerCtrl.getInstance();
 		Pl.addPlayer(p);
@@ -58,9 +58,9 @@ public class Player_buyCocotile {
 	
 	@Test
 	public void test_navigateTurnInput_GoatCutlassTile_3() {
-		String cocotiles = typesOfCocoTiles.GOAT_CUTLASSES.toString();
+		String cocotiles = COCOTILE_TYPES.GOAT_CUTLASSES.toString();
 		Player p = new Player("Derek",COLOUR.ORANGE);
-		CocoTiles ct = new CocoTiles();
+		Menu_CocoTiles ct = new Menu_CocoTiles();
 		int expected = 2;
 		
 		ct.takeAction(cocotiles,p);
@@ -73,9 +73,9 @@ public class Player_buyCocotile {
 	
 	@Test
 	public void test_navigateTurnInput_MolassesWoodTile_4() {
-		String cocotiles = typesOfCocoTiles.MOLASSES_WOOD.toString();
+		String cocotiles = COCOTILE_TYPES.MOLASSES_WOOD.toString();
 		Player p = new Player("Derek",COLOUR.ORANGE);
-		CocoTiles ct = new CocoTiles();
+		Menu_CocoTiles ct = new Menu_CocoTiles();
 		int expected = 3;
 		
 		ct.takeAction(cocotiles,p);
@@ -88,11 +88,11 @@ public class Player_buyCocotile {
 	
 	@Test
 	public void test_mostCoco_5() {
-		CocoTiles ct = new CocoTiles();
+		Menu_CocoTiles ct = new Menu_CocoTiles();
 		Player p1 = new Player("Derek",COLOUR.ORANGE);
 		Player p2 = new Player("Larry",COLOUR.RED);
 		PlayerCtrl Pl = PlayerCtrl.getInstance();
-		game g = new game();
+		Menu_PlayerActions g = new Menu_PlayerActions();
 		
 		p1.getPlayerPile().incrementPile(RESOURCE.CUTLASSES, 1);
 		p1.getPlayerPile().incrementPile(RESOURCE.GOLD, 1);

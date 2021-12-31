@@ -1,20 +1,21 @@
 package test_cases;
 
 import org.junit.*;
-import static org.junit.Assert.*;
 
-import Game.MoveGhostCaptain;
-import Game.game;
-import map.COLOUR;
-import map.RESOURCE;
-import map.TileCtrl;
-import player.Player;
-import player.PlayerCtrl;
+import Controller.Board.TileCtrl;
+import Controller.Player.PlayerCtrl;
+import Enum.COLOUR;
+import Enum.RESOURCE;
+import Model.Player.Player;
+import View.Menu_PlayerActions;
+import View.MoveGhostCaptain;
+
+import static org.junit.Assert.*;
 
 public class Player_DiceRoll {
 	@Test
 	public void test_playerCheckDiceRollInput_1() {
-		game g = game.getInstance();
+		Menu_PlayerActions g = Menu_PlayerActions.getInstance();
 		String i1 = "r";
 		String i2 = "R";
 		String i3 = "!!!!";
@@ -26,7 +27,7 @@ public class Player_DiceRoll {
 	
 	@Test
 	public void test_playerCheckDiceRoll_playerResourceAllocation_2() {
-		game g = new game();
+		Menu_PlayerActions g = new Menu_PlayerActions();
 		Player p1 = new Player("Derek",COLOUR.WHITE);
 		Player p2 = new Player("Larry",COLOUR.ORANGE);
 		Player p3 = new Player("James",COLOUR.RED);
@@ -54,7 +55,7 @@ public class Player_DiceRoll {
 	
 	@Test
 	public void test_playerCheckDiceRoll_ghostPirateBlockAllocation_3() {
-		game g = new game();
+		Menu_PlayerActions g = new Menu_PlayerActions();
 		Player p1 = new Player("Derek",COLOUR.WHITE);
 		Player p2 = new Player("Larry",COLOUR.ORANGE);
 		Player p3 = new Player("James",COLOUR.RED);
